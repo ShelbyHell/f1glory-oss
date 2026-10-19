@@ -36,14 +36,215 @@
     { id: "sp_telecom", name: "Velox Telecom 5G", payout: 28000000, tag: "Телекоммуникации", reqPos: 10 }
   ];
 
-  const DRIVER_CANDIDATES = [
-    { id: "drv_bearman", name: "Оливер Берман", ovr: 84, salary: 11000000, isPay: false, tag: "Звездный молодой талант" },
-    { id: "drv_norris_tier", name: "Ландо Вудринг", ovr: 92, salary: 26000000, isPay: false, tag: "Претендент на чемпионский титул" },
-    { id: "drv_piastri_tier", name: "Оскар Ванден", ovr: 89, salary: 18000000, isPay: false, tag: "Хладнокровный победитель Гран-при" },
-    { id: "drv_rookie_fast", name: "Артур Леклерк", ovr: 78, salary: 5000000, isPay: false, tag: "Выпускник академии" },
-    { id: "drv_pay_latifi", name: "Николас Ричмонд", ovr: 68, salary: -24000000, isPay: true, tag: "Рента-драйвер (+ $24M спонсоров)" },
-    { id: "drv_pay_zhou", name: "Чжоу Тянь", ovr: 74, salary: -18000000, isPay: true, tag: "Коммерческий пилот (+ $18M)" }
+  function calcDriverSalary(skill) {
+    if(skill >= 96) return 45000000;
+    if(skill >= 93) return 36000000;
+    if(skill >= 90) return 26000000;
+    if(skill >= 87) return 18000000;
+    if(skill >= 84) return 12000000;
+    if(skill >= 80) return 8000000;
+    if(skill >= 75) return 4000000;
+    return 2000000;
+  }
+
+  const DEFAULT_PADDOCK_DRIVERS = [
+    { id: "paddock_M__Verstappen", name: "M. Verstappen", flag: "🇳🇱", age: 28, ovr: 96, salary: 45000000, isPay: false, tag: "🏆 Чемпион мира (4x)", currentTeam: "Red Bull", buyoutFee: 67500000, category: "stars" },
+    { id: "paddock_L__Norris", name: "L. Norris", flag: "🇬🇧", age: 26, ovr: 93, salary: 36000000, isPay: false, tag: "⭐ Суперзвезда F1", currentTeam: "McLaren", buyoutFee: 54000000, category: "stars" },
+    { id: "paddock_C__Leclerc", name: "C. Leclerc", flag: "🇲🇨", age: 28, ovr: 91, salary: 26000000, isPay: false, tag: "⭐ Суперзвезда F1", currentTeam: "Ferrari", buyoutFee: 39000000, category: "stars" },
+    { id: "paddock_O__Piastri", name: "O. Piastri", flag: "🇦🇺", age: 24, ovr: 92, salary: 26000000, isPay: false, tag: "⭐ Суперзвезда F1", currentTeam: "McLaren", buyoutFee: 39000000, category: "stars" },
+    { id: "paddock_G__Russell", name: "G. Russell", flag: "🇬🇧", age: 28, ovr: 90, salary: 26000000, isPay: false, tag: "⭐ Суперзвезда F1", currentTeam: "Mercedes", buyoutFee: 39000000, category: "stars" },
+    { id: "paddock_F__Alonso", name: "F. Alonso", flag: "🇪🇸", age: 44, ovr: 87, salary: 18000000, isPay: false, tag: "🏆 Чемпион мира (2x)", currentTeam: "Aston Martin", buyoutFee: 27000000, category: "stars" },
+    { id: "paddock_C__Sainz", name: "C. Sainz", flag: "🇪🇸", age: 31, ovr: 86, salary: 18000000, isPay: false, tag: "🏎️ Топ-пилот пелотона", currentTeam: "Williams", buyoutFee: 27000000, category: "midfield" },
+    { id: "paddock_L__Hamilton", name: "L. Hamilton", flag: "🇬🇧", age: 41, ovr: 86, salary: 26000000, isPay: false, tag: "🏆 Чемпион мира (7x)", currentTeam: "Ferrari", buyoutFee: 39000000, category: "stars" },
+    { id: "paddock_O__Bearman", name: "O. Bearman", flag: "🇬🇧", age: 20, ovr: 81, salary: 8000000, isPay: false, tag: "⚡ Восходящая звезда", currentTeam: "Haas", buyoutFee: 12000000, category: "midfield" },
+    { id: "paddock_A__Albon", name: "A. Albon", flag: "🇹🇭", age: 29, ovr: 82, salary: 8000000, isPay: false, tag: "🏎️ Боевой пилот F1", currentTeam: "Williams", buyoutFee: 12000000, category: "midfield" },
+    { id: "fa_Y__Tsunoda", name: "Y. Tsunoda", flag: "🇯🇵", age: 25, ovr: 81, salary: 8000000, isPay: false, tag: "⭐ Опытный резервист F1", currentTeam: "Свободный агент", buyoutFee: 0, category: "free" },
+    { id: "pay_zhou", name: "G. Zhou", flag: "🇨🇳", age: 26, ovr: 76, salary: -18000000, isPay: true, tag: "💰 Коммерческий пилот (+ $18M)", currentTeam: "Коммерческий пул", buyoutFee: 0, category: "pay" },
+    { id: "pay_richmond", name: "N. Richmond", flag: "🇨🇦", age: 28, ovr: 68, salary: -24000000, isPay: true, tag: "💰 Рента-драйвер (+ $24M спонсоров)", currentTeam: "Коммерческий пул", buyoutFee: 0, category: "pay" }
   ];
+
+  let DRIVER_CANDIDATES = DEFAULT_PADDOCK_DRIVERS;
+
+  function getPaddockDriverMarket() {
+    const list = [];
+    const seenNames = new Set();
+    const myTeamName = (CEO_STATE && CEO_STATE.teamName) ? CEO_STATE.teamName : "";
+
+    // 1. Live Paddock from S.seats
+    let foundLiveSeats = false;
+    if(typeof S !== "undefined" && S && S.seats && typeof S.seats === "object") {
+      Object.entries(S.seats).forEach(([teamName, slots]) => {
+        if(!Array.isArray(slots)) return;
+        slots.forEach((d) => {
+          if(!d || d === "PLAYER" || !d.name) return;
+          if(seenNames.has(d.name)) return;
+          seenNames.add(d.name);
+          foundLiveSeats = true;
+
+          const skill = d.skill || 80;
+          const salary = calcDriverSalary(skill);
+          const isMyTeam = (teamName === myTeamName);
+          const buyout = isMyTeam ? 0 : Math.round(salary * 1.5);
+          const tag = (d.titles && d.titles > 0)
+            ? `🏆 Чемпион мира (${d.titles}x)`
+            : (skill >= 90 ? "⭐ Суперзвезда F1" : (skill >= 85 ? "🏎️ Топ-пилот пелотона" : (d.age && d.age <= 21 ? "⚡ Восходящая звезда" : "🏁 Боевой пилот F1")));
+
+          list.push({
+            id: "paddock_" + encodeURIComponent(d.name).replace(/%/g, "_"),
+            name: d.name,
+            age: d.age || 25,
+            ovr: skill,
+            ceil: d.ceil || (skill + 2),
+            titles: d.titles || 0,
+            flag: d.flag || "🏁",
+            currentTeam: teamName,
+            salary: salary,
+            buyoutFee: buyout,
+            isPay: false,
+            tag: tag,
+            category: skill >= 88 ? "stars" : "midfield"
+          });
+        });
+      });
+    }
+
+    // 2. If S.seats is not populated, fallback to GRID2026
+    if(!foundLiveSeats) {
+      let gridSource = (typeof GRID2026 !== "undefined" && GRID2026) ? GRID2026 : {
+        "McLaren": [["L. Norris", 26, 93, 95, 1, "🇬🇧"], ["O. Piastri", 24, 92, 95, 0, "🇦🇺"]],
+        "Ferrari": [["C. Leclerc", 28, 91, 93, 0, "🇲🇨"], ["L. Hamilton", 41, 86, 90, 7, "🇬🇧"]],
+        "Red Bull": [["M. Verstappen", 28, 96, 97, 4, "🇳🇱"], ["I. Hadjar", 21, 80, 88, 0, "🇫🇷"]],
+        "Mercedes": [["G. Russell", 28, 90, 92, 0, "🇬🇧"], ["K. Antonelli", 19, 85, 95, 0, "🇮🇹"]],
+        "Aston Martin": [["F. Alonso", 44, 87, 90, 2, "🇪🇸"], ["L. Stroll", 27, 76, 80, 0, "🇨🇦"]],
+        "Williams": [["C. Sainz", 31, 86, 88, 0, "🇪🇸"], ["A. Albon", 29, 82, 85, 0, "🇹🇭"]],
+        "Racing Bulls": [["L. Lawson", 24, 80, 85, 0, "🇳🇿"], ["A. Lindblad", 18, 78, 92, 0, "🇬🇧"]],
+        "Alpine": [["P. Gasly", 30, 82, 85, 0, "🇫🇷"], ["F. Colapinto", 22, 79, 85, 0, "🇦🇷"]],
+        "Audi": [["N. Hülkenberg", 38, 80, 83, 0, "🇩🇪"], ["G. Bortoleto", 21, 81, 89, 0, "🇧🇷"]],
+        "Haas": [["E. Ocon", 29, 80, 83, 0, "🇫🇷"], ["O. Bearman", 20, 81, 90, 0, "🇬🇧"]],
+        "Cadillac": [["S. Pérez", 36, 81, 83, 0, "🇲🇽"], ["V. Bottas", 36, 80, 82, 0, "🇫🇮"]]
+      };
+
+      Object.entries(gridSource).forEach(([teamName, drivers]) => {
+        if(!Array.isArray(drivers)) return;
+        drivers.forEach(([name, age, skill, ceil, titles, flag]) => {
+          if(!name || seenNames.has(name)) return;
+          seenNames.add(name);
+
+          const salary = calcDriverSalary(skill || 80);
+          const isMyTeam = (teamName === myTeamName);
+          const buyout = isMyTeam ? 0 : Math.round(salary * 1.5);
+          const tag = (titles && titles > 0)
+            ? `🏆 Чемпион мира (${titles}x)`
+            : (skill >= 90 ? "⭐ Суперзвезда F1" : (skill >= 85 ? "🏎️ Топ-пилот пелотона" : (age <= 21 ? "⚡ Восходящая звезда" : "🏁 Боевой пилот F1")));
+
+          list.push({
+            id: "paddock_" + encodeURIComponent(name).replace(/%/g, "_"),
+            name: name,
+            age: age || 25,
+            ovr: skill || 80,
+            ceil: ceil || (skill + 2),
+            titles: titles || 0,
+            flag: flag || "🏁",
+            currentTeam: teamName,
+            salary: salary,
+            buyoutFee: buyout,
+            isPay: false,
+            tag: tag,
+            category: (skill || 80) >= 88 ? "stars" : "midfield"
+          });
+        });
+      });
+    }
+
+    // 3. Free Agents & Reserves from S.freeAgents / S.reservas / SIN_ASIENTO_2026
+    const faSources = [];
+    if(typeof S !== "undefined" && S) {
+      if(Array.isArray(S.freeAgents)) faSources.push(...S.freeAgents);
+      if(Array.isArray(S.reservas)) faSources.push(...S.reservas);
+    }
+    if(typeof SIN_ASIENTO_2026 !== "undefined" && Array.isArray(SIN_ASIENTO_2026)) {
+      SIN_ASIENTO_2026.forEach(s => {
+        faSources.push({
+          name: s.name,
+          flag: s.flag,
+          age: s.age,
+          skill: s.base || 77,
+          ceil: s.ceil || 82,
+          titles: 0,
+          desc: (s.hoy && s.hoy[1]) ? s.hoy[1] : "Резервист F1"
+        });
+      });
+    }
+
+    // Fallback real free agents
+    if(faSources.length === 0) {
+      faSources.push(
+        { name: "Y. Tsunoda", flag: "🇯🇵", age: 25, skill: 81, ceil: 84, desc: "Резерв Red Bull Racing" },
+        { name: "J. Doohan", flag: "🇦🇺", age: 23, skill: 77, ceil: 83, desc: "Резерв Haas F1 Team" },
+        { name: "F. Vesti", flag: "🇩🇰", age: 24, skill: 77, ceil: 81, desc: "Резерв Mercedes AMG" },
+        { name: "Mick Schumacher", flag: "🇩🇪", age: 26, skill: 77, ceil: 80, desc: "Пилот программы WEC / F1" },
+        { name: "F. Drugovich", flag: "🇧🇷", age: 25, skill: 77, ceil: 80, desc: "Чемпион F2 / Резервист" },
+        { name: "J. Crawford", flag: "🇺🇸", age: 20, skill: 76, ceil: 84, desc: "Молодежная программа F1" },
+        { name: "S. Vandoorne", flag: "🇧🇪", age: 33, skill: 77, ceil: 78, desc: "Опытный экс-пилот F1" },
+        { name: "A. Dunne", flag: "🇮🇪", age: 21, skill: 75, ceil: 85, desc: "Талант молодежной серии" }
+      );
+    }
+
+    faSources.forEach(fa => {
+      if(!fa || !fa.name || seenNames.has(fa.name)) return;
+      seenNames.add(fa.name);
+      const skill = fa.skill || 76;
+      const salary = calcDriverSalary(skill);
+
+      list.push({
+        id: "fa_" + encodeURIComponent(fa.name).replace(/%/g, "_"),
+        name: fa.name,
+        age: fa.age || 24,
+        ovr: skill,
+        ceil: fa.ceil || (skill + 2),
+        titles: fa.titles || 0,
+        flag: fa.flag || "🏁",
+        currentTeam: "Свободный агент",
+        salary: salary,
+        buyoutFee: 0,
+        isPay: false,
+        tag: fa.desc || (skill >= 80 ? "⭐ Опытный резервист" : "📋 Свободный агент F1"),
+        category: "free"
+      });
+    });
+
+    // 4. Pay Drivers (Рента-драйверы с коммерческими спонсорами)
+    const payCandidates = [
+      { id: "pay_zhou", name: "G. Zhou", flag: "🇨🇳", age: 26, ovr: 76, salary: -18000000, tag: "💰 Коммерческий пул (+ $18M спонсоров)" },
+      { id: "pay_richmond", name: "N. Richmond", flag: "🇨🇦", age: 28, ovr: 68, salary: -24000000, tag: "💰 Рента-драйвер (+ $24M спонсоров)" },
+      { id: "pay_nissany", name: "R. Nissany", flag: "🇮🇱", age: 30, ovr: 66, salary: -20000000, tag: "💰 Рента-спонсоры (+ $20M)" },
+      { id: "pay_herta", name: "C. Herta", flag: "🇺🇸", age: 25, ovr: 78, salary: -14000000, tag: "💰 Американский синдикат (+ $14M)" }
+    ];
+
+    payCandidates.forEach(p => {
+      if(!seenNames.has(p.id)) {
+        seenNames.add(p.id);
+        list.push({
+          id: p.id,
+          name: p.name,
+          age: p.age,
+          ovr: p.ovr,
+          ceil: p.ovr + 2,
+          titles: 0,
+          flag: p.flag,
+          currentTeam: "Коммерческий пул",
+          salary: p.salary,
+          buyoutFee: 0,
+          isPay: true,
+          tag: p.tag,
+          category: "pay"
+        });
+      }
+    });
+
+    DRIVER_CANDIDATES = list;
+    return list;
+  }
 
   const HQ_LOCATIONS = [
     { id: "silverstone", name: "Сильверстоун", country: "Великобритания", flag: "🇬🇧", desc: "Сердце Моторспорт-долины, доступ к лучшим инженерам F1" },
@@ -521,6 +722,19 @@
       teamName = S.team.name + " Racing";
     }
 
+    const market = getPaddockDriverMarket();
+    let d1Candidate = null;
+    if(typeof S !== "undefined" && S && S.team && S.team.name && S.seats && S.seats[S.team.name]) {
+      const teamSlots = S.seats[S.team.name].filter(d => d && d !== "PLAYER");
+      if(teamSlots[0]) {
+        d1Candidate = market.find(m => m.name === teamSlots[0].name);
+      }
+    }
+    if(!d1Candidate) {
+      d1Candidate = market.find(m => m.name === "O. Bearman") || market.find(m => m.category === "midfield") || market[0];
+    }
+    const d2Candidate = market.find(m => m.id === "pay_zhou") || market.find(m => m.isPay) || market[1];
+
     CEO_STATE = {
       teamName: teamName,
       teamHq: "Сильверстоун (Великобритания)",
@@ -539,8 +753,8 @@
       teamPrincipal: Object.assign({}, DEFAULT_TEAM_PRINCIPALS[0]),
       engine: Object.assign({}, ENGINE_SUPPLIERS[0]),
       sponsor: Object.assign({}, TITLE_SPONSORS[3]),
-      driver1: Object.assign({}, DRIVER_CANDIDATES[0]),
-      driver2: Object.assign({}, DRIVER_CANDIDATES[5]), // pay driver by default for financial balance
+      driver1: Object.assign({}, d1Candidate, { currentTeam: teamName, buyoutFee: 0 }),
+      driver2: Object.assign({}, d2Candidate, { currentTeam: teamName, buyoutFee: 0 }),
       facilities: {
         windTunnel: 2, // 1..5
         cfdSupercomputer: 2,
@@ -595,6 +809,19 @@
       if(!CEO_STATE.ownership) CEO_STATE.ownership = getDefaultOwnershipState();
       if(!CEO_STATE.spygate) CEO_STATE.spygate = getDefaultSpygateState();
       if(!CEO_STATE.simMode) CEO_STATE.simMode = "calendar";
+
+      // Migrate legacy fictional driver names to real paddock drivers
+      if(CEO_STATE.driver1) {
+        if(CEO_STATE.driver1.name === "Оливер Берман") { CEO_STATE.driver1.name = "O. Bearman"; CEO_STATE.driver1.flag = "🇬🇧"; }
+        else if(CEO_STATE.driver1.name === "Ландо Вудринг") { CEO_STATE.driver1.name = "L. Norris"; CEO_STATE.driver1.flag = "🇬🇧"; }
+        else if(CEO_STATE.driver1.name === "Оскар Ванден") { CEO_STATE.driver1.name = "O. Piastri"; CEO_STATE.driver1.flag = "🇦🇺"; }
+        if(!CEO_STATE.driver1.flag) CEO_STATE.driver1.flag = "🏁";
+      }
+      if(CEO_STATE.driver2) {
+        if(CEO_STATE.driver2.name === "Чжоу Тянь") { CEO_STATE.driver2.name = "G. Zhou"; CEO_STATE.driver2.flag = "🇨🇳"; }
+        else if(CEO_STATE.driver2.name === "Николас Ричмонд") { CEO_STATE.driver2.name = "N. Richmond"; CEO_STATE.driver2.flag = "🇨🇦"; }
+        if(!CEO_STATE.driver2.flag) CEO_STATE.driver2.flag = "🏁";
+      }
     }
   }
 
@@ -726,7 +953,25 @@
     }
   };
 
+  window.filterCeoDriverCategory = function(category) {
+    const tabs = document.querySelectorAll(".ceo-market-filter-bar .cmf-btn");
+    tabs.forEach(t => {
+      if(t.dataset.cat === category) t.classList.add("active");
+      else t.classList.remove("active");
+    });
+
+    const cards = document.querySelectorAll(".ceo-candidates-grid .ceo-candidate-card");
+    cards.forEach(card => {
+      if(category === "all" || card.dataset.category === category) {
+        card.style.display = "flex";
+      } else {
+        card.style.display = "none";
+      }
+    });
+  };
+
   function openDriverMarketModal(seatIndex) {
+    if(!CEO_STATE) loadCeoState();
     let m = document.getElementById("ceoDriverMarketModal");
     if(!m) {
       m = document.createElement("div");
@@ -736,49 +981,106 @@
       document.body.appendChild(m);
     }
 
-    const currentDriver = (seatIndex === 1 ? CEO_STATE.driver1 : CEO_STATE.driver2);
+    const currentDriver = (seatIndex === 1 ? CEO_STATE.driver1 : CEO_STATE.driver2) || {};
+    const otherSeatIndex = (seatIndex === 1 ? 2 : 1);
+    const otherDriver = (seatIndex === 1 ? CEO_STATE.driver2 : CEO_STATE.driver1) || {};
+
+    const candidates = getPaddockDriverMarket();
+    const countAll = candidates.length;
+    const countStars = candidates.filter(c => c.category === "stars").length;
+    const countMid = candidates.filter(c => c.category === "midfield").length;
+    const countFree = candidates.filter(c => c.category === "free").length;
+    const countPay = candidates.filter(c => c.category === "pay").length;
+
     m.innerHTML = `
       <div class="f1-modal-card ceo-market-card">
         <div class="wealth-head">
           <div>
-            <span class="f1-mono-sub">DRIVER LINEUP MANAGEMENT</span>
-            <h2>🏎️ СМЕНА ПИЛОТА КОКПИТА #${seatIndex}</h2>
+            <span class="f1-mono-sub">PADDOCK DRIVER MARKET & BUYOUT CLAUSES</span>
+            <h2>🏎️ ТРАНСФЕРНЫЙ РЫНОК // КОКПИТ #${seatIndex}</h2>
           </div>
           <button class="rank-x" onclick="window.closeCeoDriverMarketModal()">✕</button>
         </div>
 
         <div class="ceo-market-banner">
           <div class="cmb-alert">
-            <span class="cmb-icon">🏎️</span>
+            <span class="cmb-icon">🏁</span>
             <div>
-              <div class="cmb-title">ТРАНСФЕРНЫЙ РЫНОК // КОКПИТ #${seatIndex}</div>
-              <div class="cmb-sub">Текущий пилот: <b>${currentDriver.name}</b> (${currentDriver.ovr} OVR, ${currentDriver.isPay ? `Рента-спонсоры: +${formatMoney(Math.abs(currentDriver.salary))}` : `Оклад: ${formatMoney(currentDriver.salary)}`}). Выберите контракт:</div>
+              <div class="cmb-title">СИНХРОНИЗАЦИЯ С ПАДДОКОМ // БЮДЖЕТ: ${formatMoney(CEO_STATE.budget)}</div>
+              <div class="cmb-sub">
+                Текущий пилот кокпита #${seatIndex}: <b>${currentDriver.flag ? currentDriver.flag + ' ' : ''}${currentDriver.name || "Не назначен"}</b> 
+                (${currentDriver.ovr || 75} OVR, ${currentDriver.isPay ? `Рента-спонсоры: +${formatMoney(Math.abs(currentDriver.salary || 0))}` : `Оклад: ${formatMoney(currentDriver.salary || 0)}`}).
+                <br>Вы можете переманить пилота любой команды F1 (оплатив выкуп контракта), подписать свободного агента или пригласить рента-драйвера со спонсорами.
+              </div>
             </div>
           </div>
         </div>
 
+        <div class="ceo-market-filter-bar">
+          <button class="cmf-btn active" data-cat="all" onclick="window.filterCeoDriverCategory('all')">Все пилоты (${countAll})</button>
+          <button class="cmf-btn" data-cat="stars" onclick="window.filterCeoDriverCategory('stars')">⭐ Звёзды F1 (${countStars})</button>
+          <button class="cmf-btn" data-cat="midfield" onclick="window.filterCeoDriverCategory('midfield')">🏎️ Пелотон F1 (${countMid})</button>
+          <button class="cmf-btn" data-cat="free" onclick="window.filterCeoDriverCategory('free')">📋 Свободные агенты (${countFree})</button>
+          <button class="cmf-btn" data-cat="pay" onclick="window.filterCeoDriverCategory('pay')">💰 Рента-драйверы (${countPay})</button>
+        </div>
+
         <div class="ceo-candidates-grid">
-          ${DRIVER_CANDIDATES.map(cand => {
-            const isCurrent = (currentDriver.id === cand.id);
+          ${candidates.map(cand => {
+            const isCurrent = (currentDriver && currentDriver.name === cand.name);
+            const isOther = (otherDriver && otherDriver.name === cand.name);
             const isPay = cand.isPay;
+            const isContracted = (cand.buyoutFee > 0);
+            const ovrClass = cand.ovr >= 90 ? "ovr-elite" : (cand.ovr >= 80 ? "ovr-high" : "ovr-mid");
+
             return `
-              <div class="ceo-candidate-card ${isCurrent ? 'current' : ''}">
+              <div class="ceo-candidate-card ${isCurrent ? 'current' : ''}" data-category="${cand.category}">
                 <div class="cc-head">
                   <span class="cc-trait ${isPay ? 'pay-trait' : ''}">${cand.tag}</span>
-                  <span class="cc-skill">OVR: <b>${cand.ovr}</b></span>
+                  <span class="cc-skill">OVR: <b class="${ovrClass}">${cand.ovr}</b></span>
                 </div>
-                <div class="cc-name">${cand.name}</div>
+                
+                <div class="cc-title-row">
+                  <span class="cc-flag">${cand.flag || '🏁'}</span>
+                  <span class="cc-name">${cand.name}</span>
+                  <span class="cc-age">(${cand.age} лет)</span>
+                </div>
+
+                <div class="cc-team-row">
+                  ${isContracted ? `
+                    <span class="cc-team-badge cc-badge-rival">🏎️ ${cand.currentTeam}</span>
+                  ` : (isPay ? `
+                    <span class="cc-team-badge cc-badge-pay">💰 Спонсорский пул</span>
+                  ` : `
+                    <span class="cc-team-badge cc-badge-free">📋 Свободный агент</span>
+                  `)}
+                </div>
+
                 <div class="cc-salary ${isPay ? 'pay-money' : ''}">
-                  ${isPay ? `💰 Приносит команде: <b>+${formatMoney(Math.abs(cand.salary))}</b> / сезон` : `Оклад пилота: <b>${formatMoney(cand.salary)}</b> / сезон`}
+                  ${isPay ? `
+                    💰 Приносит в кассу: <b>+${formatMoney(Math.abs(cand.salary))}</b> / сезон
+                  ` : `
+                    Оклад пилота: <b>${formatMoney(cand.salary)}</b> / сезон
+                  `}
                 </div>
+
+                <div class="cc-buyout-status">
+                  ${isContracted ? `
+                    <div class="cc-buyout-fee">⚠️ Выкуп контракта: <b>${formatMoney(cand.buyoutFee)}</b></div>
+                  ` : `
+                    <div class="cc-buyout-free">✓ Без отступных (0$)</div>
+                  `}
+                </div>
+
                 <div class="cc-actions">
                   ${isCurrent ? `
-                    <div class="cc-active-badge">ДЕЙСТВУЮЩИЙ ПИЛОТ</div>
+                    <div class="cc-active-badge">ДЕЙСТВУЮЩИЙ ПИЛОТ #${seatIndex}</div>
+                  ` : (isOther ? `
+                    <div class="cc-active-badge cc-other-badge">ЗАНЯТ В КОКПИТЕ #${otherSeatIndex}</div>
                   ` : `
                     <button class="btn s-btn ${isPay ? 'asset-buy' : 'sc-buy'}" onclick="window.signDriverToSeat(${seatIndex}, '${cand.id}')">
-                      Подписать в кокпит #${seatIndex}
+                      ${isContracted ? `Выкупить и подписать (${formatMoney(cand.buyoutFee)})` : `Подписать в кокпит #${seatIndex}`}
                     </button>
-                  `}
+                  `)}
                 </div>
               </div>
             `;
@@ -792,15 +1094,143 @@
 
   window.signDriverToSeat = function(seatIndex, drvId) {
     if(!CEO_STATE) loadCeoState();
-    const cand = DRIVER_CANDIDATES.find(c => c.id === drvId);
-    if(!cand) return;
+    const market = getPaddockDriverMarket();
+    const cand = market.find(c => c.id === drvId);
+    if(!cand) {
+      if(window.showF1Toast) window.showF1Toast("Пилот не найден на трансферном рынке!", "error");
+      return;
+    }
 
-    if(seatIndex === 1) CEO_STATE.driver1 = Object.assign({}, cand);
-    else CEO_STATE.driver2 = Object.assign({}, cand);
+    const currentDriver = (seatIndex === 1 ? CEO_STATE.driver1 : CEO_STATE.driver2);
+    const otherSeatIndex = (seatIndex === 1 ? 2 : 1);
+    const otherDriver = (seatIndex === 1 ? CEO_STATE.driver2 : CEO_STATE.driver1);
+
+    if(currentDriver && currentDriver.name === cand.name) {
+      if(window.showF1Toast) window.showF1Toast(`${cand.name} уже пилотирует болид #${seatIndex}!`, "info");
+      return;
+    }
+
+    if(otherDriver && otherDriver.name === cand.name) {
+      if(window.showF1Toast) window.showF1Toast(`${cand.name} уже занимает кокпит #${otherSeatIndex}!`, "warning");
+      return;
+    }
+
+    const buyout = cand.buyoutFee || 0;
+    if(buyout > 0 && CEO_STATE.budget < buyout) {
+      if(window.showF1Toast) {
+        window.showF1Toast(`Недостаточно средств для выкупа контракта у команды ${cand.currentTeam}! Требуется ${formatMoney(buyout)}. В кассе: ${formatMoney(CEO_STATE.budget)}.`, "error");
+      }
+      return;
+    }
+
+    if(buyout > 0) {
+      CEO_STATE.budget -= buyout;
+    }
+
+    const oldDriver = Object.assign({}, currentDriver);
+    const rivalTeam = cand.currentTeam;
+
+    const signedDriver = {
+      id: cand.id,
+      name: cand.name,
+      ovr: cand.ovr,
+      age: cand.age || 25,
+      flag: cand.flag || "🏁",
+      salary: cand.salary,
+      isPay: !!cand.isPay,
+      tag: cand.tag,
+      currentTeam: CEO_STATE.teamName,
+      buyoutFee: 0
+    };
+
+    if(seatIndex === 1) CEO_STATE.driver1 = signedDriver;
+    else CEO_STATE.driver2 = signedDriver;
+
+    // Live Paddock Synchronization with S.seats
+    if(typeof S !== "undefined" && S && S.seats && rivalTeam && S.seats[rivalTeam]) {
+      const rivalSeats = S.seats[rivalTeam];
+      const poachedIdx = rivalSeats.findIndex(d => d && d !== "PLAYER" && d.name === cand.name);
+      if(poachedIdx !== -1) {
+        let replacement = null;
+        if(oldDriver && !oldDriver.isPay && (oldDriver.ovr || oldDriver.skill) >= 76) {
+          replacement = {
+            name: oldDriver.name,
+            age: oldDriver.age || 26,
+            skill: oldDriver.ovr || oldDriver.skill || 78,
+            ceil: Math.min(99, (oldDriver.ovr || oldDriver.skill || 78) + 2),
+            titles: 0,
+            flag: oldDriver.flag || "🏁"
+          };
+        } else if(Array.isArray(S.freeAgents) && S.freeAgents.length > 0) {
+          replacement = S.freeAgents.shift();
+        } else if(Array.isArray(S.reservas) && S.reservas.length > 0) {
+          const res = S.reservas.shift();
+          replacement = {
+            name: res.name,
+            age: res.age || 24,
+            skill: res.skill || 78,
+            ceil: res.ceil || 82,
+            titles: 0,
+            flag: res.flag || "🏁"
+          };
+        } else if(typeof mkRookie === "function") {
+          try {
+            replacement = mkRookie(false, rivalTeam);
+          } catch(e){}
+        }
+
+        if(!replacement) {
+          replacement = {
+            name: "A. Dunne",
+            age: 21,
+            skill: 76,
+            ceil: 85,
+            titles: 0,
+            flag: "🇮🇪"
+          };
+        }
+
+        rivalSeats[poachedIdx] = replacement;
+      }
+    }
+
+    // Retain old driver in free agents pool if valid
+    if(typeof S !== "undefined" && S && oldDriver && oldDriver.name && !oldDriver.isPay) {
+      if(!Array.isArray(S.freeAgents)) S.freeAgents = [];
+      const alreadyInFA = S.freeAgents.some(f => f && f.name === oldDriver.name);
+      if(!alreadyInFA) {
+        S.freeAgents.push({
+          name: oldDriver.name,
+          age: oldDriver.age || 26,
+          skill: oldDriver.ovr || 78,
+          ceil: Math.min(99, (oldDriver.ovr || 78) + 2),
+          titles: 0,
+          flag: oldDriver.flag || "🏁"
+        });
+      }
+    }
 
     saveCeoState();
+    if(typeof saveGame === "function") {
+      try { saveGame(); } catch(e){}
+    }
+
     window.closeCeoDriverMarketModal();
-    if(window.showF1Toast) window.showF1Toast(`🏁 ${cand.name} подписан в кокпит #${seatIndex}!`, "success");
+
+    if(buyout > 0) {
+      if(window.showF1Toast) {
+        window.showF1Toast(`🚨 ГРОМКИЙ ТРАНСФЕР: ${cand.name} (${cand.flag}) перешел из ${rivalTeam} в ${CEO_STATE.teamName}! Выкуп: ${formatMoney(buyout)}.`, "success");
+      }
+    } else if(cand.isPay) {
+      if(window.showF1Toast) {
+        window.showF1Toast(`💰 РЕНТА-КОНТРАКТ: ${cand.name} подписан в кокпит #${seatIndex}! Спонсорский транш: +${formatMoney(Math.abs(cand.salary))}/сезон.`, "success");
+      }
+    } else {
+      if(window.showF1Toast) {
+        window.showF1Toast(`🏁 ${cand.name} (${cand.flag}) подписан в кокпит #${seatIndex} команды ${CEO_STATE.teamName}!`, "success");
+      }
+    }
+
     renderCeoModal();
   };
 
@@ -2635,10 +3065,11 @@
               <span class="cec-role-badge badge-d1">🏁 ПИЛОТ №1 (ЛИДЕР)</span>
               <span class="cec-salary">${formatMoney(d1.salary)}/год</span>
             </div>
-            <div class="cec-name">${d1.name}</div>
+            <div class="cec-name">${d1.flag ? d1.flag + ' ' : ''}${d1.name}</div>
             <div class="cec-pills">
               <span class="cec-pill">Мастерство: <b>${d1.ovr} OVR</b></span>
-              <span class="cec-pill trait-pill">${d1.tag}</span>
+              ${d1.age ? `<span class="cec-pill">${d1.age} лет</span>` : ''}
+              <span class="cec-pill trait-pill">${d1.tag || 'Боевой пилот'}</span>
             </div>
             <div class="cec-desc">Главная ударная сила команды в борьбе за победы и очки в Личном зачёте.</div>
             <div class="cec-footer">
@@ -2658,10 +3089,11 @@
                 ${d2.isPay ? `+${formatMoney(Math.abs(d2.salary))}/год` : `${formatMoney(d2.salary)}/год`}
               </span>
             </div>
-            <div class="cec-name">${d2.name}</div>
+            <div class="cec-name">${d2.flag ? d2.flag + ' ' : ''}${d2.name}</div>
             <div class="cec-pills">
               <span class="cec-pill">Мастерство: <b>${d2.ovr} OVR</b></span>
-              <span class="cec-pill trait-pill">${d2.tag}</span>
+              ${d2.age ? `<span class="cec-pill">${d2.age} лет</span>` : ''}
+              <span class="cec-pill trait-pill">${d2.tag || 'Боевой пилот'}</span>
             </div>
             <div class="cec-desc">
               ${d2.isPay ? 'Приносит спонсорские миллионы в бюджет конюшни, помогая компенсировать лимит расходов.' : 'Надежный второй пилот для набора очков в Кубок Конструкторов.'}
@@ -3977,7 +4409,12 @@
     updateCeoIntroCard();
   };
 
-  // Expose global init
+  // Expose global init & helpers
+  window.getPaddockDriverMarket = getPaddockDriverMarket;
+  window.initCeoState = initCeoState;
+  window.loadCeoState = loadCeoState;
+  window.getCeoState = function() { if(!CEO_STATE) loadCeoState(); return CEO_STATE; };
+
   window.initCeoMode = function() {
     loadCeoState();
     updateCeoIntroCard();

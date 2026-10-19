@@ -4135,9 +4135,39 @@ h1,h2,h3,.decision h3,#intro h1{font-family:var(--f-disp);font-weight:800;letter
   margin-top: 3px;
   line-height: 1.4;
 }
+.ceo-market-filter-bar {
+  display: flex;
+  gap: 8px;
+  padding: 0 22px 14px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--line);
+}
+.cmf-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  color: var(--muted);
+  font-family: var(--f-mono);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 6px 14px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.cmf-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.25);
+}
+.cmf-btn.active {
+  background: #00d2be;
+  color: #020617;
+  border-color: #00d2be;
+  box-shadow: 0 0 12px rgba(0, 210, 190, 0.35);
+}
 .ceo-candidates-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 12px;
   padding: 16px 22px;
   max-height: 55vh;
@@ -4168,10 +4198,83 @@ h1,h2,h3,.decision h3,#intro h1{font-family:var(--f-disp);font-weight:800;letter
 }
 .pay-trait { background: rgba(0, 210, 190, 0.15); color: #00d2be; }
 .pay-money { color: #00d2be; }
+.cc-title-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 4px 0 2px;
+}
+.cc-flag {
+  font-size: 16px;
+}
+.cc-name {
+  font-size: 14.5px;
+  font-weight: 800;
+  color: #fff;
+}
+.cc-age {
+  font-size: 11px;
+  color: var(--muted);
+}
+.cc-team-row {
+  margin: 4px 0 6px;
+}
+.cc-team-badge {
+  display: inline-block;
+  font-family: var(--f-mono);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 4px;
+  letter-spacing: 0.03em;
+}
+.cc-badge-rival {
+  background: rgba(59, 130, 246, 0.15);
+  color: #60a5fa;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+.cc-badge-free {
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+.cc-badge-pay {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
 .cc-salary {
   font-size: 11.5px;
   color: var(--muted);
-  margin: 8px 0 12px;
+  margin: 6px 0 8px;
+}
+.cc-buyout-status {
+  margin-bottom: 10px;
+}
+.cc-buyout-fee {
+  font-family: var(--f-mono);
+  font-size: 11px;
+  color: #fbbf24;
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+.cc-buyout-free {
+  font-family: var(--f-mono);
+  font-size: 10.5px;
+  color: #34d399;
+  padding: 2px 0;
+}
+.ovr-elite {
+  color: #fbbf24;
+  text-shadow: 0 0 6px rgba(245, 158, 11, 0.4);
+}
+.ovr-high {
+  color: #00d2be;
+}
+.ovr-mid {
+  color: #93c5fd;
 }
 .cc-active-badge {
   text-align: center;
@@ -4182,6 +4285,10 @@ h1,h2,h3,.decision h3,#intro h1{font-family:var(--f-disp);font-weight:800;letter
   background: rgba(16, 185, 129, 0.12);
   padding: 6px;
   border-radius: 6px;
+}
+.cc-other-badge {
+  color: #fbbf24 !important;
+  background: rgba(245, 158, 11, 0.12) !important;
 }
 
 /* =====================================================================
