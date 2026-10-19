@@ -1,4 +1,7 @@
-/* Russian Localization for F1 Glory */
+/* =====================================================================
+   F1 Glory · Russian Localization Module / Полная русская локализация
+   ===================================================================== */
+
 window.RU_COUNTRIES = {
   "Alemania": "Германия",
   "Angola": "Ангола",
@@ -215,6 +218,7 @@ window.RU_COUNTRIES = {
 
 window.RU_DICT = {
   "Continue ▸": "Продолжить ▸",
+  "Continuar ▸": "Продолжить ▸",
   "Show as tabs": "Показывать вкладками",
   "Show all on one page": "Всё на одной странице",
   "Back to summary": "Вернуться к итогам",
@@ -233,36 +237,55 @@ window.RU_DICT = {
   "Confirm identity": "Подтвердить данные",
   "Back": "Назад",
   "AGE": "ВОЗРАСТ",
+  "EDAD": "ВОЗРАСТ",
   "FAME": "СЛАВА",
+  "Fama": "Слава",
+  "Fame": "Слава",
   "Wins": "Победы",
+  "Victorias": "Победы",
   "Podiums": "Подиумы",
+  "Podios": "Подиумы",
   "Poles": "Поулы",
   "Empty trophy case": "Пустая витрина",
+  "Vitrina vacía": "Пустая витрина",
+  "🏆 Empty trophy case": "🏆 Пустая витрина",
+  "🏆 Vitrina vacía": "🏆 Пустая витрина",
   "Drivers' Championship": "Личный зачёт",
   "Constructors": "Кубок конструкторов",
+  "Constructores": "Кубок конструкторов",
   "Age": "Возраст",
   "Team": "Команда",
   "Your story starts here…": "Твоя история начинается здесь…",
   "Grands Prix": "Гран-при",
+  "Grandes Premios": "Гран-при",
   "F1 Titles": "Титулы Ф1",
+  "Títulos F1": "Титулы Ф1",
   "Runner-ups": "Вице-чемпионства",
+  "Subcampeonatos": "Вице-чемпионства",
   "F1 Points": "Очки Ф1",
+  "Puntos F1": "Очки Ф1",
   "Same driver": "Тот же пилот",
+  "Mismo piloto": "Тот же пилот",
   "Start from scratch": "Начать заново",
+  "Empezar de cero": "Начать заново",
   "Share": "Поделиться",
+  "Compartir": "Поделиться",
   "View career": "Смотреть карьеру",
+  "Ver carrera": "Смотреть карьеру",
   "Offers": "Предложения",
+  "Ofertas": "Предложения",
   "Offer": "Предложение",
   "Free agent": "Свободный агент",
+  "Agente libre": "Свободный агент",
   "No team": "Без команды",
+  "Sin equipo": "Без команды",
+  "No seat": "Без контракта",
+  "Sin asiento": "Без контракта",
   "Reserve": "Резервист",
+  "Probador": "Резервист",
   "PROBADOR": "ТЕСТ-ПИЛОТ",
   "RESERVE": "РЕЗЕРВИСТ",
   "PILOTO DE TESTES": "ТЕСТ-ПИЛОТ",
-  "Probador": "Резервист",
-  "Agente libre": "Свободный агент",
-  "Sin equipo": "Без команды",
-  "Sin asiento": "Без контракта",
   "Karting": "Картинг",
   "Team Principal": "Руководитель команды",
   "Fórmula 1": "Формула-1",
@@ -271,30 +294,71 @@ window.RU_DICT = {
   "F1": "Ф1",
   "F2": "Ф2",
   "F3": "Ф3",
-  "IMMORTAL": "БЕССМЕРТНЫЙ",
-  "INMORTAL": "БЕССМЕРТНЫЙ",
-  "LEGEND": "ЛЕГЕНДА",
-  "LEYENDA": "ЛЕГЕНДА",
-  "ICON": "ИКОНА",
-  "ICONO": "ИКОНА",
-  "STAR NAME": "СУПЕРЗВЕЗДА",
-  "FIGURA": "СУПЕРЗВЕЗДА",
-  "STAR": "ЗВЕЗДА",
-  "ESTRELLA": "ЗВЕЗДА",
-  "ESTABLISHED": "ПРИЗНАННЫЙ",
-  "CONSAGRADO": "ПРИЗНАННЫЙ",
-  "PROSPECT": "ПЕРСПЕКТИВНЫЙ",
-  "PROMESA": "ПЕРСПЕКТИВНЫЙ",
-  "UNKNOWN": "НЕИЗВЕСТНЫЙ",
-  "DESCONOCIDO": "НЕИЗВЕСТНЫЙ",
+  "OVR": "OVR",
+  "CAR": "БОЛИД",
+  "COCHE": "БОЛИД",
+  "CARRO": "БОЛИД",
+  "SEASON": "СЕЗОН",
+  "TEMPORADA": "СЕЗОН",
+  "Season": "Сезон",
+  "Temporada": "Сезон",
+  "Seasons": "Сезоны",
+  "Temporadas": "Сезоны",
+  "BOOKS": "СЧЕТА",
+  "CUENTAS": "СЧЕТА",
+  "Books": "Счета",
+  "Cuentas": "Счета",
+  "BOARD": "СОВЕТ",
+  "CONSEJO": "СОВЕТ",
+  "Board": "Совет",
+  "Consejo": "Совет",
+  "GOAL": "ЦЕЛЬ",
+  "OBJETIVO": "ЦЕЛЬ",
+  "Goal": "Цель",
+  "Objetivo": "Цель",
+  "TITLES": "ТИТУЛЫ",
+  "TÍTULOS": "ТИТУЛЫ",
+  "Titles": "Титулы",
+  "Títulos": "Титулы",
+  "title": "титул",
+  "título": "титул",
+  "yr": "г.",
+  "año": "год",
+  "yrs": "г.",
+  "años": "лет",
+  "YOU": "ВЫ",
+  "TÚ": "ВЫ",
+  "TU": "ВЫ",
+  "Drivers": "Гонщики",
+  "Pilotos": "Гонщики",
+  "Previous seasons": "Прошлые сезоны",
+  "Años anteriores": "Прошлые сезоны",
+  "📜 Previous seasons": "📜 Прошлые сезоны",
+  "📜 Años anteriores": "📜 Прошлые сезоны",
+  "× F1 Title": "× Чемпион Ф1",
+  "× Mundial F1": "× Чемпион Ф1",
+  "× Constructors": "× Кубок конструкторов",
+  "× Constructores": "× Кубок конструкторов",
+  "TREND": "ДИНАМИКА",
+  "TENDENCIA": "ДИНАМИКА",
+  "Teammate": "Напарник",
+  "Compañero": "Напарник",
+  "Car": "Болид",
+  "Coche": "Болид",
+  "✓ suits your driving": "✓ подходит вашему стилю",
+  "✓ encaja con tu pilotaje": "✓ подходит вашему стилю",
+  "✗ clashes with your style": "✗ не подходит стилю",
+  "✗ choca con tu estilo": "✗ не подходит стилю",
+  "neutral": "нейтрально",
+  "One-car team: you'd race alone": "Один болид в команде: без напарника",
+  "Coche único: correrías solo": "Один болид в команде: без напарника",
+  "Hang up your helmet and secure your legacy": "Повесить шлем на гвоздь и сохранить наследие",
+  "Colgar el casco y asegurar tu legado": "Повесить шлем на гвоздь и сохранить наследие",
   "Retire": "Завершить карьеру",
   "Retirarse": "Завершить карьеру",
-  "Give up and retire": "Сдаться и завершить карьеру",
   "Hang up your helmet": "Повесить шлем на гвоздь",
-  "Hang up the helmet": "Повесить шлем на гвоздь",
   "Colgar el casco": "Повесить шлем на гвоздь",
-  "Accept and hang up the helmet": "Принять предложение и повесить шлем на гвоздь",
-  "Hang up the helmet as champion": "Уйти непобеждённым чемпионом",
+  "Give up and retire": "Сдаться и завершить карьеру",
   "Leave the pit wall": "Покинуть мостик",
   "Dejar el muro": "Покинуть мостик",
   "Close your era": "Завершить свою эпоху",
@@ -307,13 +371,13 @@ window.RU_DICT = {
   "Retire by your own choice": "Завершить карьеру по своему желанию",
   "Retire by your own choice and secure your legacy": "Завершить карьеру по своему выбору и закрепить наследие",
   "Seek adventure outside F1": "Искать приключения за пределами Ф1",
+  "Buscar aventura fuera de la F1": "Искать приключения за пределами Ф1",
   "Compete outside F1": "Выступать за пределами Ф1",
+  "Competir fuera de la F1": "Выступать вне Ф1",
   "Your path continues elsewhere": "Твой путь продолжается в других гонках",
   "Maybe your place is elsewhere": "Возможно, твоё место в другой серии",
   "Conquer another world": "Покорить другой гоночный мир",
   "Buscar un último asiento modesto": "Искать место в скромной команде",
-  "Buscar aventura fuera de la F1": "Искать приключения за пределами Ф1",
-  "Competir fuera de la F1": "Выступать вне Ф1",
   "Rebuild with ": "Перезапустить карьеру в ",
   "Renew with ": "Продлить контракт с ",
   "Renovar con ": "Продлить контракт с ",
@@ -334,8 +398,340 @@ window.RU_DICT = {
   "«Two more years and I retire»": "«Ещё два года, и я ухожу»",
   "«Three. Not one more»": "«Три. И ни годом больше»",
   "«Four: there's a project here»": "«Четыре: здесь строится проект»",
+  "🏦 Acreedores": "🏦 Кредиторы",
+  "🏦 Creditors": "🏦 Кредиторы",
+  "💸 Números rojos": "💸 В минусе",
+  "💸 In the red": "💸 В минусе",
+  "📗 En orden": "📗 В порядке",
+  "📗 In order": "📗 В порядке",
+  "🚨 Ultimátum": "🚨 Ультиматум",
+  "🚨 Ultimatum": "🚨 Ультиматум",
+  "😮‍💨 Con aire": "😮‍💨 Спокойно",
+  "😮‍💨 Breathing": "😮‍💨 Спокойно",
+  "😊 Contento": "😊 Доволен",
+  "😊 Happy": "😊 Доволен",
+  "Founding year": "Год основания",
+  "Año de fundación": "Год основания",
+  "Orders from the pit wall": "Приказы с командного мостика",
+  "Órdenes desde el muro": "Приказы с командного мостика",
+  "«Hold positions»": "«Сохранять позиции»",
+  "«Mantened posiciones»": "«Сохранять позиции»",
+  "«Let them race»": "«Пусть борются»",
+  "«Dejadlos correr»": "«Пусть борются»",
+  "The sponsor demands": "Требования спонсора",
+  "El patrocinador exige": "Требования спонсора",
+  "«Here you earn your seat»": "«Здесь место зарабатывают на трассе»",
+  "«Aquí se corre por mérito»": "«Здесь место зарабатывают на трассе»",
+  "The illegal car": "Нелегальный болид",
+  "El coche ilegal": "Нелегальный болид",
+  "File the protest": "Подать протест",
+  "Presentar la protesta": "Подать протест",
+  "Keep the report in the drawer": "Убрать отчёт под сукно",
+  "Guardar el informe en el cajón": "Убрать отчёт под сукно",
+  "Your driver blows up": "Пилот устраивает скандал",
+  "Tu piloto la lía": "Пилот устраивает скандал",
+  "Defend him publicly": "Защитить его публично",
+  "Defenderle en público": "Защитить его публично",
+  "Fine him and force an apology": "Оштрафовать и потребовать извинений",
+  "Multa y disculpa pública": "Оштрафовать и потребовать извинений",
+  "To the bench": "На скамейку запасных",
+  "Al banquillo": "На скамейку запасных",
+  "Make the switch": "Произвести замену",
+  "Hacer el cambio": "Произвести замену",
+  "Stick with him to the end of the year": "Оставить его до конца года",
+  "Aguantar hasta final de año": "Оставить его до конца года",
+  "Teams": "Команды",
+  "Escuderías": "Команды",
+  "Your drivers' titles": "Титулы твоих гонщиков",
+  "Mundiales de tus pilotos": "Титулы твоих гонщиков",
+  "Team wins": "Победы команды",
+  "Victorias del equipo": "Победы команды",
+  "Best constructors' finish": "Лучший результат в Кубке конструкторов",
+  "Mejor puesto constructores": "Лучший результат в Кубке конструкторов",
+  "Final prestige": "Итоговый престиж",
+  "Prestigio final": "Итоговый престиж",
+  "🧑‍💼 Your pit-wall chapters": "🧑‍💼 Твои этапы на командном мостике",
+  "🧑‍💼 Tus etapas en el muro": "🧑‍💼 Твои этапы на командном мостике",
+  "🏆 Who you took to glory": "🏆 Кого ты привёл к триумфу",
+  "🏆 A quién llevaste a la gloria": "🏆 Кого ты привёл к триумфу",
+  "ARCHITECT OF A DYNASTY": "СОЗДАТЕЛЬ ДИНАСТИИ",
+  "ARQUITECTO DE UNA DINASTÍA": "СОЗДАТЕЛЬ ДИНАСТИИ",
+  "IMMORTAL": "БЕССМЕРТНЫЙ",
+  "INMORTAL": "БЕССМЕРТНЫЙ",
+  "Immortal": "Бессмертный",
+  "Inmortal": "Бессмертный",
+  "LEGEND": "ЛЕГЕНДА",
+  "LEYENDA": "ЛЕГЕНДА",
+  "Legend": "Легенда",
+  "Leyenda": "Легенда",
+  "ICON": "ИКОНА",
+  "ICONO": "ИКОНА",
+  "STAR NAME": "СУПЕРЗВЕЗДА",
+  "FIGURA": "СУПЕРЗВЕЗДА",
+  "STAR": "ЗВЕЗДА",
+  "ESTRELLA": "ЗВЕЗДА",
+  "Star": "Звезда",
+  "Estrella": "Звезда",
+  "Big Name": "Суперзвезда",
+  "Figura": "Суперзвезда",
+  "ESTABLISHED": "ПРИЗНАННЫЙ",
+  "CONSAGRADO": "ПРИЗНАННЫЙ",
+  "PROSPECT": "ПЕРСПЕКТИВНЫЙ",
+  "PROMESA": "ПЕРСПЕКТИВНЫЙ",
+  "UNKNOWN": "НЕИЗВЕСТНЫЙ",
+  "DESCONOCIDO": "НЕИЗВЕСТНЫЙ",
+  "Aspirant": "Претендент",
+  "Aspirante": "Претендент",
+  "F1 Driver": "Пилот Ф1",
+  "Piloto de F1": "Пилот Ф1",
+  "🏅 Legacy points": "🏅 Очки легенды",
+  "🏅 Puntos de leyenda": "🏅 Очки легенды",
+  "HALL OF FAME": "ЗАЛ СЛАВЫ",
+  "SALÓN DE LA FAMA": "ЗАЛ СЛАВЫ",
+  "LEGEND OF F1": "ЛЕГЕНДА ФОРМУЛЫ-1",
+  "LEYENDA DE LA F1": "ЛЕГЕНДА ФОРМУЛЫ-1",
+  "ONE OF THE GREATS": "ОДИН ИЗ ВЕЛИЧАЙШИХ",
+  "UNO DE LOS GRANDES": "ОДИН ИЗ ВЕЛИЧАЙШИХ",
+  "WORLD CHAMPION": "ЧЕМПИОН МИРА",
+  "CAMPEÓN DEL MUNDO": "ЧЕМПИОН МИРА",
+  "RESPECTED VETERAN": "УВАЖАЕМЫЙ ВЕТЕРАН",
+  "VETERANO RESPETADO": "УВАЖАЕМЫЙ ВЕТЕРАН",
+  "JOURNEYMAN": "ОПЫТНЫЙ ПИЛОТ",
+  "PILOTO EXPERIMENTADO": "ОПЫТНЫЙ ПИЛОТ",
+  "ETERNAL LEGEND": "ВЕЧНАЯ ЛЕГЕНДА",
+  "LEYENDA ETERNA": "ВЕЧНАЯ ЛЕГЕНДА",
+  "MULTIPLE WORLD CHAMPION": "МНОГОКРАТНЫЙ ЧЕМПИОН МИРА",
+  "MULTICAMPEÓN DEL MUNDO": "МНОГОКРАТНЫЙ ЧЕМПИОН МИРА",
+  "CONSTRUCTORS' CHAMPION": "ЧЕМПИОН КУБКА КОНСТРУКТОРОВ",
+  "CAMPEÓN DE CONSTRUCTORES": "ЧЕМПИОН КУБКА КОНСТРУКТОРОВ",
+  "ETERNAL CONTENDER": "ВЕЧНЫЙ ПРЕТЕНДЕНТ",
+  "ETERNO ASPIRANTE": "ВЕЧНЫЙ ПРЕТЕНДЕНТ",
+  "GRAND PRIX WINNER": "ПОБЕДИТЕЛЬ ГРАН-ПРИ",
+  "GANADOR DE GRANDES PREMIOS": "ПОБЕДИТЕЛЬ ГРАН-ПРИ",
+  "GANADOR DE UN GRAN PREMIO": "ПОБЕДИТЕЛЬ ГРАН-ПРИ",
+  "FORMULA 1 DRIVER": "ГОНЩИК ФОРМУЛЫ-1",
+  "PILOTO DE FÓRMULA 1": "ГОНЩИК ФОРМУЛЫ-1",
+  "LEGEND BEYOND F1": "ЛЕГЕНДА ВНЕ Ф1",
+  "LEYENDA FUERA DE LA F1": "ЛЕГЕНДА ВНЕ Ф1",
+  "CHAMPION AWAY FROM F1": "ЧЕМПИОН ДРУГИХ СЕРИЙ",
+  "CAMPEÓN LEJOS DE LA F1": "ЧЕМПИОН ДРУГИХ СЕРИЙ",
+  "A RACING PRO": "ПРОФЕССИОНАЛЬНЫЙ ГОНЩИК",
+  "PROFESIONAL DEL VOLANTE": "ПРОФЕССИОНАЛЬНЫЙ ГОНЩИК",
+  "MOTORSPORT PROSPECT": "ТАЛАНТ АВТОСПОРТА",
+  "PROMESA DEL AUTOMOVILISMO": "ТАЛАНТ АВТОСПОРТА",
+  "DOUBLE": "ДВУКРАТНЫЙ",
+  "DOBLE": "ДВУКРАТНЫЙ",
+  "TRIPLE": "ТРЁХКРАТНЫЙ",
+  "No change.": "Без изменений.",
+  "Sin cambios.": "Без изменений.",
+  "slight +fame": "+немного славы",
+  "slight −fame": "−немного славы",
+  "slight -fame": "−немного славы",
+  "+fame": "+слава",
+  "−fame": "−слава",
+  "-fame": "−слава",
+  "slight +standing": "+немного авторитета",
+  "slight −standing": "−немного авторитета",
+  "+standing": "+авторитет",
+  "−standing": "−авторитет",
+  "+prestige": "+престиж",
+  "−prestige": "−престиж",
+  "+project": "+проект",
+  "−project": "−проект",
+  "+1 car": "+1 к болиду",
+  "−1 car": "−1 к болиду",
+  "+2 car": "+2 к болиду",
+  "−2 car": "−2 к болиду",
+  "+0.5 car": "+0.5 к болиду",
+  "−0.5 car": "−0.5 к болиду",
+  "+1 coche": "+1 к болиду",
+  "−1 coche": "−1 к болиду",
+  "+fama leve": "+немного славы",
+  "−fama leve": "−немного славы",
+  "+fama": "+слава",
+  "−fama": "−слава",
+  "+proyecto": "+проект",
+  "−proyecto": "−проект",
+  "+prestigio": "+престиж",
+  "−prestigio": "−престиж",
+  "Friday in the garage": "Пятница в боксах",
+  "El viernes en el box": "Пятница в боксах",
+  "The spare car": "Запасной болид",
+  "El coche de reserva": "Запасной болид",
+  "The test on the eve": "Тесты накануне",
+  "El test de la víspera": "Тесты накануне",
+  "I'm going home": "Я возвращаюсь домой",
+  "Me vuelvo a casa": "Я возвращаюсь домой",
+  "Secret test": "Секретные тесты",
+  "Test secreto": "Секретные тесты",
+  "The shark agent": "Агент-акула",
+  "El mánager tiburón": "Агент-акула",
+  "Iron winter": "Железная зима",
+  "Invierno de hierro": "Железная зима",
+  "The setup dispute": "Спор о настройках",
+  "Disputa de setup": "Спор о настройках",
+  "Social media fire": "Пожар в соцсетях",
+  "Incendio en redes": "Пожар в соцсетях",
+  "Spy scandal": "Шпионский скандал",
+  "Escándalo de espionaje": "Шпионский скандал",
+  "Serious injury": "Серьёзная травма",
+  "Lesión grave": "Серьёзная травма",
+  "Civil war": "Гражданская война",
+  "Guerra civil": "Гражданская война",
+  "Mechanics revolt": "Бунт механиков",
+  "Rebelión de mecánicos": "Бунт механиков",
+  "The demanding sponsor": "Требовательный спонсор",
+  "El patrocinador exigente": "Требовательный спонсор",
+  "Team orders": "Командная тактика",
+  "Órdenes de equipo": "Командная тактика",
+  "Strategy gamble": "Стратегический риск",
+  "Apuesta estratégica": "Стратегический риск",
+  "Your engineer leaves": "Твой инженер уходит",
+  "Tu ingeniero se va": "Твой инженер уходит",
+  "The documentary crew": "Съёмочная группа документалки",
+  "El equipo del documental": "Съёмочная группа документалки",
+  "24 Hours of Le Mans": "24 часа Ле-Мана",
+  "24 Horas de Le Mans": "24 часа Ле-Мана",
+  "The simulator method": "Метод симулятора",
+  "El método del simulador": "Метод симулятора",
+  "Budget cuts": "Сокращение бюджета",
+  "Recorte de presupuesto": "Сокращение бюджета",
+  "Telemetry leak": "Утечка телеметрии",
+  "Filtración de telemetría": "Утечка телеметрии",
+  "Internal pact": "Внутренний пакт",
+  "Pacto interno": "Внутренний пакт",
+  "Secret alliance": "Тайный союз",
+  "Alianza secreta": "Тайный союз",
+  "Party night": "Ночная вечеринка",
+  "Noche de fiesta": "Ночная вечеринка",
+  "Team hierarchy": "Иерархия в команде",
+  "Jerarquía de equipo": "Иерархия в команде",
+  "The hungry rookie": "Голодный новичок",
+  "El novato con hambre": "Голодный новичок",
+  "Transfer rumour": "Слухи о трансфере",
+  "Rumor de traspaso": "Слухи о трансфере",
+  "Behind your back": "За твоей спиной",
+  "A tus espaldas": "За твоей спиной",
+  "Brand ambassador": "Амбассадор бренда",
+  "Embajador de marca": "Амбассадор бренда",
+  "Crashgate": "Крэшгейт",
+  "Safety Car drama": "Драма с сейфти-каром",
+  "Drama con el coche de seguridad": "Драма с сейфти-каром",
+  "Title decider crash": "Авария в финале сезона",
+  "Choque por el título": "Авария в финале сезона",
+  "Brake test": "Брейк-тест",
+  "Frenazo": "Брейк-тест",
+  "Parked in Rascasse": "Остановка в Раскассе",
+  "Aparcado en La Rascasse": "Остановка в Раскассе",
+  "Grey area": "Серая зона регламента",
+  "Zona gris": "Серая зона регламента",
+  "Rival teammates": "Враждующие напарники",
+  "Compañeros rivales": "Враждующие напарники",
+  "Torrential rain": "Тропический ливень",
+  "Lluvia torrencial": "Тропический ливень",
+  "Technical revolution": "Техническая революция",
+  "Revolución técnica": "Техническая революция",
+  "The protege": "Протеже",
+  "El pupilo": "Протеже",
+  "Contract clause": "Пункт контракта",
+  "Cláusula de contrato": "Пункт контракта",
+  "The gesture": "Жест",
+  "El gesto": "Жест",
+  "Dakar cameo": "Вылазка на Дакар",
+  "Cameo en el Dakar": "Вылазка на Дакар",
+  "Radio rage": "Ярость по радио",
+  "Furia por radio": "Ярость по радио",
+  "Multi 21": "Мульти 21",
+  "Financial inspection": "Финансовая проверка",
+  "Inspección financiera": "Финансовая проверка",
+  "Driving on the limit": "Пилотаж на грани",
+  "Al límite del asfalto": "Пилотаж на грани",
+  "FIA stewards decision": "Решение судей FIA",
+  "Fallo de los comisarios": "Решение судей FIA",
+  "Family emergency": "Семейные обстоятельства",
+  "Emergencia familiar": "Семейные обстоятельства",
+  "New team principal": "Новый руководитель команды",
+  "Nuevo jefe de equipo": "Новый руководитель команды",
+  "Attack from a legend": "Критика от легенды",
+  "Ataque de una leyenda": "Критика от легенды",
+  "They need your seat": "Им нужно твое место",
+  "Necesitan tu asiento": "Им нужно твое место",
+  "Favor to a veteran": "Услуга ветерану",
+  "Favor a un veterano": "Услуга ветерану",
+  "Hollywood film": "Голливудский фильм",
+  "Película de Hollywood": "Голливудский фильм",
+  "Pandemic disruption": "Пандемия",
+  "Interrupción por pandemia": "Пандемия",
+  "Rival pit wall": "Мостик соперника",
+  "El muro rival": "Мостик соперника",
+  "Grid penalty": "Штраф на стартовой решётке",
+  "Sanción en parrilla": "Штраф на стартовой решётке",
+  "Rebellion": "Бунт",
+  "Rebelión": "Бунт",
+  "Rosberg retirement": "Уход по-чемпионски",
+  "La retirada de Rosberg": "Уход по-чемпионски",
+  "Sleeping giant": "Спящий гигант",
+  "El gigante dormido": "Спящий гигант",
+  "Slipstream battle": "Битва в слипстриме",
+  "Guerra de rebufos": "Битва в слипстриме",
+  "Briefcase sponsor": "Спонсор с чемоданом",
+  "Patrocinador del maletín": "Спонсор с чемоданом",
+  "Career reinvention": "Перезапуск карьеры",
+  "Reinvención de carrera": "Перезапуск карьеры",
+  "Obey the team": "Подчиниться команде",
+  "Obedecer al equipo": "Подчиниться команде",
+  "Front up to the press": "Выступить перед прессой",
+  "Dar la cara ante la prensa": "Выступить перед прессой",
+  "Go out anyway": "Выехать несмотря ни на что",
+  "Salir igualmente": "Выехать несмотря ни на что",
+  "Refuse": "Отказаться",
+  "Negarte": "Отказаться",
+  "Accept the offer": "Принять предложение",
+  "Aceptar la oferta": "Принять предложение",
+  "Reject the offer": "Отклонить предложение",
+  "Rechazar la oferta": "Отклонить предложение",
+  "Push to the limit": "Атаковать на пределе",
+  "Apretar al límite": "Атаковать на пределе",
+  "Play it safe": "Не рисковать",
+  "Asegurar": "Не рисковать",
+  "Demand equal status": "Требовать равного статуса",
+  "Exigir igualdad": "Требовать равного статуса",
+  "Accept the role": "Принять свою роль",
+  "Aceptar el rol": "Принять свою роль",
+  "Keep quiet": "Промолчать",
+  "Guardar silencio": "Промолчать",
+  "Speak out": "Высказаться открыто",
+  "Hablar claro": "Высказаться открыто",
+  "Sign contract": "Подписать контракт",
+  "Firmar contrato": "Подписать контракт",
+  "Negotiate harder": "Настаивать на лучших условиях",
+  "Apretar en la negociación": "Настаивать на лучших условиях",
+  "Get into the spare car": "Сесть в запасной болид",
+  "Subirte al coche de reserva": "Сесть в запасной болид",
+  "Stay out": "Остаться в боксах",
+  "Quedarte fuera": "Остаться в боксах",
+  "Ask the stewards first": "Сначала спросить у судей",
+  "Preguntar antes a los comisarios": "Сначала спросить у судей",
+  "Do the test and fly afterwards": "Провести тесты и сразу лететь",
+  "Hacer el test y volar después": "Провести тесты и сразу лететь",
+  "Say no and arrive rested": "Отказаться и приехать отдохнувшим",
+  "Decir que no y llegar descansado": "Отказаться и приехать отдохнувшим",
+  "Ask them to move the test": "Попросить перенести дату тестов",
+  "Pedir que te cambien el test de fecha": "Попросить перенести дату тестов",
+  "Stay in England with no money": "Остаться в Англии без гроша",
+  "Seguir en Inglaterra sin dinero": "Остаться в Англии без гроша",
+  "Make a name for yourself back home": "Сделать себе имя на родине",
+  "Hacerte un nombre en casa": "Сделать себе имя на родине",
+  "Retract in public": "Публично забрать слова назад",
+  "Retractarte en público": "Публично забрать слова назад",
+  "Hold your ground": "Стоять на своём",
+  "Aguantar el pulso": "Стоять на своём",
+  "Let the team decide": "Пусть решает команда",
+  "Que decida el equipo": "Пусть решает команда",
   "Monaco": "Монако",
   "Mónaco": "Монако",
+  "Monaco GP": "Гран-при Монако",
+  "GP Mónaco": "Гран-при Монако",
   "Mexico City": "Мехико",
   "México": "Мехико",
   "Buenos Aires": "Буэнос-Айрес",
@@ -378,150 +774,725 @@ window.RU_DICT = {
   "New York": "Нью-Йорк",
   "Nueva York": "Нью-Йорк",
   "Chicago": "Чикаго",
-  "🔥 twitchy": "🔥 резкий",
-  "🧠 technical": "🧠 техничный",
-  "📈 forgiving": "📈 послушный",
-  "🔥 nervioso": "🔥 резкий",
-  "🧠 técnico": "🧠 техничный",
-  "📈 noble": "📈 послушный",
-  "champion": "чемпион",
-  "campeón": "чемпион",
-  "runner-up": "вице-чемпион",
-  "subcampeón": "вице-чемпион",
-  "World Champion": "Чемпион мира",
-  "F1 Champion": "Чемпион Ф1",
-  "Constructors Champion": "Чемпион Кубка конструкторов",
-  "Friday in the garage": "Пятница в боксах",
-  "El viernes en el box": "Пятница в боксах",
-  "The spare car": "Запасной болид",
-  "El coche de reserva": "Запасной болид",
-  "The test on the eve": "Тесты накануне",
-  "El test de la víspera": "Тесты накануне",
-  "Secret test": "Секретные тесты",
-  "Test secreto": "Секретные тесты",
-  "The shark agent": "Агент-акула",
-  "El mánager tiburón": "Агент-акула",
-  "Iron winter": "Железная зима",
-  "Invierno de hierro": "Железная зима",
+  "One year on the bench": "Год на скамейке запасных",
+  "El año en blanco": "Год на скамейке запасных",
+  "⏸️ The blank year": "⏸️ Год на скамейке запасных",
+  "⏸️ El año en blanco": "⏸️ Год на скамейке запасных",
+  "The blank year": "Год на скамейке запасных",
+  "Adventure outside F1": "Приключение за пределами Ф1",
+  "Aventura fuera de la F1": "Приключение за пределами Ф1",
+  "Return to F1": "Возвращение в Ф1",
+  "Volver a la F1": "Возвращение в Ф1",
+  "A seat opens up": "Освободилось место боевого пилота",
+  "Se abre un asiento": "Освободилось место боевого пилота",
+  "Free agent market": "Рынок свободных агентов",
+  "Mercado de agentes libres": "Рынок свободных агентов",
+  "Promotion to race driver": "Повышение до боевого пилота",
+  "Promoción a piloto titular": "Повышение до боевого пилота",
+  "Stay as reserve driver": "Остаться резервным пилотом",
+  "Seguir como probador": "Остаться резервным пилотом",
+  "Looking for a team": "В поиске команды",
+  "Buscando equipo": "В поиске команды",
+  " These doors are still open.": " Эти двери по-прежнему открыты.",
+  " Estas puertas siguen abiertas.": " Estas puertas siguen abiertas.",
+  "Silly season ": "Глупый сезон ",
+  "Mercado de fichajes ": "Рынок контрактов ",
+  "Silly season: the contracts are on the table.": "Глупый сезон: контракты на столе.",
+  "End of the road in F1": "Конец пути в Ф1",
+  "Fin del camino en la F1": "Конец пути в Ф1",
+  "The doors to F1 have closed for now. You can make a career in other championships or hang up your helmet by your own choice.": "Двери в Ф1 пока закрыты. Вы можете продолжить карьеру в других гоночных сериях или повесить шлем на гвоздь.",
+  "🏁 Technical revolution": "🏁 Техническая революция",
+  "🏁 Revolución técnica": "🏁 Техническая революция",
+  "W": "ПОБ",
+  "V": "ПОБ",
+  "Pod": "ПОД",
+  "Champ.": "ЧЕМП.",
+  "Camp.": "ЧЕМП.",
+  "🏠 At home": "🏠 Дома",
+  "🏠 En casa": "🏠 Дома",
+  "F1 Reserve": "Резервист Ф1",
+  "Probador F1": "Тест-пилот Ф1",
+  "Adventure": "Приключение",
+  "Aventura": "Приключение",
+  "best": "лучший",
+  "mejor": "лучший",
+  "Not racing": "Без гонок",
+  "Sin correr": "Без гонок",
+  "sub GPs": "ГП на замене",
+  "GP sustituto": "ГП на замене",
+  "points": "очков",
+  "puntos": "очков",
+  "🏁 Your career year by year": "🏁 Твоя карьера год за годом",
+  "🏁 Tu carrera año a año": "🏁 Твоя карьера год за годом",
+  "Best OVR": "Лучший OVR",
+  "Mejor OVR": "Лучший OVR",
+  "adventure": "приключение",
+  "aventura": "приключение",
+  "Loading…": "Загрузка…",
+  "Cargando…": "Загрузка…",
+  "☕ Support the game": "☕ Поддержать проект",
+  "☕ Apoyar el juego": "☕ Поддержать проект",
+  "Thanks for keeping this running. 🧡": "Спасибо за поддержку проекта! 🧡",
+  "Gracias por mantener esto en marcha. 🧡": "Спасибо за поддержку проекта! 🧡",
+  "🌍 All-time": "🌍 Все времена",
+  "🌍 Global": "🌍 Все времена",
+  "🕰️ By era": "🕰️ По эпохам",
+  "🕰️ Por época": "🕰️ По эпохам",
+  "📅 Challenge": "📅 Испытание",
+  "📅 Reto": "📅 Испытание",
+  "🧑‍💼 Boss": "🧑‍💼 Руководитель",
+  "🧑‍💼 Jefe": "🧑‍💼 Руководитель",
+  "Classic": "Классика",
+  "Clásico": "Классика",
+  "Can't reach the online ranking — showing your careers on this device.": "Нет связи с онлайн-рейтингом — показаны локальные результаты этого устройства.",
+  "Sin conexión con el ranking online — mostrando tus carreras de este dispositivo.": "Нет связи с онлайн-рейтингом — показаны локальные результаты этого устройства.",
+  "No scores yet. Finish a career and open the table!": "Пока нет результатов. Завершите карьеру, чтобы открыть таблицу!",
+  "Aún no hay puntuaciones. ¡Termina una carrera y estrena la tabla!": "Пока нет результатов. Завершите карьеру, чтобы открыть таблицу!",
+  "🌎 Adventures outside F1": "🌎 Приключения за пределами Ф1",
+  "🌎 Aventuras fuera de la F1": "🌎 Приключения за пределами Ф1",
+  "👑 TRIPLE CROWN · Monaco + Indy 500 + Le Mans": "👑 ТРОЙНАЯ КОРОНА · Монако + Инди 500 + Ле-Ман",
+  "👑 TRIPLE CORONA · Mónaco + Indy 500 + Le Mans": "👑 ТРОЙНАЯ КОРОНА · Монако + Инди 500 + Ле-Ман",
+  "No marquee wins": "Без легендарных побед",
+  "Sin victorias míticas": "Без легендарных побед",
+  "series title": "титул в серии",
+  "series titles": "титулов в серии",
+  "título de serie": "титул в серии",
+  "títulos de serie": "титулов в серии",
+  "🏛️ All-time F1 title table · ": "🏛️ Исторический зал славы Ф1 · ",
+  "🏛️ Palmarés histórico de la F1 · ": "🏛️ Исторический зал славы Ф1 · ",
+  " The last time was you.": " В прошлый раз это были вы.",
+  " La última vez fuiste tú.": " В прошлый раз это были вы.",
+  "More years on the way 🏗️": "Остальные годы в разработке 🏗️",
+  "Más años en camino 🏗️": "Остальные годы в разработке 🏗️",
+  "The Beast": "Зверь",
+  "La Bestia": "Зверь",
+  "Start the test": "Начать испытание",
+  "Empezar la prueba": "Начать испытание",
+  "Swipe for more challenges →": "Листайте для других испытаний →",
+  "Desliza para ver más retos →": "Листайте для других испытаний →",
+  "More challenges on the way 🏗️": "Новые испытания в разработке 🏗️",
+  "Más retos en camino 🏗️": "Новые испытания в разработке 🏗️",
+  "tomorrow": "завтра",
+  "mañana": "завтра",
+  "Tomorrow!": "Завтра!",
+  "¡Mañana!": "Завтра!",
+  "🔒 You only": "🔒 Только вы",
+  "🔒 Solo tú": "🔒 Только вы",
+  "New!": "Новинка!",
+  "¡Nuevo!": "Новинка!",
+  "Install": "Установить",
+  "Instalar": "Установить",
+  "Five things before you start": "Пять вещей перед стартом",
+  "A driver's stars are his level and his ceiling.": "Звёзды гонщика показывают его текущий уровень и потенциал.",
+  "The gold ones are what he is today. The blue ones, how far he can still go. The dim ones, what he'll never reach.": "Золотые — текущий уровень. Синие — потенциал развития. Серые — недостижимый предел.",
+  "Deciding who sits there is deciding your No.1, and the other one knows it.": "Выбор первого номера определяет лидера команды, и напарник это понимает.",
+  "Miss it twice in a row and you're out.": "Два провала подряд — и вас уволят.",
+  "From karting": "С картинга",
+  "You choose who you are": "Выбери свою судьбу",
+  "Your number, your flag and how you drive. The track decides the rest.": "Твой номер, твой флаг и стиль пилотажа. Остальное решит трасса.",
+  "🔁 Replay the challenge": "🔁 Повторить испытание",
+  "🔁 Repetir el reto": "🔁 Повторить испытание",
+  "🔁 Same driver": "🔁 Тот же пилот",
+  "🔁 Mismo piloto": "🔁 Тот же пилот",
+  "🔁 Another spell in charge": "🔁 Ещё одна эпоха у руля",
+  "🔁 Otra etapa de jefe": "🔁 Ещё одна эпоха у руля",
+  "Una bandera roja aparece en el momento más conveniente y regala neumáticos nuevos justo a quien iba a perder.": "Красный флаг появляется в самый удобный момент и дарит свежие шины тому, кто уже проигрывал.",
+  "A red flag appears at the most convenient moment and gifts fresh tyres to whoever was about to lose.": "Красный флаг появляется в самый удобный момент и дарит свежие шины тому, кто уже проигрывал.",
+  "Dos comisarios juzgan el mismo adelantamiento con criterios diferentes el mismo día. Nadie entiende el criterio.": "Два судьи оценивают один и тот же обгон по разным критериям в один день. Никто не понимает логики.",
+  "Two stewards judge the same overtake by different criteria on the same day. Nobody understands the standard.": "Два судьи оценивают один и тот же обгон по разным критериям в один день. Никто не понимает логики.",
+  "Un toque 50-50 con un rival y los comisarios te cargan la sanción a TI. Medio paddock lo ve justo; medio, una injusticia.": "Обоюдный контакт 50-50 с соперником, но судьи вешают штраф на ВАС. Половина паддока согласна, половина возмущена.",
+  "A 50-50 clash with a rival and the stewards pin the penalty on YOU. Half the paddock calls it fair; half, an injustice.": "Обоюдный контакт 50-50 с соперником, но судьи вешают штраф на ВАС. Половина паддока согласна, половина возмущена.",
+  "The fast guy's setup": "Настройки быстрейшего",
+  "El setup del rápido": "Настройки быстрейшего",
   "Fame too soon": "Ранняя слава",
   "Fama antes de tiempo": "Ранняя слава",
   "The anonymous envelope": "Анонимный конверт",
   "El sobre anónimo": "Анонимный конверт",
-  "Serious injury": "Серьёзная травма",
-  "Lesión grave": "Серьёзная травма",
-  "Civil war": "Гражданская война",
-  "Guerra civil": "Гражданская война",
   "Overtime": "Сверхурочные",
   "Horas extra": "Сверхурочные",
-  "The demanding sponsor": "Требовательный спонсор",
-  "El patrocinador exigente": "Требовательный спонсор",
-  "Team orders": "Командная тактика",
-  "Órdenes de equipo": "Командная тактика",
   "All-or-nothing season": "Сезон ва-банк",
   "Temporada a una carta": "Сезон ва-банк",
-  "Your engineer leaves": "Твой инженер уходит",
-  "Tu ingeniero se va": "Твой инженер уходит",
-  "Rain master": "Мастер дождевых гонок",
-  "Rey de la lluvia": "Мастер дождевых гонок",
-  "The dirty trick": "Грязный приём",
-  "La jugada sucia": "Грязный приём",
-  "The press attack": "Атака прессы",
-  "Ataque de la prensa": "Атака прессы",
-  "The setup dispute": "Спор о настройках",
-  "Disputa de setup": "Спор о настройках",
-  "Obey the team": "Подчиниться команде",
-  "Obedecer al equipo": "Подчиниться команде",
-  "Front up to the press": "Выступить перед прессой",
-  "Dar la cara ante la prensa": "Выступить перед прессой",
-  "Go out anyway": "Выехать несмотря ни на что",
-  "Salir igualmente": "Выехать несмотря ни на что",
-  "Refuse": "Отказаться",
-  "Negarte": "Отказаться",
-  "Accept the offer": "Принять предложение",
-  "Aceptar la oferta": "Принять предложение",
-  "Reject the offer": "Отклонить предложение",
-  "Rechazar la oferta": "Отклонить предложение",
-  "Push to the limit": "Атаковать на пределе",
-  "Apretar al límite": "Атаковать на пределе",
-  "Play it safe": "Не рисковать",
-  "Asegurar": "Не рисковать",
-  "Demand equal status": "Требовать равного статуса",
-  "Exigir igualdad": "Требовать равного статуса",
-  "Accept the role": "Принять свою роль",
-  "Aceptar el rol": "Принять свою роль",
-  "Keep quiet": "Промолчать",
-  "Guardar silencio": "Промолчать",
-  "Speak out": "Высказаться открыто",
-  "Hablar claro": "Высказаться открыто",
-  "Sign contract": "Подписать контракт",
-  "Firmar contrato": "Подписать контракт",
-  "Negotiate harder": "Настаивать на лучших условиях",
-  "Apretar en la negociación": "Настаивать на лучших условиях",
-  "HALL OF FAME": "ЗАЛ СЛАВЫ",
-  "SALÓN DE LA FAMA": "ЗАЛ СЛАВЫ",
-  "LEGEND OF F1": "ЛЕГЕНДА ФОРМУЛЫ-1",
-  "LEYENDA DE LA F1": "ЛЕГЕНДА ФОРМУЛЫ-1",
-  "ONE OF THE GREATS": "ОДИН ИЗ ВЕЛИЧАЙШИХ",
-  "UNO DE LOS GRANDES": "ОДИН ИЗ ВЕЛИЧАЙШИХ",
-  "WORLD CHAMPION": "ЧЕМПИОН МИРА",
-  "CAMPEÓN DEL MUNDO": "ЧЕМПИОН МИРА",
-  "RESPECTED VETERAN": "УВАЖАЕМЫЙ ВЕТЕРАН",
-  "VETERANO RESPETADO": "УВАЖАЕМЫЙ ВЕТЕРАН",
-  "JOURNEYMAN": "ОПЫТНЫЙ ПИЛОТ",
-  "PILOTO EXPERIMENTADO": "ОПЫТНЫЙ ПИЛОТ"
+  "Cameras in the garage": "Камеры в боксах",
+  "Cámaras en el box": "Камеры в боксах",
+  "The Le Mans temptation": "Искушение Ле-Маном",
+  "La tentación de Le Mans": "Искушение Ле-Маном",
+  "The performance guru": "Гуру скорости",
+  "El gurú del rendimiento": "Гуру скорости",
+  "Salary or car": "Зарплата или болид",
+  "Sueldo o coche": "Зарплата или болид",
+  "The leak": "Утечка информации",
+  "La filtración": "Утечка информации",
+  "The non-aggression pact": "Пакт о ненападении",
+  "El pacto de no agresión": "Пакт о ненападении",
+  "A drivers' pact": "Пакт между пилотами",
+  "Pacto entre pilotos": "Пакт между пилотами",
+  "The Monaco night": "Ночь в Монако",
+  "La noche de Mónaco": "Ночь в Монако",
+  "Fight for No.1": "Битва за статус первого номера",
+  "Guerra por el Nº1": "Битва за статус первого номера",
+  "The wonderkid rookie": "Вундеркинд",
+  "El novato prodigio": "Вундеркинд",
+  "Retirement rumours": "Слухи об уходе",
+  "Rumores de retirada": "Слухи об уходе",
+  "The back gives out": "Спина отказывает",
+  "La espalda dice basta": "Спина отказывает",
+  "The comfortable offer": "Удобное предложение",
+  "La oferta cómoda": "Удобное предложение",
+  "Race control's call": "Решение дирекции гонки",
+  "La decisión del muro de control": "Решение дирекции гонки",
+  "The title showdown": "Решающая битва за титул",
+  "El duelo por el título": "Решающая битва за титул",
+  "Hot blood": "Горячая кровь",
+  "Sangre caliente": "Горячая кровь",
+  "Pole at any cost": "Поул любой ценой",
+  "La pole a cualquier precio": "Поул любой ценой",
+  "The grey-area invention": "Изобретение из серой зоны",
+  "El invento de la zona gris": "Изобретение из серой зоны",
+  "War to the death with your teammate": "Война не на жизнь, а на смерть с напарником",
+  "Guerra a muerte con tu compañero": "Война не на жизнь, а на смерть с напарником",
+  "The rain gamble": "Дождевая лотерея",
+  "La apuesta de la lluvia": "Дождевая лотерея",
+  "Bet on the new regulations": "Ставка на новый регламент",
+  "Apostar por el reglamento nuevo": "Ставка на новый регламент",
+  "The fast pupil": "Быстрый ученик",
+  "El pupilo veloz": "Быстрый ученик",
+  "Break the contract": "Разорвать контракт",
+  "Romper el contrato": "Разорвать контракт",
+  "The podium statement": "Заявление на подиуме",
+  "El gesto en el podio": "Заявление на подиуме",
+  "The call of the Dakar": "Зов Дакара",
+  "La llamada del Dakar": "Зов Дакара",
+  "Hold position": "Удерживай позицию",
+  "Mantén la posición": "Удерживай позицию",
+  "Unfinished business": "Незаконченные дела",
+  "Cuentas pendientes": "Незаконченные дела",
+  "On the ragged edge": "На волосок от пропасти",
+  "Al filo del abismo": "На волосок от пропасти",
+  "All or nothing": "Пан или пропал",
+  "A tumba abierta": "Пан или пропал",
+  "The gut call": "Чутьё гонщика",
+  "La intuición": "Чутьё гонщика",
+  "The setup": "Настройки болида",
+  "El reglaje": "Настройки болида",
+  "You've done your homework": "Трасса изучена до дыр",
+  "Te has estudiado el circuito": "Трасса изучена до дыр",
+  "The safe pair of hands": "Надёжные руки",
+  "El fiable": "Надёжные руки",
+  "Cool head in chaos": "Холодная голова в хаосе",
+  "Cabeza fría en el caos": "Холодная голова в хаосе",
+  "The tap": "Контакт",
+  "El toque": "Контакт",
+  "The culprit": "Виновник аварии",
+  "El culpable": "Виновник аварии",
+  "The veto": "Право вето",
+  "El veto": "Право вето",
+  "Signing the enemy": "Контракт с заклятым врагом",
+  "El fichaje del enemigo": "Контракт с заклятым врагом",
+  "The record question": "Вопрос о рекорде",
+  "La pregunta del récord": "Вопрос о рекорде",
+  "Milk the car": "Выжать все соки из машины",
+  "Ordeñar el coche": "Выжать все соки из машины",
+  "Far from home": "Вдали от дома",
+  "Lejos de casa": "Вдали от дома",
+  "The legend's disdain": "Презрение легенды",
+  "El desprecio de la leyenda": "Презрение легенды",
+  "The weight of guilt": "Груз вины",
+  "El peso de la culpa": "Груз вины",
+  "Hollywood in the paddock": "Голливуд в паддоке",
+  "Hollywood en el paddock": "Голливуд в паддоке",
+  "The year the world stopped": "Год, когда мир остановился",
+  "El año que el mundo se detuvo": "Год, когда мир остановился",
+  "The pit wall marks the wrong man": "Мостик следит не за тем соперником",
+  "El muro se equivoca de rival": "Мостик следит не за тем соперником",
+  "A one-race ban": "Дисквалификация на один Гран-при",
+  "La sanción de un Gran Premio": "Дисквалификация на один Гран-при",
+  "The drivers' revolt": "Бунт гонщиков",
+  "La rebelión de los pilotos": "Бунт гонщиков",
+  "Retire on top?": "Уйти на пике славы?",
+  "¿Retirarte en la cima?": "Уйти на пике славы?",
+  "The rulebook gamble": "Ставка на новый свод правил",
+  "La apuesta del reglamento": "Ставка на новый свод правил",
+  "The year of truth": "Момент истины",
+  "El año de la verdad": "Момент истины",
+  "The rulebook that buries you": "Регламент, который тянет на дно",
+  "El reglamento que te hunde": "Регламент, который тянет на дно",
+  "They want you tied down": "Тебя хотят связать по рукам",
+  "Te quieren atar": "Тебя хотят связать по рукам",
+  "The one who found you and the one who wants you": "Тот, кто открыл тебя, и тот, кто хочет тебя подписать",
+  "El que te descubrió y el que te quiere": "Тот, кто открыл тебя, и тот, кто хочет тебя подписать",
+  "The strange road": "Нестандартный путь",
+  "El camino raro": "Нестандартный путь",
+  "It's raining and there are no wets": "Дождь стеной, а дождевой резины нет",
+  "Llueve y no hay gomas de agua": "Дождь стеной, а дождевой резины нет",
+  "The licence in doubt": "Суперлицензия под вопросом",
+  "La licencia en duda": "Суперлицензия под вопросом",
+  "The tyres don't forgive": "Шины не прощают ошибок",
+  "Las gomas no perdonan": "Шины не прощают ошибок",
+  "You've collided": "Столкновение",
+  "Os habéis tocado": "Столкновение",
+  "The tyres won't last": "Резина не выдержит",
+  "La goma no llega": "Резина не выдержит",
+  "The other side of the world": "На другом краю света",
+  "El otro lado del mundo": "На другом краю света",
+  "From the back": "Прорыв с последнего ряда",
+  "Desde el fondo": "Прорыв с последнего ряда",
+  "The tow": "Слипстрим",
+  "El rebufo": "Слипстрим",
+  "The briefcase": "Чемодан с деньгами",
+  "El maletín": "Чемодан с деньгами",
+  "Time to reinvent yourself": "Время переизобрести себя",
+  "Es hora de reinventarse": "Время переизобрести себя",
+  "The board shops for your successor": "Совет ищет тебе замену",
+  "El consejo busca sustituto": "Совет ищет тебе замену",
+  "Official No.1 or open war?": "Официальный первый номер или открытая война?",
+  "¿Nº1 oficial o guerra abierta?": "Официальный первый номер или открытая война?",
+  "The manufacturer wants to buy": "Автоконцерн хочет выкупить команду",
+  "El fabricante quiere comprar": "Автоконцерн хочет выкупить команду",
+  "The engine supplier squeezes": "Моторист выкручивает руки",
+  "El pulso del motorista": "Моторист выкручивает руки",
+  "They come for your star": "Охота за твоей главной звездой",
+  "Vienen a por tu estrella": "Охота за твоей главной звездой",
+  "Two roosters, one yard": "Два медведя в одной берлоге",
+  "Dos gallos en el corral": "Два медведя в одной берлоге",
+  "Practice said otherwise": "Свободные заезды сулили другое",
+  "Los libres decían otra cosa": "Свободные заезды сулили другое",
+  "The Sunday you didn't plan for": "Воскресенье пошло не по плану",
+  "El domingo que no esperabais": "Воскресенье пошло не по плану",
+  "The nose on lap one": "Сломанное антикрыло на первом круге",
+  "El morro en la primera vuelta": "Сломанное антикрыло на первом круге",
+  "Saturday or Sunday": "Суббота или воскресенье",
+  "Sábado o domingo": "Суббота или воскресенье",
+  "The safety car is out": "Машина безопасности на трассе",
+  "Sale el coche de seguridad": "Машина безопасности на трассе",
+  "The pit wall and the tyres": "Командный мостик и шины",
+  "El muro y la goma": "Командный мостик и шины",
+  "The team is up for sale": "Команда выставлена на продажу",
+  "El equipo está en venta": "Команда выставлена на продажу",
+  "They want to buy you after you won": "Тебя хотят перекупить после победы",
+  "Te quieren comprar después de ganar": "Тебя хотят перекупить после победы",
+  "Races are won from the pit wall": "Гонки выигрываются с пит-уолла",
+  "La carrera se gana desde el muro": "Гонки выигрываются с пит-уолла",
+  "Forty degrees": "Жара за сорок",
+  "Cuarenta grados": "Жара за сорок",
+  "Bring your people": "Приведи свою команду инженеров",
+  "Trae a tu gente": "Приведи свою команду инженеров",
+  "The boss becomes the story": "Босс становится главной новостью",
+  "El jefe se convierte en la noticia": "Босс становится главной новостью",
+  "The sponsor arrives on the eve": "Спонсор на пороге перед гонкой",
+  "El patrocinador llega la víspera": "Спонсор на пороге перед гонкой",
+  "Bankrolled by the rival": "Финансирование от конкурента",
+  "Financiarse con el rival": "Финансирование от конкурента",
+  "The rule or the freedom": "Регламент или полная свобода",
+  "La regla o la libertad": "Регламент или полная свобода",
+  "His home race": "Домашняя гонка",
+  "Su carrera de casa": "Домашняя гонка",
+  "The driver or the car": "Пилот или машина",
+  "El piloto o el coche": "Пилот или машина",
+  "The red flag": "Красный флаг",
+  "La bandera roja": "Красный флаг",
+  "The radio turns on you": "Радиосвязь против тебя",
+  "La radio se vuelve contra ti": "Радиосвязь против тебя",
+  "The impossible stop": "Невозможный пит-стоп",
+  "La parada imposible": "Невозможный пит-стоп",
+  "Fast on Saturday, slow on Sunday": "Быстры в субботу, медленны в воскресенье",
+  "Rápidos el sábado, lentos el domingo": "Быстры в субботу, медленны в воскресенье",
+  "The fragile rival": "Уязвимый соперник",
+  "El rival frágil": "Уязвимый соперник",
+  "The new parts won't cover two cars": "Новинок не хватит на два болида",
+  "Las piezas nuevas no dan para dos": "Новинок не хватит на два болида",
+  "The revolution": "Революция в регламенте",
+  "La revolución": "Революция в регламенте",
+  "The brain needs to stop": "Гению нужен отпуск",
+  "El cerebro necesita parar": "Гению нужен отпуск",
+  "All on one card": "Ва-банк на один болид",
+  "Todo a una carta": "Ва-банк на один болид",
+  "Best of the rest": "Лучшие из остальных",
+  "El mejor del resto": "Лучшие из остальных",
+  "Opening the garage": "Распахнуть двери боксов",
+  "Abrir el box": "Распахнуть двери боксов",
+  "The folder": "Конверт с деньгами",
+  "El sobre": "Конверт с деньгами",
+  "The support staff": "Инженерный штаб",
+  "El cuerpo técnico": "Инженерный штаб",
+  "Do we stop the race?": "Останавливаем гонку?",
+  "¿Paramos la carrera?": "Останавливаем гонку?",
+  "August's casualty": "Августовская травма",
+  "El lesionado de agosto": "Августовская травма",
+  "Both are asking for the opposite": "Оба пилота требуют противоположного",
+  "Los dos piden lo contrario": "Оба пилота требуют противоположного",
+  "The order nobody says out loud": "Приказ, о котором молчат вслух",
+  "La orden que no se dice": "Приказ, о котором молчат вслух",
+  "The hearing": "Разбирательство в трибунале",
+  "El juicio": "Разбирательство в трибунале",
+  "The favour": "Услуга за услугу",
+  "El favor": "Услуга за услугу",
+  "The prize for finishing last": "Награда за последнее место",
+  "El premio de acabar último": "Награда за последнее место",
+  "The heir": "Наследник",
+  "El heredero": "Наследник",
+  "The FIA consults you": "FIA просит совета",
+  "La FIA te consulta": "FIA просит совета",
+  "The old guard": "Старая гвардия",
+  "La vieja guardia": "Старая гвардия",
+  "The new headquarters": "Новая база команды",
+  "La sede nueva": "Новая база команды",
+  "You no longer recognise the paddock": "Паддок уже не узнать",
+  "Ya no reconoces el paddock": "Паддок уже не узнать",
+  "The owner retires": "Владелец уходит на пенсию",
+  "El dueño se jubila": "Владелец уходит на пенсию",
+  "Your name on the door": "Твоё имя на вывеске базы",
+  "Tu nombre en la puerta": "Твоё имя на вывеске базы",
+  "The factory is running on empty": "Завод на пределе возможностей",
+  "La fábrica está cansada": "Завод на пределе возможностей",
+  "The succession plan": "План преемственности",
+  "El plan de sucesión": "План преемственности",
+  "How far can you shave it?": "До какого предела можно снижать вес?",
+  "¿Hasta dónde se puede recortar?": "До какого предела можно снижать вес?",
+  "The engineer nobody can stand": "Инженер с невыносимым характером",
+  "El ingeniero que nadie soporta": "Инженер с невыносимым характером",
+  "The enemy is inside": "Враг внутри команды",
+  "El enemigo está dentro": "Враг внутри команды",
+  "The wrong interview": "Интервью, о котором пожалеешь",
+  "La entrevista equivocada": "Интервью, о котором пожалеешь",
+  "Where you pay for it": "Где за всё приходится платить",
+  "Dónde se paga": "Где за всё приходится платить",
+  "Race control stops the Grand Prix for rain at half distance and takes the order from the lap before: it HANDS you the win. You take it with an asterisk. 🏆": "Дирекция гонки останавливает Гран-при из-за дождя на экваторе дистанции и фиксирует результаты по предыдущему кругу: вам ДАРЯТ победу со звёздочкой. 🏆",
+  "Dirección de carrera para el Gran Premio por la lluvia a mitad de distancia y da por buena la vuelta anterior: te REGALA la victoria. Te la llevas con asterisco. 🏆": "Дирекция гонки останавливает Гран-при из-за дождя на экваторе дистанции и фиксирует результаты по предыдущему кругу: вам ДАРЯТ победу со звёздочкой. 🏆",
+  "Ask to run on the old tyres from the last test": "Попросить выехать на старых шинах с прошлых тестов",
+  "Pedir rodar con las gomas viejas del último test": "Попросить выехать на старых шинах с прошлых тестов",
+  "Go in secret": "Поехать втайне ото всех",
+  "Ir a escondidas": "Поехать втайне ото всех",
+  "Tell your boss": "Рассказать руководителю",
+  "Contárselo a tu jefe": "Рассказать руководителю",
+  "Sign with him": "Подписать с ним контракт",
+  "Firmar con él": "Подписать с ним контракт",
+  "Stick with your family": "Остаться с семьёй",
+  "Seguir con tu familia": "Остаться с семьёй",
+  "Normal winter": "Обычная зима",
+  "Invierno clásico": "Обычная зима",
+  "Copy his setup": "Скопировать его настройки",
+  "Copiar su setup": "Скопировать его настройки",
+  "My own way": "Идти своим путём",
+  "Mi propio camino": "Идти своим путём",
+  "Take the deal": "Принять сделку",
+  "Aceptar la campaña": "Принять сделку",
+  "Turn it down": "Отказаться",
+  "Rechazarla": "Отказаться",
+  "Use the data": "Использовать телеметрию",
+  "Usar los datos": "Использовать телеметрию",
+  "Report it": "Сообщить властям",
+  "Denunciarlo": "Сообщить властям",
+  "Race on painkillers": "Выступать на обезболивающих",
+  "Correr infiltrado": "Выступать на обезболивающих",
+  "Go under the knife": "Лечь на операцию",
+  "Pasar por quirófano": "Лечь на операцию",
+  "Hit back in the press": "Ответить через прессу",
+  "Contraatacar en prensa": "Ответить через прессу",
+  "Bite your tongue": "Прикусить язык",
+  "Morderte la lengua": "Прикусить язык",
+  "Put in the hours": "Работать сверхурочно",
+  "Echar horas": "Работать сверхурочно",
+  "Prioritise rest": "Выбрать отдых",
+  "Priorizar descanso": "Выбрать отдых",
+  "Sign": "Подписать",
+  "Firmar": "Подписать",
+  "Decline": "Отклонить",
+  "Rechazar": "Отклонить",
+  "Declinar": "Отклонить",
+  "Obey": "Подчиниться",
+  "Obedecer": "Подчиниться",
+  "Ignore the order": "Проигнорировать приказ",
+  "Ignorar la orden": "Проигнорировать приказ",
+  "Go all in": "Пойти ва-банк",
+  "Apostar fuerte": "Пойти ва-банк",
+  "Safe evolution": "Надёжная эволюция",
+  "Evolución segura": "Надёжная эволюция",
+  "Stay": "Остаться",
+  "Quedarte": "Остаться",
+  "Lights, camera": "Камера, мотор!",
+  "Luces, cámara": "Камера, мотор!",
+  "Closed doors": "Закрытые двери",
+  "Puerta cerrada": "Закрытые двери",
+  "Race it": "Принять участие в гонке",
+  "Correrla": "Принять участие в гонке",
+  "Focus on F1": "Сосредоточиться на Ф1",
+  "Centrarte en la F1": "Сосредоточиться на Ф1",
+  "Live on the sim": "Днями жить на симуляторе",
+  "Vivir en el simulador": "Днями жить на симуляторе",
+  "Real track only": "Только реальная трасса",
+  "Solo pista real": "Только реальная трасса",
+  "Keep your salary": "Сохранить зарплату",
+  "Mantener tu sueldo": "Сохранить зарплату",
+  "Give up money for aero": "Отдать часть денег на аэродинамику",
+  "Ceder dinero para aero": "Отдать часть денег на аэродинамику",
+  "Investigate internally": "Провести внутреннее расследование",
+  "Investigar por dentro": "Провести внутреннее расследование",
+  "Brush it off": "Спустить на тормозах",
+  "Quitarle hierro": "Спустить на тормозах",
+  "Respect the pact": "Соблюдать договорённость",
+  "Respetar el pacto": "Соблюдать договорённость",
+  "Break it": "Нарушить её",
+  "Romperlo": "Нарушить её",
+  "Drive through the pain": "Терпеть боль",
+  "Apretar los dientes": "Терпеть боль",
+  "Protect your health": "Беречь здоровье",
+  "Cuidarte": "Беречь здоровье",
+  "Take the money and run": "Взять деньги и бежать",
+  "Coger el dinero y correr": "Взять деньги и бежать",
+  "Fight to the end": "Бороться до последнего",
+  "Pelear hasta el final": "Бороться до последнего",
+  "Hold the lead": "Удержать лидерство",
+  "Mantener el liderato": "Удержать лидерство",
+  "Attack for victory": "Атаковать ради победы",
+  "Atacar por la victoria": "Атаковать ради победы",
+  "Take the penalty": "Принять штраф",
+  "Cumplir la sanción": "Принять штраф",
+  "Appeal": "Подать апелляцию",
+  "Apelar": "Подать апелляцию",
+  "Keep the secret": "Сохранить тайну",
+  "Guardar el secreto": "Сохранить тайну",
+  "Blow the whistle": "Вскрыть правду",
+  "Tirar de la manta": "Вскрыть правду",
+  "Retire as champion": "Уйти непобеждённым чемпионом",
+  "Retirarte como campeón": "Уйти непобеждённым чемпионом",
+  "Defend the crown": "Защищать титул",
+  "Defender la corona": "Защищать титул"
 };
-
 
 window.ruTranslate = function(str) {
   if (!str || typeof str !== "string") return str;
   if (window.RU_DICT[str]) return window.RU_DICT[str];
 
-  // Dynamic patterns
-  let m;
-  // Driver No.X
+  var m;
+
+  // 1. Numbers, deals and roles
   if ((m = str.match(/^Driver No\.(\d+)$/i)) || (m = str.match(/^Piloto Nº(\d+)$/i))) {
     return "Пилот №" + m[1];
   }
-  // X-season deal
-  if ((m = str.match(/^(\d+)-season deal$/i))) {
-    const n = parseInt(m[1], 10);
-    const w = (n === 1) ? "сезон" : (n >= 2 && n <= 4) ? "сезона" : "сезонов";
+  if ((m = str.match(/^(\d+)-season deal$/i)) || (m = str.match(/^Contrato de (\d+) temporada(s)?$/i))) {
+    var n = parseInt(m[1], 10);
+    var w = (n === 1) ? "сезон" : (n >= 2 && n <= 4) ? "сезона" : "сезонов";
     return "Контракт на " + n + " " + w;
   }
-  // Contrato de X temporadas
-  if ((m = str.match(/^Contrato de (\d+) temporada(s)?$/i))) {
-    const n = parseInt(m[1], 10);
-    const w = (n === 1) ? "сезон" : (n >= 2 && n <= 4) ? "сезона" : "сезонов";
-    return "Контракт на " + n + " " + w;
-  }
-  // You renew with X: Y more seasons in charge.
   if ((m = str.match(/^📄 You renew with (.*?): (\d+) more season(s)? in charge\.$/i))) {
-    const n = parseInt(m[2], 10);
-    const w = (n === 1) ? "сезон" : (n >= 2 && n <= 4) ? "сезона" : "сезонов";
+    var n = parseInt(m[2], 10);
+    var w = (n === 1) ? "сезон" : (n >= 2 && n <= 4) ? "сезона" : "сезонов";
     return "📄 Вы продлили контракт с " + m[1] + ": ещё " + n + " " + w + " у руля команды.";
   }
-  // You miss X GP
+  if ((m = str.match(/^In charge: (\d+) – (\d+) · (\d+) season(s)? · (\d+) team(s)?$/i))) {
+    var yrs = parseInt(m[3], 10);
+    var yw = (yrs === 1) ? "сезон" : (yrs >= 2 && yrs <= 4) ? "сезона" : "сезонов";
+    var tms = parseInt(m[5], 10);
+    var tw = (tms === 1) ? "команда" : (tms >= 2 && tms <= 4) ? "команды" : "команд";
+    return "У руля: " + m[1] + " – " + m[2] + " · " + yrs + " " + yw + " · " + tms + " " + tw;
+  }
+  if ((m = str.match(/^Career: (\d+) – (\d+) · Retired at (\d+)$/i)) || (m = str.match(/^Carreira: (\d+) – (\d+) · Aposentado aos (\d+) anos$/i))) {
+    var aN = parseInt(m[3], 10);
+    var aW = (aN % 10 === 1 && aN % 100 !== 11) ? "год" : ([2,3,4].includes(aN % 10) && ![12,13,14].includes(aN % 100)) ? "года" : "лет";
+    return "Карьера: " + m[1] + " – " + m[2] + " · Завершил карьеру в " + aN + " " + aW;
+  }
+  if ((m = str.match(/^Career (\d+)–(\d+)$/i))) {
+    return "Карьера " + m[1] + "–" + m[2];
+  }
+
+  // 2. Team Principal & Driver signings / leaves
+  if ((m = str.match(/^🧢 (.*?) is your new reserve driver\.$/i))) {
+    return "🧢 " + m[1] + " — ваш новый резервный гонщик.";
+  }
+  if ((m = str.match(/^✍️ (.*?) signs with (.*?)\.$/i))) {
+    return "✍️ " + m[1] + " подписывает контракт с " + m[2] + ".";
+  }
+  if ((m = str.match(/^✍️ Signing: (.*?) leaves (.*?) and races for you in (.*?)\.$/i))) {
+    return "✍️ Трансфер: " + m[1] + " уходит из " + m[2] + " и будет выступать за вас в " + m[3] + ".";
+  }
+  if ((m = str.match(/^🚪 (.*?) leaves with his severance and signs for (.*?)\.$/i))) {
+    return "🚪 " + m[1] + " уходит с компенсацией и подписывает контракт с " + m[2] + ".";
+  }
+  if ((m = str.match(/^🚪 (.*?) leaves with his severance\.$/i))) {
+    return "🚪 " + m[1] + " покидает команду с выплатой компенсации.";
+  }
+  if ((m = str.match(/^👋 (.*?) keeps his word and hangs up his helmet\.$/i))) {
+    return "👋 " + m[1] + " держит слово и вешает шлем на гвоздь.";
+  }
+  if ((m = str.match(/^👋 (.*?) hangs up his helmet and leaves the grid\.$/i))) {
+    return "👋 " + m[1] + " вешает шлем на гвоздь и покидает стартовую решётку.";
+  }
+  if ((m = str.match(/^👋 Hanging up their helmets: (.*?)\.$/i))) {
+    return "👋 Вешают шлем на гвоздь: " + m[1] + ".";
+  }
+
+  // 3. Drought statistics
+  if ((m = str.match(/^(.*?) haven't won the Constructors' Championship since (\d+): (\d+) years\.$/i))) {
+    return m[1] + " не выигрывали Кубок конструкторов с " + m[2] + " года (" + m[3] + " лет).";
+  }
+  if ((m = str.match(/^(.*?) haven't won the Drivers' Championship since (\d+): (\d+) years\.$/i))) {
+    return m[1] + " не выигрывали личный зачёт с " + m[2] + " года (" + m[3] + " лет).";
+  }
+  if ((m = str.match(/^ The last time was (.*?)\.$/i))) {
+    return " В прошлый раз это был " + m[1] + ".";
+  }
+  if ((m = str.match(/^Challenge (.*?) · (.*?)$/i))) {
+    return "Испытание " + m[1] + " · " + m[2];
+  }
+  if ((m = str.match(/^Next: (.*?)( · .*)? 🏗️$/i))) {
+    return "Следующее: " + m[1] + (m[2] || "") + " 🏗️";
+  }
+  if ((m = str.match(/^in (\d+) days$/i)) || (m = str.match(/^In (\d+) days$/i))) {
+    return "через " + m[1] + " дн.";
+  }
+  if ((m = str.match(/^today at (.*?)$/i))) {
+    return "сегодня в " + m[1];
+  }
+
+  // 4. In-season events
+  if ((m = str.match(/^🔥 An impossible around-the-outside pass at (.*?) that takes your breath away\.$/i))) {
+    return "🔥 Невероятный обгон по внешней траектории на Гран-при " + m[1] + ", от которого захватывает дух.";
+  }
+  if ((m = str.match(/^🎯 (\d+) races in a row without a single mistake: the paddock is stunned\.$/i))) {
+    return "🎯 " + m[1] + " гонок подряд без единой ошибки: паддок поражён вашей стабильностью.";
+  }
+  if ((m = str.match(/^🧊 Ice-cold under pressure on the last lap at (.*?)\.$/i))) {
+    return "🧊 Хладнокровие под прессингом на последнем круге Гран-при " + m[1] + ".";
+  }
+  if ((m = str.match(/^🤝 A cold war with (.*?) inside the garage\.$/i))) {
+    return "🤝 Холодная война с " + m[1] + " внутри боксов команды.";
+  }
+  if ((m = str.match(/^🏁 A charge from P(\d+) at (.*?): one of those you remember at the end of the year\.$/i))) {
+    return "🏁 Прорыв с P" + m[1] + " на Гран-при " + m[2] + ": такие гонки вспоминают в конце сезона.";
+  }
+  if ((m = str.match(/^🏎️ Your around-the-outside move at turn 1 of (.*?) goes around the world\.$/i))) {
+    return "🏎️ Ваш манёвр по внешке в первом повороте Гран-при " + m[1] + " облетел весь мир.";
+  }
+  if ((m = str.match(/^🔌 A reliability failure leaves you pointless at a (.*?) you were dominating\.$/i))) {
+    return "🔌 Отказ техники лишает вас очков на Гран-при " + m[1] + ", где вы безоговорочно лидировали.";
+  }
+  if ((m = str.match(/^💬 A former champion names you the best on track this weekend\.$/i))) {
+    return "💬 Экс-чемпион мира назвал вас лучшим на трассе в этот уикенд.";
+  }
+  if ((m = str.match(/^📸 Front page of the sports press after a perfect Sunday\.$/i))) {
+    return "📸 Первая полоса спортивных газет после безупречного воскресенья.";
+  }
+  if ((m = str.match(/^🏆 You dominate the (.*?) weekend from start to finish\.$/i))) {
+    return "🏆 Вы доминируете на этапе в " + m[1] + " от старта до финиша.";
+  }
+  if ((m = str.match(/^📈 A test with a bigger team goes better than expected\.$/i))) {
+    return "📈 Тесты в топ-команде прошли гораздо лучше ожиданий.";
+  }
+  if ((m = str.match(/^🧰 Your modest team squeezes everything from the car: you get noticed\.$/i))) {
+    return "🧰 Ваша скромная команда выжала всё из болида: вас заметили.";
+  }
+  if ((m = str.match(/^🎓 A paddock veteran takes you under his wing\.$/i))) {
+    return "🎓 Ветеран паддока взял вас под своё крыло.";
+  }
+  if ((m = str.match(/^🩺 Physical niggles mid-season\.$/i))) {
+    return "🩺 Физический дискомфорт в середине сезона.";
+  }
+  if ((m = str.match(/^😷 You race (.*?) with the flu: you tough it out\.$/i))) {
+    return "😷 Вы провели гонку в " + m[1] + " с гриппом: перетерпели изо всех сил.";
+  }
+
+  // 4b. Qualifying & Wild Laps
+  if (str.includes("wild qualifying lap") || str.includes("Vuelta salvaje en la clasificación")) {
+    return "🅿️ Бешеный квалификационный круг на грани отбойника: поул с преимуществом в тысячные.";
+  }
+  if (str.includes("wild lap on Saturday's qualifying tyres") || str.includes("Vuelta salvaje con las gomas de clasificación")) {
+    return "🅿️ Бешеный круг на квалификационных субботних шинах: поул с преимуществом в тысячные.";
+  }
+  if (str.includes("wild lap in Saturday's final run") || str.includes("Vuelta salvaje en la última tanda del sábado")) {
+    return "🅿️ Бешеный круг в финальной субботней попытке: поул с преимуществом в тысячные.";
+  }
+  if (str.includes("wild lap on your one qualifying shot") || str.includes("Vuelta salvaje en tu única vuelta de clasificación")) {
+    return "🅿️ Бешеный круг на единственной попытке в квалификации: поул с преимуществом в тысячные.";
+  }
+  if (str.includes("wild Q3 lap") || str.includes("Vuelta salvaje en la Q3")) {
+    return "🅿️ Бешеный круг в третьем сегменте квалификации: поул с преимуществом в тысячные.";
+  }
+
+  // 4c. Hall of fame verdicts and quotes
+  if ((m = str.match(/^Your name is spoken alongside (.*?)\. The grandstands fill with banners bearing your name, and every kid in a kart dreams of being you\.(.*)$/i))) {
+    return "Твоё имя произносят в одном ряду с " + m[1] + ". Трибуны пестрят плакатами с твоим именем, и каждый мальчишка на картодроме мечтает быть тобой." + (m[2] ? window.ruTranslate(m[2]) : "");
+  }
+  if ((m = str.match(/^Your name is spoken alongside (.*?)\. The grandstands wear your number, and every kid in a kart dreams of being you\.(.*)$/i))) {
+    return "Твоё имя произносят в одном ряду с " + m[1] + ". Трибуны раскрашены твоим номером, и каждый мальчишка на картодроме мечтает быть тобой." + (m[2] ? window.ruTranslate(m[2]) : "");
+  }
+  if ((m = str.match(/^(\d+) world crowns\. The documentaries about your career are already in production\.(.*)$/i))) {
+    return m[1] + " чемпионских титулов. Документальные фильмы о твоей карьере уже запущены в производство." + (m[2] ? window.ruTranslate(m[2]) : "");
+  }
+  if ((m = str.match(/^(Twice|Three times) on top of the world — something within reach of very few\.(.*)$/i))) {
+    return (m[1] === "Twice" ? "Дважды" : "Трижды") + " на вершине мира — достижение, покорившееся лишь избранным." + (m[2] ? window.ruTranslate(m[2]) : "");
+  }
+  if ((m = str.match(/^You shared the throne with (.*?) \((\d+)-(\d+)\): a rivalry that will go down in history\./i))) {
+    return " Ты делил трон с " + m[1] + " (" + m[2] + "-" + m[3] + "): дуэль, которая навсегда останется в летописях автоспорта.";
+  }
+  if ((m = str.match(/^Even so, (.*?) ruled your era with (\d+) titles: you never quite dominated, but you fought them for the throne to the very end\./i))) {
+    return " Тем не менее, " + m[1] + " правил в твою эпоху с " + m[2] + " титулами: ты так и не покорил вершину безраздельно, но бился за неё до самого конца.";
+  }
+  if ((m = str.match(/^And nobody of your generation won more titles than you: you dominated your era\./i))) {
+    return " И никто в твоём поколении не выиграл больше титулов: ты безраздельно правил своей эпохой.";
+  }
+  if ((m = str.match(/^Nobody of your generation won more than you: you dominated your era… then left to find another\. What came next was someone else's time\./i))) {
+    return " Никто в твоём поколении не добился большего: ты правил своей эпохой... а затем ушёл покорять новые горизонты. Дальше настало чужое время.";
+  }
+  if ((m = str.match(/^You won (\d+) races and heard your anthem from the top of the podium\. Very few in history can say the same\./i))) {
+    return "Ты одержал " + m[1] + " побед и слушал гимн своей страны с верхней ступени подиума. Мало кто в истории может похвастаться тем же.";
+  }
+  if (str.includes("And yes: the APXGP thing was as cinematic as it sounds")) {
+    return " И да: история с APXGP была настолько кинематографичной, насколько это звучит. 🎬";
+  }
+  if ((m = str.match(/And you revived (.*?): you found them sleeping and took them back to the top\. 🛌/))) {
+    return " И ты возродил " + m[1] + ": нашёл команду спящей и вернул её на вершину славы. 🛌";
+  }
+
+  // 5. Missed races & penalties
   if ((m = str.match(/You miss (\d+) GP/i))) {
     return str.replace(/You miss (\d+) GP/i, "Вы пропускаете $1 Гран-при");
   }
-  // +X car / -X car
-  if (str.includes("car")) {
+  if ((m = str.match(/Te pierdes (\d+) GP/i))) {
+    return str.replace(/Te pierdes (\d+) GP/i, "Вы пропускаете $1 Гран-при");
+  }
+
+  // 6. Component and parameter modifications
+  if (str.includes("car") || str.includes("coche")) {
     str = str.replace(/\+(\d+(\.\d+)?)\s*car/gi, "+$1 к болиду")
              .replace(/−(\d+(\.\d+)?)\s*car/gi, "−$1 к болиду")
-             .replace(/-(\d+(\.\d+)?)\s*car/gi, "−$1 к болиду");
+             .replace(/-(\d+(\.\d+)?)\s*car/gi, "−$1 к болиду")
+             .replace(/\+(\d+(\.\d+)?)\s*coche/gi, "+$1 к болиду")
+             .replace(/−(\d+(\.\d+)?)\s*coche/gi, "−$1 к болиду")
+             .replace(/-(\d+(\.\d+)?)\s*coche/gi, "−$1 к болиду");
   }
-  // Fame and standing modifiers
-  if (str.includes("fame") || str.includes("standing")) {
+
+  if (str.includes("fame") || str.includes("fama")) {
     str = str.replace(/slight \+fame/gi, "+немного славы")
              .replace(/slight −fame/gi, "−немного славы")
              .replace(/slight -fame/gi, "−немного славы")
+             .replace(/\+fama leve/gi, "+немного славы")
+             .replace(/−fama leve/gi, "−немного славы")
+             .replace(/-fama leve/gi, "−немного славы")
              .replace(/\+fame/gi, "+слава")
              .replace(/−fame/gi, "−слава")
              .replace(/-fame/gi, "−слава")
-             .replace(/slight \+standing/gi, "+немного авторитета")
+             .replace(/\+fama/gi, "+слава")
+             .replace(/−fama/gi, "−слава")
+             .replace(/-fama/gi, "−слава");
+  }
+
+  if (str.includes("standing") || str.includes("prestige") || str.includes("prestigio")) {
+    str = str.replace(/slight \+standing/gi, "+немного авторитета")
              .replace(/slight −standing/gi, "−немного авторитета")
              .replace(/\+standing/gi, "+авторитет")
-             .replace(/−standing/gi, "−авторитет");
+             .replace(/−standing/gi, "−авторитет")
+             .replace(/\+prestige/gi, "+престиж")
+             .replace(/−prestige/gi, "−престиж")
+             .replace(/\+prestigio/gi, "+престиж")
+             .replace(/−prestigio/gi, "−престиж");
   }
+
+  if (str.includes("project") || str.includes("proyecto")) {
+    str = str.replace(/\+project/gi, "+проект")
+             .replace(/−project/gi, "−проект")
+             .replace(/\+proyecto/gi, "+проект")
+             .replace(/−proyecto/gi, "−проект");
+  }
+
   return str;
 };
