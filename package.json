@@ -1,0 +1,19 @@
+{
+  "name": "f1glory-oss",
+  "version": "1.0.0",
+  "description": "F1 Glory - Formula 1 career simulation browser game (Offline / Open Source replica)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "py": "python3 server.py"
+  },
+  "keywords": [
+    "f1",
+    "formula-1",
+    "career-simulator",
+    "f1-glory",
+    "game"
+  ],
+  "author": "Carlos Pérez (Original Game Author)",
+  "license": "MIT"
+}
