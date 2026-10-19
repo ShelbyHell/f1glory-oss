@@ -146,8 +146,11 @@
 
         <div class="ceo-market-banner">
           <div class="cmb-alert">
-            🚨 <b>Решение Совета Директоров:</b> Предыдущий специалист (<b>${firedName}</b>) отправлен в отставку.
-            Выберите нового главу подразделения для утверждения акционерами.
+            <span class="cmb-icon">🏛️</span>
+            <div>
+              <div class="cmb-title">РЕШЕНИЕ СОВЕТА ДИРЕКТОРОВ // КАДРОВАЯ РОТАЦИЯ</div>
+              <div class="cmb-sub">Специалист <b>${firedName}</b> отправлен в отставку. Выберите преемника для подписания контракта:</div>
+            </div>
           </div>
         </div>
 
@@ -228,8 +231,11 @@
 
         <div class="ceo-market-banner">
           <div class="cmb-alert">
-            Текущий пилот: <b>${currentDriver.name}</b> (OVR: ${currentDriver.ovr}, ${currentDriver.isPay ? `Рента-спонсоры: +${formatMoney(Math.abs(currentDriver.salary))}` : `Оклад: ${formatMoney(currentDriver.salary)}`}).
-            Выберите гонщика для подписания в основной состав.
+            <span class="cmb-icon">🏎️</span>
+            <div>
+              <div class="cmb-title">ТРАНСФЕРНЫЙ РЫНОК // КОКПИТ #${seatIndex}</div>
+              <div class="cmb-sub">Текущий пилот: <b>${currentDriver.name}</b> (${currentDriver.ovr} OVR, ${currentDriver.isPay ? `Рента-спонсоры: +${formatMoney(Math.abs(currentDriver.salary))}` : `Оклад: ${formatMoney(currentDriver.salary)}`}). Выберите контракт:</div>
+            </div>
           </div>
         </div>
 
@@ -610,93 +616,126 @@
     const d2 = CEO_STATE.driver2;
 
     container.innerHTML = `
-      <div class="ceo-overview-grid">
-        <!-- Car Performance Summary -->
-        <div class="ceo-card car-perf-card">
-          <div class="cc-title">🏎️ ИНДЕКС БОЛИДА F1 (ТЕМП И НАДЕЖНОСТЬ)</div>
-          <div class="car-meters">
-            <div class="cm-row">
-              <span>Скорость и прижимная сила:</span>
-              <div class="cm-bar-wrap"><div class="cm-bar" style="width: ${CEO_STATE.carPerf}%; background: #00d2be;"></div></div>
-              <b>${CEO_STATE.carPerf}/100</b>
+      <div class="ceo-content-stack">
+        <!-- Car Telemetry Card -->
+        <div class="ceo-car-hero">
+          <div class="cch-head">
+            <div class="cch-title-wrap">
+              <span class="f1-mono-sub">CHASSIS & AERODYNAMICS TELEMETRY</span>
+              <div class="cch-title">🏎️ БОЛИД ЧЕМПИОНАТА // ТЕМП И НАДЕЖНОСТЬ</div>
             </div>
-            <div class="cm-row">
-              <span>Механическая надежность:</span>
-              <div class="cm-bar-wrap"><div class="cm-bar" style="width: ${CEO_STATE.carRel}%; background: #10b981;"></div></div>
-              <b>${CEO_STATE.carRel}%</b>
+            <div class="cch-quick-tags">
+              <span class="cch-tag">Мотор: <b>${CEO_STATE.engine ? CEO_STATE.engine.name.split(' ')[0] : 'F1'}</b></span>
+              <span class="cch-tag">Труба: <b>Tier ${CEO_STATE.facilities.windTunnel}/5</b></span>
+              <span class="cch-tag">CFD: <b>Tier ${CEO_STATE.facilities.cfdSupercomputer}/5</b></span>
             </div>
           </div>
-        </div>
 
-        <!-- Chief Technical Officer (CTO) Card -->
-        <div class="ceo-card staff-card ${td.skill >= 90 ? 'elite' : ''}">
-          <div class="cc-badge-row">
-            <span class="sc-tag">ГЛАВНЫЙ ИНЖЕНЕР (CTO)</span>
-            <span class="sc-price">${formatMoney(td.salary)}/год</span>
-          </div>
-          <div class="sc-name">${td.name}</div>
-          <div class="sc-specs">
-            <div>Рейтинг мастерства: <b>${td.skill}/100</b></div>
-            <div>Специфика: <b>${td.trait}</b></div>
-          </div>
-          <div class="ceo-action-row">
-            <button class="btn s-btn ceo-fire-btn" onclick="window.fireCeoTechDirector()">
-              ⚠️ УВОЛИТЬ ГЛАВНОГО ИНЖЕНЕРА
-            </button>
-          </div>
-        </div>
+          <div class="cch-meters">
+            <div class="cch-meter-item">
+              <div class="cch-lbl-row">
+                <span>Скорость в поворотах и прижимная сила (Car Performance)</span>
+                <b>${CEO_STATE.carPerf} <small>/ 100</small></b>
+              </div>
+              <div class="cch-bar-track">
+                <div class="cch-bar-fill cch-fill-teal" style="width: ${CEO_STATE.carPerf}%;"></div>
+              </div>
+            </div>
 
-        <!-- Team Principal Card -->
-        <div class="ceo-card staff-card">
-          <div class="cc-badge-row">
-            <span class="sc-tag">РУКОВОДИТЕЛЬ КОМАНДЫ (TP)</span>
-            <span class="sc-price">${formatMoney(tp.salary)}/год</span>
-          </div>
-          <div class="sc-name">${tp.name}</div>
-          <div class="sc-specs">
-            <div>Авторитет на мостике: <b>${tp.skill}/100</b></div>
-            <div>Профиль: <b>${tp.trait}</b></div>
-          </div>
-          <div class="ceo-action-row">
-            <button class="btn s-btn sc-buy" onclick="window.fireCeoTeamPrincipal()">
-              Сменить Team Principal
-            </button>
+            <div class="cch-meter-item">
+              <div class="cch-lbl-row">
+                <span>Механическая надежность шасси и силовой установки (Reliability)</span>
+                <b>${CEO_STATE.carRel}%</b>
+              </div>
+              <div class="cch-bar-track">
+                <div class="cch-bar-fill cch-fill-green" style="width: ${CEO_STATE.carRel}%;"></div>
+              </div>
+            </div>
           </div>
         </div>
 
-        <!-- Driver 1 -->
-        <div class="ceo-card driver-card">
-          <div class="cc-badge-row">
-            <span class="sc-tag">ПИЛОТ №1 (ЛИДЕР)</span>
-            <span class="sc-price">${formatMoney(d1.salary)}/год</span>
+        <!-- 2x2 Executive Suite -->
+        <div class="ceo-exec-grid">
+          <!-- 1. Chief Technical Officer (CTO) -->
+          <div class="ceo-exec-card staff-cto ${td.skill >= 90 ? 'elite' : ''}">
+            <div class="cec-top">
+              <span class="cec-role-badge badge-cto">🛠️ ГЛАВНЫЙ ИНЖЕНЕР (CTO)</span>
+              <span class="cec-salary">${formatMoney(td.salary)}/год</span>
+            </div>
+            <div class="cec-name">${td.name}</div>
+            <div class="cec-pills">
+              <span class="cec-pill">Рейтинг: <b>${td.skill}/100</b></span>
+              <span class="cec-pill trait-pill">${td.trait}</span>
+            </div>
+            <div class="cec-desc">${td.desc || "Руководит конструкторским бюро и отвечает за аэродинамический пакет болида."}</div>
+            <div class="cec-footer">
+              <button class="btn ceo-fire-btn" onclick="window.fireCeoTechDirector()">
+                ⚠️ УВОЛИТЬ ГЛАВНОГО ИНЖЕНЕРА
+              </button>
+            </div>
           </div>
-          <div class="sc-name">${d1.name}</div>
-          <div class="sc-specs">
-            <div>Рейтинг пилотажа: <b>${d1.ovr} OVR</b></div>
-            <div>Статус: <b>${d1.tag}</b></div>
-          </div>
-          <div class="ceo-action-row">
-            <button class="btn s-btn sc-buy" onclick="window.openCeoDriverMarket(1)">
-              Сменить пилота №1
-            </button>
-          </div>
-        </div>
 
-        <!-- Driver 2 -->
-        <div class="ceo-card driver-card ${d2.isPay ? 'pay-border' : ''}">
-          <div class="cc-badge-row">
-            <span class="sc-tag ${d2.isPay ? 'asset-tag' : ''}">ПИЛОТ №2 ${d2.isPay ? '(PAY DRIVER)' : ''}</span>
-            <span class="sc-price ${d2.isPay ? 'asset-price' : ''}">${d2.isPay ? `+${formatMoney(Math.abs(d2.salary))}/год` : `${formatMoney(d2.salary)}/год`}</span>
+          <!-- 2. Team Principal (TP) -->
+          <div class="ceo-exec-card staff-tp">
+            <div class="cec-top">
+              <span class="cec-role-badge badge-tp">👔 РУКОВОДИТЕЛЬ КОМАНДЫ (TP)</span>
+              <span class="cec-salary">${formatMoney(tp.salary)}/год</span>
+            </div>
+            <div class="cec-name">${tp.name}</div>
+            <div class="cec-pills">
+              <span class="cec-pill">Авторитет в FIA: <b>${tp.skill}/100</b></span>
+              <span class="cec-pill trait-pill">${tp.trait}</span>
+            </div>
+            <div class="cec-desc">${tp.desc || "Контролирует пит-лейн, политику в паддоке и операционную работу гаража."}</div>
+            <div class="cec-footer">
+              <button class="btn ceo-neutral-btn" onclick="window.fireCeoTeamPrincipal()">
+                Сменить Team Principal
+              </button>
+            </div>
           </div>
-          <div class="sc-name">${d2.name}</div>
-          <div class="sc-specs">
-            <div>Рейтинг пилотажа: <b>${d2.ovr} OVR</b></div>
-            <div>Статус: <b>${d2.tag}</b></div>
+
+          <!-- 3. Driver 1 (Lead Driver) -->
+          <div class="ceo-exec-card driver-lead">
+            <div class="cec-top">
+              <span class="cec-role-badge badge-d1">🏁 ПИЛОТ №1 (ЛИДЕР)</span>
+              <span class="cec-salary">${formatMoney(d1.salary)}/год</span>
+            </div>
+            <div class="cec-name">${d1.name}</div>
+            <div class="cec-pills">
+              <span class="cec-pill">Мастерство: <b>${d1.ovr} OVR</b></span>
+              <span class="cec-pill trait-pill">${d1.tag}</span>
+            </div>
+            <div class="cec-desc">Главная ударная сила команды в борьбе за победы и очки в Личном зачёте.</div>
+            <div class="cec-footer">
+              <button class="btn ceo-neutral-btn" onclick="window.openCeoDriverMarket(1)">
+                Сменить пилота №1
+              </button>
+            </div>
           </div>
-          <div class="ceo-action-row">
-            <button class="btn s-btn ${d2.isPay ? 'asset-buy' : 'sc-buy'}" onclick="window.openCeoDriverMarket(2)">
-              Сменить пилота №2
-            </button>
+
+          <!-- 4. Driver 2 (Second Driver / Pay Driver) -->
+          <div class="ceo-exec-card driver-second ${d2.isPay ? 'pay-card' : ''}">
+            <div class="cec-top">
+              <span class="cec-role-badge ${d2.isPay ? 'badge-pay' : 'badge-d2'}">
+                ${d2.isPay ? '💰 ПИЛОТ №2 (PAY DRIVER)' : '🏁 ПИЛОТ №2 (ВТОРОЙ НОМЕР)'}
+              </span>
+              <span class="cec-salary ${d2.isPay ? 'pay-green' : ''}">
+                ${d2.isPay ? `+${formatMoney(Math.abs(d2.salary))}/год` : `${formatMoney(d2.salary)}/год`}
+              </span>
+            </div>
+            <div class="cec-name">${d2.name}</div>
+            <div class="cec-pills">
+              <span class="cec-pill">Мастерство: <b>${d2.ovr} OVR</b></span>
+              <span class="cec-pill trait-pill">${d2.tag}</span>
+            </div>
+            <div class="cec-desc">
+              ${d2.isPay ? 'Приносит спонсорские миллионы в бюджет конюшни, помогая компенсировать лимит расходов.' : 'Надежный второй пилот для набора очков в Кубок Конструкторов.'}
+            </div>
+            <div class="cec-footer">
+              <button class="btn ${d2.isPay ? 'ceo-pay-btn' : 'ceo-neutral-btn'}" onclick="window.openCeoDriverMarket(2)">
+                Сменить пилота №2
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -704,88 +743,129 @@
   }
 
   function renderFactoryTab(container) {
-    const eng = CEO_STATE.engine;
-    const sp = CEO_STATE.sponsor;
+    const currentEng = CEO_STATE.engine;
+    const currentSp = CEO_STATE.sponsor;
     const fac = CEO_STATE.facilities;
 
+    const renderPips = (lvl) => {
+      let pips = '';
+      for(let i = 1; i <= 5; i++) {
+        pips += `<span class="fac-pip ${i <= lvl ? 'filled' : ''}"></span>`;
+      }
+      return pips;
+    };
+
     container.innerHTML = `
-      <div class="ceo-factory-grid">
-        <!-- Engine Supplier -->
-        <div class="ceo-card">
-          <div class="cc-badge-row">
-            <span class="sc-tag asset-tag">СИЛОВАЯ УСТАНОВКА F1</span>
-            <span class="sc-price">${formatMoney(eng.cost)} / сезон</span>
+      <div class="ceo-factory-layout">
+        <!-- Section: Engine Partners -->
+        <div class="ceo-sec-block">
+          <div class="csb-header">
+            <div>
+              <span class="f1-mono-sub">POWER UNIT ALLIANCE</span>
+              <h3>🔧 ПОСТАВЩИК СИЛОВОЙ УСТАНОВКИ V6 TURBO HYBRID</h3>
+            </div>
           </div>
-          <div class="sc-name">${eng.name}</div>
-          <div class="sc-specs">
-            <div>Мощность ERS/ICE: <b>${eng.power}/100</b> · Надежность: <b>${eng.rel}%</b></div>
-            <div>Характеристика: <b>${eng.tag}</b></div>
-          </div>
-          <div class="ceo-engine-selector">
-            <select class="f1-select" onchange="window.selectEngineSupplier(this.value)">
-              ${ENGINE_SUPPLIERS.map(e => `
-                <option value="${e.id}" ${e.id === eng.id ? 'selected' : ''}>
-                  ${e.name} (${formatMoney(e.cost)}, Мощность ${e.power})
-                </option>
-              `).join("")}
-            </select>
-          </div>
-        </div>
-
-        <!-- Title Sponsor -->
-        <div class="ceo-card">
-          <div class="cc-badge-row">
-            <span class="sc-tag asset-tag">ТИТУЛЬНЫЙ СПОНСОР</span>
-            <div class="cfb-val cfb-green">+${formatMoney(sp.payout)} / сезон</div>
-          </div>
-          <div class="sc-name">${sp.name}</div>
-          <div class="sc-specs">
-            <div>Индустрия: <b>${sp.tag}</b></div>
-            <div>Требование акционеров: <b>Топ-${sp.reqPos} в Кубке Конструкторов</b></div>
-          </div>
-          <div class="ceo-engine-selector">
-            <select class="f1-select" onchange="window.selectTitleSponsor(this.value)">
-              ${TITLE_SPONSORS.map(s => `
-                <option value="${s.id}" ${s.id === sp.id ? 'selected' : ''}>
-                  ${s.name} (+${formatMoney(s.payout)})
-                </option>
-              `).join("")}
-            </select>
+          <div class="ceo-engines-strip">
+            ${ENGINE_SUPPLIERS.map(e => {
+              const isSelected = (currentEng.id === e.id);
+              return `
+                <div class="ceo-engine-box ${isSelected ? 'active' : ''}">
+                  <div class="ceb-top">
+                    <span class="ceb-tag">${e.tag}</span>
+                    <span class="ceb-cost">${formatMoney(e.cost)}/год</span>
+                  </div>
+                  <div class="ceb-name">${e.name}</div>
+                  <div class="ceb-stats">
+                    <span>Мощность ERS/ICE: <b>${e.power}/100</b></span> · 
+                    <span>Надежность: <b>${e.rel}%</b></span>
+                  </div>
+                  <button class="btn ${isSelected ? 'ceb-btn-active' : 'ceb-btn-pick'}" onclick="window.selectEngineSupplier('${e.id}')" ${isSelected ? 'disabled' : ''}>
+                    ${isSelected ? '✅ ТЕКУЩИЙ КОНТРАКТ' : 'ЗАКЛЮЧИТЬ КОНТРАКТ'}
+                  </button>
+                </div>
+              `;
+            }).join("")}
           </div>
         </div>
 
-        <!-- Facility Upgrades -->
-        <div class="ceo-card fac-card">
-          <div class="cc-badge-row">
-            <span class="sc-tag">АЭРОДИНАМИЧЕСКАЯ ТРУБА 60%</span>
-            <span class="sc-price">Tier ${fac.windTunnel}/5</span>
+        <!-- Section: Title Sponsors -->
+        <div class="ceo-sec-block">
+          <div class="csb-header">
+            <div>
+              <span class="f1-mono-sub">COMMERCIAL TITLE PARTNERS</span>
+              <h3>💼 ГЕНЕРАЛЬНЫЙ ТИТУЛЬНЫЙ СПОНСОР</h3>
+            </div>
           </div>
-          <div class="sc-specs">Ключевой инструмент проектирования прижимной силы болида (+4 к Car Perf).</div>
-          <button class="btn s-btn ${fac.windTunnel >= 5 ? 'sc-locked' : 'sc-buy'}" onclick="window.upgradeCeoFacility('windTunnel')">
-            ${fac.windTunnel >= 5 ? 'Максимальный уровень' : `Модернизировать (${formatMoney((fac.windTunnel + 1) * 12000000)})`}
-          </button>
+          <div class="ceo-sponsors-strip">
+            ${TITLE_SPONSORS.map(s => {
+              const isSelected = (currentSp.id === s.id);
+              return `
+                <div class="ceo-sponsor-box ${isSelected ? 'active' : ''}">
+                  <div class="ceb-top">
+                    <span class="ceb-tag">${s.tag}</span>
+                    <span class="ceb-cost pay-green">+${formatMoney(s.payout)}/год</span>
+                  </div>
+                  <div class="ceb-name">${s.name}</div>
+                  <div class="ceb-stats">
+                    Требование акционеров: <b>Топ-${s.reqPos} в Кубке Конструкторов</b>
+                  </div>
+                  <button class="btn ${isSelected ? 'ceb-btn-active' : 'ceb-btn-pick'}" onclick="window.selectTitleSponsor('${s.id}')" ${isSelected ? 'disabled' : ''}>
+                    ${isSelected ? '✅ ГЕНЕРАЛЬНЫЙ СПОНСОР' : 'ПОДПИСАТЬ СОГЛАШЕНИЕ'}
+                  </button>
+                </div>
+              `;
+            }).join("")}
+          </div>
         </div>
 
-        <div class="ceo-card fac-card">
-          <div class="cc-badge-row">
-            <span class="sc-tag">СУПЕРКОМПЬЮТЕРНЫЙ CFD КЛАСТЕР</span>
-            <span class="sc-price">Tier ${fac.cfdSupercomputer}/5</span>
+        <!-- Section: Factory Facilities Upgrades -->
+        <div class="ceo-sec-block">
+          <div class="csb-header">
+            <div>
+              <span class="f1-mono-sub">HQ & R&D INFRASTRUCTURE (COST CAP EXCLUDED)</span>
+              <h3>🏗️ МОДЕРНИЗАЦИЯ БАЗЫ И ТЕХНОЛОГИЙ</h3>
+            </div>
           </div>
-          <div class="sc-specs">Вычислительная гидродинамика для виртуального моделирования потоков (+4 к Car Perf).</div>
-          <button class="btn s-btn ${fac.cfdSupercomputer >= 5 ? 'sc-locked' : 'sc-buy'}" onclick="window.upgradeCeoFacility('cfdSupercomputer')">
-            ${fac.cfdSupercomputer >= 5 ? 'Максимальный уровень' : `Модернизировать (${formatMoney((fac.cfdSupercomputer + 1) * 12000000)})`}
-          </button>
-        </div>
+          <div class="ceo-facilities-strip">
+            <!-- Facility 1: Wind Tunnel -->
+            <div class="ceo-fac-box">
+              <div class="cfb-top">
+                <span class="cfb-title">АЭРОДИНАМИЧЕСКАЯ ТРУБА 60%</span>
+                <span class="cfb-lvl">Tier ${fac.windTunnel}/5</span>
+              </div>
+              <div class="cfb-pips">${renderPips(fac.windTunnel)}</div>
+              <div class="cfb-desc">Высокоточная калибровка прижимной силы и диффузора (+4 к Car Performance).</div>
+              <button class="btn cfb-btn ${fac.windTunnel >= 5 ? 'maxed' : ''}" onclick="window.upgradeCeoFacility('windTunnel')" ${fac.windTunnel >= 5 ? 'disabled' : ''}>
+                ${fac.windTunnel >= 5 ? 'МАКСИМАЛЬНЫЙ УРОВЕНЬ' : `МОДЕРНИЗИРОВАТЬ (${formatMoney((fac.windTunnel + 1) * 12000000)})`}
+              </button>
+            </div>
 
-        <div class="ceo-card fac-card">
-          <div class="cc-badge-row">
-            <span class="sc-tag">КОМПОЗИТНОЕ ПРОИЗВОДСТВО</span>
-            <span class="sc-price">Tier ${fac.compositeFactory}/5</span>
+            <!-- Facility 2: CFD Supercomputer -->
+            <div class="ceo-fac-box">
+              <div class="cfb-top">
+                <span class="cfb-title">СУПЕРКОМПЬЮТЕРНЫЙ CFD КЛАСТЕР</span>
+                <span class="cfb-lvl">Tier ${fac.cfdSupercomputer}/5</span>
+              </div>
+              <div class="cfb-pips">${renderPips(fac.cfdSupercomputer)}</div>
+              <div class="cfb-desc">Гидродинамическое 3D-моделирование вихрей переднего крыла (+4 к Car Performance).</div>
+              <button class="btn cfb-btn ${fac.cfdSupercomputer >= 5 ? 'maxed' : ''}" onclick="window.upgradeCeoFacility('cfdSupercomputer')" ${fac.cfdSupercomputer >= 5 ? 'disabled' : ''}>
+                ${fac.cfdSupercomputer >= 5 ? 'МАКСИМАЛЬНЫЙ УРОВЕНЬ' : `МОДЕРНИЗИРОВАТЬ (${formatMoney((fac.cfdSupercomputer + 1) * 12000000)})`}
+              </button>
+            </div>
+
+            <!-- Facility 3: Composites Autoclaves -->
+            <div class="ceo-fac-box">
+              <div class="cfb-top">
+                <span class="cfb-title">КОМПОЗИТНОЕ ПРОИЗВОДСТВО</span>
+                <span class="cfb-lvl">Tier ${fac.compositeFactory}/5</span>
+              </div>
+              <div class="cfb-pips">${renderPips(fac.compositeFactory)}</div>
+              <div class="cfb-desc">Углеволоконные автоклавы: облегчение шасси и снижение сходов (+4% к надежности).</div>
+              <button class="btn cfb-btn ${fac.compositeFactory >= 5 ? 'maxed' : ''}" onclick="window.upgradeCeoFacility('compositeFactory')" ${fac.compositeFactory >= 5 ? 'disabled' : ''}>
+                ${fac.compositeFactory >= 5 ? 'МАКСИМАЛЬНЫЙ УРОВЕНЬ' : `МОДЕРНИЗИРОВАТЬ (${formatMoney((fac.compositeFactory + 1) * 12000000)})`}
+              </button>
+            </div>
           </div>
-          <div class="sc-specs">Автоклавы и цеха карбоновых волокон, снижающие вес и сходы (+4% к надежности).</div>
-          <button class="btn s-btn ${fac.compositeFactory >= 5 ? 'sc-locked' : 'sc-buy'}" onclick="window.upgradeCeoFacility('compositeFactory')">
-            ${fac.compositeFactory >= 5 ? 'Максимальный уровень' : `Модернизировать (${formatMoney((fac.compositeFactory + 1) * 12000000)})`}
-          </button>
         </div>
       </div>
     `;
@@ -796,28 +876,54 @@
 
     container.innerHTML = `
       <div class="ceo-board-content">
-        <div class="ceo-board-banner">
-          <div class="cbb-title">🏛️ СОВЕТ ДИРЕКТОРОВ И АКЦИОНЕРЫ КОМАНДЫ</div>
-          <div class="cbb-desc">
-            Как владелец и управляющий (CEO), вы определяете вектор развития завода и несете прямую ответственность перед инвестиционным комитетом.
-            Победы в Кубке Конструкторов увеличивают рыночную оценку конюшни, а падение на дно пелотона приводит к ультиматумам и перестановкам в менеджменте.
+        <div class="ceo-board-hero">
+          <div class="cbh-left">
+            <span class="f1-mono-sub">BOARD OF DIRECTORS CONFIDENCE</span>
+            <div class="cbh-title">🏛️ ДОВЕРИЕ СОВЕТА АКЦИОНЕРОВ: <b>${CEO_STATE.boardApproval}%</b></div>
+            <div class="cbh-desc">
+              Как управляющий совладелец, вы несете персональную ответственность перед советом директоров. 
+              ${CEO_STATE.boardApproval >= 70 ? 
+                '✅ Акционеры довольны текущим курсом развития и одобряют выбранную стратегию.' : 
+                '⚠️ Внимание: Низкий уровень доверия акционеров! Совет настаивает на кадровых перестановках в техническом штабе.'}
+            </div>
+          </div>
+          <div class="cbh-gauge-wrap">
+            <div class="cbh-gauge-bar">
+              <div class="cbh-gauge-fill" style="width: ${CEO_STATE.boardApproval}%; background: ${CEO_STATE.boardApproval >= 70 ? '#10b981' : CEO_STATE.boardApproval >= 45 ? '#f59e0b' : '#ef4444'};"></div>
+            </div>
           </div>
         </div>
 
-        <div class="ceo-history-list">
-          <h3>ХРОНИКА СЕЗОНОВ ПОД ВАШИМ РУКОВОДСТВОМ</h3>
+        <div class="ceo-history-block">
+          <div class="chb-title">🏆 ХРОНИКА ВЫСТУПЛЕНИЙ В КУБКЕ КОНСТРУКТОРОВ</div>
           ${history.length === 0 ? `
             <div class="ceo-empty-history">
-              Команда готовится к первому сезону чемпионата. Проведите симуляцию 24 Гран-при!
+              🏎️ Команда находится в межсезонье и готовится к дебютному чемпионату. Нажмите «СИМУЛИРОВАТЬ СЕЗОН» внизу!
             </div>
-          ` : history.map(h => `
-            <div class="ceo-history-row ${h.wccPos === 1 ? 'gold-row' : ''}">
-              <div class="chr-season">Сезон ${h.seasonNum} (${h.year})</div>
-              <div class="chr-pos"><b>P${h.wccPos}</b> в Кубке Конструкторов</div>
-              <div class="chr-stats">${h.wccPoints} очков · 🏆 ×${h.wins} · 🍾 ×${h.podiums}</div>
-              <div class="chr-profit ${h.profit >= 0 ? 'cfb-green' : 'cfb-red'}">${h.profit >= 0 ? '+' : ''}${formatMoney(h.profit)}</div>
+          ` : `
+            <div class="ceo-history-table">
+              <div class="cht-head">
+                <span>СЕЗОН</span>
+                <span>ПОЗИЦИЯ КК</span>
+                <span>ОЧКИ</span>
+                <span>ПОБЕДЫ</span>
+                <span>ПОДИУМЫ</span>
+                <span>ФИНАНСОВЫЙ РЕЗУЛЬТАТ</span>
+              </div>
+              ${history.map(h => `
+                <div class="cht-row ${h.wccPos === 1 ? 'gold-row' : ''}">
+                  <span class="cht-season">Сезон ${h.seasonNum} (${h.year})</span>
+                  <span class="cht-pos"><b>P${h.wccPos}</b> ${h.wccPos === 1 ? '🏆' : ''}</span>
+                  <span class="cht-pts">${h.wccPoints}</span>
+                  <span class="cht-wins">${h.wins}</span>
+                  <span class="cht-pods">${h.podiums}</span>
+                  <span class="cht-profit ${h.profit >= 0 ? 'cfb-green' : 'cfb-red'}">
+                    ${h.profit >= 0 ? '+' : ''}${formatMoney(h.profit)}
+                  </span>
+                </div>
+              `).join("")}
             </div>
-          `).join("")}
+          `}
         </div>
       </div>
     `;
