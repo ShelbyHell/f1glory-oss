@@ -1,11 +1,12 @@
 {
   "name": "f1glory-oss",
   "version": "1.0.0",
-  "description": "F1 Glory - Formula 1 career simulation browser game (Offline / Open Source replica)",
-  "main": "server.js",
+  "description": "F1 Glory - Formula 1 career simulation browser game (Offline & Modular replica)",
+  "main": "server/server.js",
   "scripts": {
-    "start": "node server.js",
-    "py": "python3 server.py"
+    "start": "node server/server.js",
+    "py": "python3 server/server.py",
+    "dev": "node server/server.js"
   },
   "keywords": [
     "f1",

@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<!--
+  F1 Glory · © 2026 Carlos Pérez. Todos los derechos reservados.
+  Código, textos, datos y diseño son obra original de su autor y están protegidos por derechos de autor.
+  Queda prohibida su copia, redistribución o publicación, total o parcial, sin autorización expresa.
+  Proyecto independiente, sin relación alguna con la FIA ni con Formula One Group.
+  Contacto: carlosrealmurcia@gmail.com · f1-glory.com
+-->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F1 Glory · Construye tu carrera en la F1 / Build your F1 career</title>
+<meta name="description" content="Del karting a la gloria: fichajes, títulos y decisiones que definen tu legado. · From karting to glory: signings, titles and choices that shape your legacy.">
+<link rel="canonical" href="https://f1-glory.com/">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-title" content="F1 Glory">
+<!-- 📱 instalable como app: sin barra del navegador, con su icono y su nombre -->
+<link rel="manifest" href="/manifest.json">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#c8000a">
+<!-- Open Graph / redes sociales -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="F1 Glory">
+<meta property="og:locale" content="es_ES">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:title" content="F1 Glory 🏁 Construye tu carrera en la F1 · Build your F1 career">
+<meta property="og:description" content="Del karting a la gloria. Fichajes, títulos y decisiones que marcan tu legado. ¿Hasta dónde llegarás? · From karting to glory. Signings, titles and choices that shape your legacy. How far will you go?">
+<meta property="og:image" content="https://f1-glory.com/f1-glory.jpg">
+<meta property="og:image:secure_url" content="https://f1-glory.com/f1-glory.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="675">
+<meta property="og:image:alt" content="F1 Glory">
+<meta property="og:url" content="https://f1-glory.com/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="F1 Glory 🏁 Construye tu carrera · Build your F1 career">
+<meta name="twitter:description" content="Del karting a la gloria. ¿Hasta dónde llegarás? · From karting to glory. How far will you go?">
+<meta name="twitter:image" content="https://f1-glory.com/f1-glory.jpg">
+<link rel="preload" href="TwemojiCountryFlags.woff2" as="font" type="font/woff2" crossorigin>
+<!-- 🎨 LA MUDANZA: Anybody para titulares e Inter para todo lo demás, números incluidos. JetBrains Mono
+     salió el 13-sep (Carlos: «no me gusta, tiene un punto dentro del 0»). -->
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@75..150,600..900&family=Inter:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div id="betaBar" style="display:none"
+  data-es="🧪 <b>BETA</b> · Modo Team Principal en pruebas. Puede fallar. <span style='opacity:.75'>Cuéntale a Carlos lo que veas raro.</span>"
+  data-en="🧪 <b>BETA</b> · Team Principal mode in testing. It may break. <span style='opacity:.75'>Tell Carlos anything that looks off.</span>"
+  data-pt="🧪 <b>BETA</b> · Modo Team Principal em testes. Pode falhar. <span style='opacity:.75'>Conte ao Carlos o que achar estranho.</span>"
+  >🧪 <b>BETA</b> · Modo Team Principal en pruebas. Puede fallar. <span style="opacity:.75">Cuéntale a Carlos lo que veas raro.</span></div>
+<div id="topBtns">
+  <button id="themeToggle" onclick="setTheme(THEME==='dark'?'light':'dark')" title="Modo claro/oscuro">🌙</button>
+  <button id="langToggle" onclick="nextLang()" title="Language / Idioma">EN</button>
+  <!-- 📱 VISTA DEL MÓVIL (Carlos, 23-sep): pestañas (lo de serie) o todo en una página, para los
+       jugadores que echaban de menos la interfaz de antes. Solo aparece en móvil. -->
+  <button id="viewToggle" onclick="toggleVista()" title="Ver todo en una página">📄</button>
+  <!-- ⚙️ AJUSTES (Carlos, 19-sep: los dos botones flotantes eran «un puto estorbo»): idioma y tema
+       viven plegados detrás de este engranaje pequeño y translúcido. column-reverse → va el último
+       en el HTML para pintarse ARRIBA. -->
+  <button id="cogToggle" onclick="document.getElementById('topBtns').classList.toggle('open')" title="Ajustes / Settings">⚙️</button>
+</div>
+
+<!-- ========== INTRO ========== -->
+<section id="intro">
+  <!-- 🏁 EL LOGO, NO EL EMOJI (Carlos, 3-sep). Es el mismo damero del favicon, en línea: 523 bytes,
+       cero peticiones extra, escala sin pixelarse y lleva su propio fondo rojo, así que se sostiene
+       igual en claro y en oscuro sin tener que inventarle una segunda versión. -->
+  <div class="flag" aria-hidden="true"><svg viewBox="0 0 32 32" width="56" height="56">
+    <rect width="32" height="32" rx="7" fill="#e10600"/>
+    <g fill="#fff">
+      <rect x="4" y="4" width="6" height="6"/><rect x="16" y="4" width="6" height="6"/>
+      <rect x="10" y="10" width="6" height="6"/><rect x="22" y="10" width="6" height="6"/>
+      <rect x="4" y="16" width="6" height="6"/><rect x="16" y="16" width="6" height="6"/>
+      <rect x="10" y="22" width="6" height="6"/><rect x="22" y="22" width="6" height="6"/>
+    </g></svg></div>
+  <h1 data-es="Construye tu carrera<br>en la <span>Fórmula 1</span>" data-pt="Construa a sua carreira<br>na <span>Fórmula 1</span>" data-pl="Zbuduj swoją karierę<br>w <span>Formule 1</span>" data-fr="Construis ta carrière<br>en <span>Formule 1</span>" data-pt="Constrói a tua carreira<br>na <span>Fórmula 1</span>" data-en="Build your career<br>in <span>Formula 1</span>">Construye tu carrera<br>en la <span>Fórmula 1</span></h1>
+  <!-- 🧹 la parrafada de intro se fue (Carlos, 22-sep): cada tarjeta de modo ya lleva su descripción -->
+  <!-- 🧭 EL MENÚ DE CUATRO MODOS (Carlos, 19-sep-2026): se quita «Iniciar carrera» y los modos quedan
+       iguales. Retro → dos cuadrados (Carrera / Team Principal) → sus décadas → los años de cada década.
+       Retos → cuadrados de 4×2 con desplazamiento lateral cuando haya más de ocho. -->
+  <div class="mode-menu">
+    <div class="mode-card retro-on" id="careerCard" onclick="startCareerFlow('2026')">
+      <span class="mode-ico"><img src="/ico/carrera.png" alt="" width="30" height="30" loading="lazy"></span>
+      <span class="mode-txt"><b data-es="Modo Carrera" data-pt="Modo Carreira" data-en="Career mode">Modo Carrera</b><small data-es="Del karting a la F1: construye tu carrera" data-pt="Do kart à F1: construa a sua carreira" data-en="From karting to F1: build your career">Del karting a la F1: construye tu carrera</small></span>
+    </div>
+    <div class="mode-card soon" id="tpCard">
+      <span class="soon-badge" id="badgeTP" data-es="Próximamente" data-pt="Em breve" data-pl="Wkrótce" data-fr="Bientôt" data-pt="Em breve" data-en="Coming soon">Próximamente</span>
+      <span class="mode-ico"><img src="/ico/teamprincipal.png" alt="" width="30" height="30" loading="lazy"></span>
+      <span class="mode-txt"><b data-es="Modo Team Principal" data-pt="Modo Chefe de Equipe" data-pl="Tryb szefa zespołu" data-fr="Mode Directeur d'écurie" data-pt="Modo Team Principal" data-en="Team Principal mode">Modo Team Principal</b><small data-es="Ficha a los mejores pilotos, desarrolla el mejor coche y lleva a tu equipo a la gloria" data-pt="Contrate os melhores pilotos, desenvolva o melhor carro e leve a sua equipe à glória" data-pl="Podpisuj najlepszych kierowców, rozwijaj najlepszy samochód i poprowadź zespół po chwałę" data-fr="Recrute les meilleurs pilotes, développe la meilleure voiture et mène ton écurie à la gloire" data-pt="Contrata os melhores pilotos, desenvolve o melhor carro e leva a tua equipa à glória" data-en="Sign the best drivers, develop the best car, and take your team to glory">Ficha a los mejores pilotos, desarrolla el mejor coche y lleva a tu equipo a la gloria</small></span>
+    </div>
+    <div class="mode-card soon" id="challengeCard">
+      <span class="soon-badge" id="badgeReto" data-es="Próximamente" data-pt="Em breve" data-pl="Wkrótce" data-fr="Bientôt" data-pt="Em breve" data-en="Coming soon">Próximamente</span>
+      <span class="mode-ico"><img src="/ico/retosemanal.png" alt="" width="30" height="30" loading="lazy"></span>
+      <span class="mode-txt"><b data-es="Reto semanal" data-pt="Desafio semanal" data-pl="Wyzwanie tygodnia" data-fr="Défi hebdomadaire" data-pt="Desafio semanal" data-en="Weekly challenge">Reto semanal</b><small id="retoSub" data-es="Un escenario nuevo cada semana" data-pt="Um cenário novo a cada semana" data-pl="Nowy scenariusz co tydzień" data-fr="Un nouveau scénario chaque semaine" data-pt="Um cenário novo todas as semanas" data-en="A new scenario every week">Un escenario nuevo cada semana</small></span>
+    </div>
+    <div class="decade-grid reto-panel" id="challengeGrid" style="display:none"></div>
+    <div class="mode-card retro-on" id="retroCard" onclick="toggleRetro()">
+      <span class="new-badge" id="badgeRetro" style="display:none" data-es="¡Nuevo!" data-pt="Novo!" data-pl="Nowość!" data-fr="Nouveau !" data-pt="Novo!" data-en="New!">¡Nuevo!</span>
+      <span class="mode-ico"><img src="/ico/crono.png" alt="" width="30" height="30" loading="lazy"></span>
+      <span class="mode-txt"><b data-es="Modo Retro" data-pt="Modo Retrô" data-pl="Tryb retro" data-fr="Mode Rétro" data-en="Retro mode">Modo Retro</b><small data-es="Juega en otra época" data-pt="Jogue em outra época" data-en="Play in another era">Juega en otra época</small></span>
+      <span class="retro-caret" id="retroCaret">▾</span>
+    </div>
+    <!-- 1 · qué modo -->
+    <div class="decade-grid retro-pick" id="retroPick" style="display:none">
+      <button class="dec modo" id="rpCarrera" onclick="retroModo('carrera')"><img src="/ico/retro.png" alt=""><span data-es="Modo Carrera" data-pt="Modo Carreira" data-en="Career mode">Modo Carrera</span></button>
+      <button class="dec modo" id="rpTP" onclick="retroModo('tp')"><img src="/ico/tpretro.png" alt=""><span data-es="Modo Team Principal" data-pt="Modo Team Principal" data-en="Team Principal mode">Modo Team Principal</span><small class="dec-sub" id="rpTPsub"></small></button>
+    </div>
+    <!-- 2 · qué década (carrera) -->
+    <div class="decade-grid" id="decadeGrid" style="display:none">
+      <button class="dec locked car" disabled><span class="dec-y">1950</span><img src="/ico/1950car.png" alt="" loading="lazy"></button>
+      <button class="dec locked car" disabled><span class="dec-y">1960</span><img src="/ico/1960car.png" alt="" loading="lazy"></button>
+      <button class="dec locked car" disabled><span class="dec-y">1970</span><img src="/ico/1970car.png" alt="" loading="lazy"></button>
+      <button class="dec locked car" id="dec1980" disabled><span class="dec-y">1980</span><img src="/ico/1980car.png" alt="" loading="lazy"></button>
+      <button class="dec locked" id="dec1990" disabled>1990</button>
+      <button class="dec locked" id="dec2000" disabled>2000</button>
+      <button class="dec car" id="dec2010" onclick="retroAnios('carrera','2010')"><span class="dec-y">2010</span><img src="/ico/2010car.png" alt="" loading="lazy"></button>
+      <button class="dec car" id="dec2020" onclick="retroAnios('carrera','2020')"><span class="dec-y">2020</span><img src="/ico/2020car.png" alt="" loading="lazy"></button>
+      <div class="dec-note" data-es="Las demás décadas están en camino 🏗️" data-pt="As outras décadas estão a caminho 🏗️" data-pl="Pozostałe dekady są w drodze 🏗️" data-fr="Les autres décennies arrivent 🏗️" data-pt="As outras décadas estão a caminho 🏗️" data-en="The other decades are on the way 🏗️">Las demás décadas están en camino 🏗️</div>
+    </div>
+    <!-- 2 · qué década (team principal): por ahora solo la de 2020 -->
+    <div class="decade-grid" id="tpDecadeGrid" style="display:none">
+      <button class="dec locked car" disabled><span class="dec-y">1950</span><img src="/ico/1950car.png" alt="" loading="lazy"></button>
+      <button class="dec locked car" disabled><span class="dec-y">1960</span><img src="/ico/1960car.png" alt="" loading="lazy"></button>
+      <button class="dec locked car" disabled><span class="dec-y">1970</span><img src="/ico/1970car.png" alt="" loading="lazy"></button>
+      <button class="dec locked car" disabled><span class="dec-y">1980</span><img src="/ico/1980car.png" alt="" loading="lazy"></button>
+      <button class="dec locked car" disabled><span class="dec-y">1990</span><img src="/ico/1990car.png" alt="" loading="lazy"></button>
+      <button class="dec locked car" disabled><span class="dec-y">2000</span><img src="/ico/2000car.png" alt="" loading="lazy"></button>
+      <button class="dec locked car" disabled><span class="dec-y">2010</span><img src="/ico/2010car.png" alt="" loading="lazy"></button>
+      <button class="dec car" id="tpDec2020" onclick="retroAnios('tp','2020')"><span class="dec-y">2020</span><img src="/ico/2020car.png" alt="" loading="lazy"></button>
+      <div class="dec-note" data-es="Las demás décadas están en camino 🏗️" data-pt="As outras décadas estão a caminho 🏗️" data-en="The other decades are on their way 🏗️">Las demás décadas están en camino 🏗️</div>
+    </div>
+    <!-- 3 · qué año de esa década (se rellena al elegir década) -->
+    <div class="decade-grid" id="yearGrid" style="display:none"></div>
+  </div>
+  <!-- 🔄 la fecha la pinta pintarActualizacion() con el last-modified del despliegue: no hay nada
+       que mantener a mano (Carlos, 11-sep-2026: las novedades escritas caducaban). Si el HEAD falla,
+       el párrafo se queda oculto y no se ve nunca una fecha rota. -->
+  <p class="news" id="newsUpd" style="display:none;max-width:540px;margin:20px auto 0;font-size:13px;line-height:1.55;color:var(--muted)"><span
+     data-es="🔄 <b>Última actualización:</b>" data-pt="🔄 <b>Última atualização:</b>"
+     data-en="🔄 <b>Last updated:</b>">🔄 <b>Última actualización:</b></span> <span id="updFecha"></span></p>
+  <!-- 📲 aviso de instalar como app: solo en móvil, se puede cerrar y no vuelve (lo activa initInstallHint) -->
+  <div id="installHint" style="display:none">
+    <div class="ih-top">
+      <span id="installTxt"></span>
+      <button id="installBtn" style="display:none"></button>
+      <button id="installX" onclick="event.stopPropagation();dismissInstallHint()" aria-label="cerrar">✕</button>
+    </div>
+    <!-- 📖 los pasos, que sin ellos el aviso solo dice QUÉ hacer y no CÓMO (lo pidió Carlos) -->
+    <!-- sin display:none EN LÍNEA: un estilo en línea gana a la hoja de estilos y la clase .open no
+         podía abrirlo. Lo oculta el CSS (#installSteps) y lo abre #installHint.open. -->
+    <ol id="installSteps"></ol>
+  </div>
+  <!-- ☕ APOYAR EL JUEGO, DE VUELTA EN LA PORTADA (Carlos, 21-sep-2026): el botón del café se movió
+       al final de partida el 1-ago y la home se quedó solo con el muro. Ahora vive en los dos sitios. -->
+  <p class="intro-kofi"><a class="kofi-btn" href="https://ko-fi.com/carlosperezesp" target="_blank" rel="noopener" onclick="track('kofi_click',{from:'home'})" data-es="☕ Apoyar el juego" data-pt="☕ Apoiar o jogo" data-pl="☕ Wesprzyj grę" data-fr="☕ Soutenir le jeu" data-en="☕ Support the game">☕ Apoyar el juego</a></p>
+  <!-- 🏆 el ranking vivía SOLO en la pantalla final: quien entraba y no jugaba no sabía que existía -->
+  <p class="intro-links"><a onclick="openRanking()" data-es="🏆 Ranking de leyendas" data-pt="🏆 Ranking de lendas" data-pl="🏆 Ranking legend" data-fr="🏆 Classement des légendes" data-en="🏆 Legends ranking">🏆 Ranking de leyendas</a>
+    <span class="il-sep">·</span>
+    <a onclick="openPatrons()" data-es="☕ Muro de mecenas" data-pt="☕ Mural de mecenas" data-pl="☕ Ściana patronów" data-fr="☕ Mur des mécènes" data-pt="☕ Mural de apoiantes" data-en="☕ Wall of supporters">☕ Muro de mecenas</a></p>
+  <p class="legal"
+     data-es="Proyecto personal de un aficionado, sin relación con la Fórmula 1. No está afiliado ni respaldado por la Fórmula 1, la FIA ni ninguna escudería. Los nombres, marcas y escudos pertenecen a sus respectivos titulares. Banderas: <a href='https://github.com/jdecked/twemoji' target='_blank' rel='noopener'>Twemoji</a> &copy; Twitter, Inc. y colaboradores, con licencia <a href='https://creativecommons.org/licenses/by/4.0/' target='_blank' rel='noopener'>CC BY 4.0</a>; se usa un subconjunto con solo las banderas." data-pt="Projeto pessoal de um fã, sem relação com a Fórmula 1. Não é afiliado nem endossado pela Fórmula 1, pela FIA nem por nenhuma equipe. Os nomes, marcas e escudos pertencem aos seus respectivos titulares. Bandeiras: <a href='https://github.com/jdecked/twemoji' target='_blank' rel='noopener'>Twemoji</a> &copy; Twitter, Inc. e colaboradores, sob licen&ccedil;a <a href='https://creativecommons.org/licenses/by/4.0/' target='_blank' rel='noopener'>CC BY 4.0</a>; &eacute; usado um subconjunto apenas com as bandeiras." data-pl="Prywatny projekt kibica, bez związku z Formułą 1. Nie jest powiązany z Formułą 1, FIA ani żadnym zespołem i nie ma ich poparcia. Nazwy, znaki i loga należą do ich właścicieli. Flagi: <a href='https://github.com/jdecked/twemoji' target='_blank' rel='noopener'>Twemoji</a> &copy; Twitter, Inc. i wsp&oacute;&#322;tw&oacute;rcy, na licencji <a href='https://creativecommons.org/licenses/by/4.0/' target='_blank' rel='noopener'>CC BY 4.0</a>; u&#380;yto podzbioru zawieraj&#261;cego wy&#322;&#261;cznie flagi." data-fr="Projet personnel d'un passionné, sans lien avec la Formule 1. Ni affilié ni approuvé par la Formule 1, la FIA ou une quelconque écurie. Les noms, marques et logos appartiennent à leurs détenteurs respectifs. Drapeaux&nbsp;: <a href='https://github.com/jdecked/twemoji' target='_blank' rel='noopener'>Twemoji</a> &copy; Twitter, Inc. et contributeurs, sous licence <a href='https://creativecommons.org/licenses/by/4.0/' target='_blank' rel='noopener'>CC BY 4.0</a>; un sous-ensemble limit&eacute; aux drapeaux est utilis&eacute;." data-pt="Projeto pessoal de um adepto, sem qualquer ligação à Fórmula 1. Não é afiliado nem apoiado pela Fórmula 1, pela FIA nem por nenhuma equipa."
+     data-en="A personal fan project, unconnected to Formula 1. Not affiliated with or endorsed by Formula 1, the FIA or any team. All names, trademarks and badges belong to their respective owners. Flags: <a href='https://github.com/jdecked/twemoji' target='_blank' rel='noopener'>Twemoji</a> &copy; Twitter, Inc. and other contributors, licensed under <a href='https://creativecommons.org/licenses/by/4.0/' target='_blank' rel='noopener'>CC BY 4.0</a>; a flags-only subset is used.">Proyecto personal de un aficionado, sin relación con la Fórmula 1. No está afiliado ni respaldado por la Fórmula 1, la FIA ni ninguna escudería. Los nombres, marcas y escudos pertenecen a sus respectivos titulares. Banderas: <a href='https://github.com/jdecked/twemoji' target='_blank' rel='noopener'>Twemoji</a> &copy; Twitter, Inc. y colaboradores, con licencia <a href='https://creativecommons.org/licenses/by/4.0/' target='_blank' rel='noopener'>CC BY 4.0</a>; se usa un subconjunto con solo las banderas.</p>
+</section>
+
+<!-- ========== IDENTITY ========== -->
+<section id="identity">
+  <h2 data-es="Define tu identidad" data-pt="Defina a sua identidade" data-pl="Określ swoją tożsamość" data-fr="Définis ton identité" data-pt="Define a tua identidade" data-en="Define your identity">Define tu identidad</h2>
+  <p class="lead" data-es="Tu dorsal, tu bandera y tu forma de pilotar. El resto lo decide la pista." data-pt="O seu número, a sua bandeira e o seu jeito de pilotar. O resto quem decide é a pista." data-pl="Twój numer, twoja flaga i twój styl jazdy. Resztę rozstrzygnie tor." data-fr="Ton numéro, ton drapeau et ta façon de piloter. Le reste, c'est la piste qui décide." data-pt="O teu número, a tua bandeira e a tua forma de pilotar. O resto decide-se na pista." data-en="Your number, your flag and your driving style. The rest is decided on track.">Tu dorsal, tu bandera y tu forma de pilotar. El resto lo decide la pista.</p>
+  <div class="id-grid">
+    <div class="card">
+      <h3 data-es="Identidad" data-pt="Identidade" data-pl="Tożsamość" data-fr="Identité" data-pt="Identidade" data-en="Identity">Identidad</h3>
+      <div class="numplate"><span id="helmetNum"></span></div>
+      <div class="field"><label data-es="Apellido" data-pt="Sobrenome" data-pl="Nazwisko" data-fr="Nom" data-pt="Apelido" data-en="Surname">Apellido</label><input id="inName" onblur="idBlurIdent()" maxlength="14" placeholder="Apellido" data-esph="Apellido" data-ptph="Sobrenome" data-plph="Nazwisko" data-frph="Nom" data-enph="Surname" oninput="idChanged()"></div>
+      <div class="field"><label data-es="Dorsal (1-99)" data-pt="Número (1-99)" data-pl="Numer (1-99)" data-fr="Numéro (1-99)" data-pt="Número (1-99)" data-en="Number (1-99)">Dorsal (1-99)</label><input id="inNum" onblur="idBlurIdent()" maxlength="2" placeholder="Nº" data-esph="Nº" data-ptph="Nº" data-plph="Nr" data-frph="N°" data-enph="No." inputmode="numeric" oninput="idChanged()"></div>
+    </div>
+    <div class="card" id="cardChallenge" style="display:none">
+      <h3 id="chTitle"></h3>
+      <p id="chDesc" style="font-size:13px;line-height:1.5;color:var(--muted);margin-bottom:12px"></p>
+      <div id="chFixed"></div>
+    </div>
+    <div class="card" id="cardCountry">
+      <h3 data-es="Nacionalidad" data-pt="Nacionalidade" data-pl="Narodowość" data-fr="Nationalité" data-pt="Nacionalidade" data-en="Nationality">Nacionalidad</h3>
+      <div class="field"><input id="inCountry" placeholder="Buscar país…" data-esph="Buscar país…" data-ptph="Buscar país…" data-plph="Szukaj kraju…" data-frph="Rechercher un pays…" data-enph="Search country…" oninput="renderCountries()"></div>
+      <div class="country-list" id="countryList"></div>
+    </div>
+    <div class="card" id="cardStyle">
+      <h3 data-es="Estilo de pilotaje" data-pt="Estilo de pilotagem" data-pl="Styl jazdy" data-fr="Style de pilotage" data-pt="Estilo de pilotagem" data-en="Driving style">Estilo de pilotaje</h3>
+      <div class="style-cards">
+        <button id="st-agresivo" onclick="pickStyle('agresivo')">
+          <div class="t" data-es="🔥 Agresivo" data-pt="🔥 Agressivo" data-pl="🔥 Agresywny" data-fr="🔥 Agressif" data-pt="🔥 Agressivo" data-en="🔥 Aggressive">🔥 Agresivo</div>
+          <div class="d" data-es="Más poles y victorias épicas, pero mayor riesgo de abandono. Estilo Verstappen." data-pt="Mais poles e vitórias épicas, mas maior risco de abandono. Estilo Verstappen." data-pl="Więcej pole position i epickich zwycięstw, ale większe ryzyko wycofania. Styl Verstappena." data-fr="Plus de poles et de victoires épiques, mais plus de risque d'abandon. Style Verstappen." data-pt="Mais poles e vitórias épicas, mas maior risco de desistir. Estilo Verstappen." data-en="More poles and epic wins, but a higher risk of retiring. Verstappen style.">Más poles y victorias épicas, pero mayor riesgo de abandono. Estilo Verstappen.</div>
+        </button>
+        <button id="st-tecnico" onclick="pickStyle('tecnico')">
+          <div class="t" data-es="🧠 Técnico" data-pt="🧠 Técnico" data-pl="🧠 Techniczny" data-fr="🧠 Technique" data-pt="🧠 Técnico" data-en="🧠 Technical">🧠 Técnico</div>
+          <div class="d" data-es="Brilla bajo la lluvia y desarrolla el coche. Progresa más rápido. Estilo Prost." data-pt="Brilha na chuva e desenvolve o carro. Evolui mais rápido. Estilo Prost." data-pl="Błyszczy w deszczu i rozwija samochód. Szybciej robi postępy. Styl Prosta." data-fr="Brille sous la pluie et développe la voiture. Progresse plus vite. Style Prost." data-pt="Brilha à chuva e desenvolve o carro. Progride mais depressa. Estilo Prost." data-en="Shines in the wet and develops the car. Progresses faster. Prost style.">Brilla bajo la lluvia y desarrolla el coche. Progresa más rápido. Estilo Prost.</div>
+        </button>
+        <button id="st-consistente" onclick="pickStyle('consistente')">
+          <div class="t" data-es="📈 Consistente" data-pt="📈 Consistente" data-pl="📈 Równy" data-fr="📈 Régulier" data-pt="📈 Consistente" data-en="📈 Consistent">📈 Consistente</div>
+          <div class="d" data-es="Casi nunca abandona y suma puntos siempre. Los campeonatos se ganan así. Estilo Alonso." data-pt="Quase nunca abandona e pontua sempre. É assim que se ganham campeonatos. Estilo Alonso." data-pl="Prawie nigdy się nie wycofuje i zawsze punktuje. Tak właśnie wygrywa się mistrzostwa. Styl Alonso." data-fr="N'abandonne presque jamais et marque toujours des points. C'est comme ça qu'on gagne des titres. Style Alonso." data-pt="Quase nunca desiste e pontua sempre. Os campeonatos ganham-se assim. Estilo Alonso." data-en="Almost never retires and always scores. This is how titles are won. Alonso style.">Casi nunca abandona y suma puntos siempre. Los campeonatos se ganan así. Estilo Alonso.</div>
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- ⚫ el aviso de muertes va ENCIMA de los botones: dentro de .actions (flex) convertía
+       «Volver» y «Confirmar» en dos columnas kilométricas (captura de Carlos, 20-ago) -->
+  <div id="deathOpt" style="display:none;margin:10px auto 14px;text-align:left;max-width:640px">
+    <label style="display:flex;gap:10px;align-items:flex-start;cursor:pointer;font-size:14px;line-height:1.45">
+      <input type="checkbox" id="chkDeaths" checked style="margin-top:3px;flex-shrink:0;width:18px;height:18px;accent-color:#c8102e">
+      <span id="deathOptTxt"></span>
+    </label>
+  </div>
+  <!-- 🧑‍💼 las cuatro notas del modo jefe: solo se rellenan si entras como Team Principal -->
+  <div id="tpNotas" style="display:none;margin:10px auto 14px;text-align:left;max-width:640px"></div>
+  <div class="actions">
+    <button class="btn ghost" onclick="backToIntro()" data-es="Volver" data-pt="Voltar" data-pl="Wróć" data-fr="Retour" data-pt="Voltar" data-en="Back">Volver</button>
+    <button class="btn" id="btnConfirm" disabled onclick="startCareer()" data-es="Confirmar identidad" data-pt="Confirmar identidade" data-pl="Potwierdź tożsamość" data-fr="Confirmer l'identité" data-pt="Confirmar identidade" data-en="Confirm identity">Confirmar identidad</button>
+  </div>
+</section>
+
+<!-- ========== CAREER ========== -->
+<section id="career">
+  <div id="printHeader" class="print-only"></div>
+  <div class="career-grid">
+    <div>
+      <div class="card" id="driverCard">
+        <div class="pl-name" id="plName"></div>
+      <div class="driver-head">
+          <div class="ovr-badge" id="ovrBadge"><span class="n" id="ovrNum">50</span><span class="l">OVR</span></div>
+          <div class="driver-meta">
+            <div class="tags">
+              <span class="tag" id="tagNat">🌍</span>
+              <span class="tag red" id="tagNum">#10</span>
+              <span class="tag" id="tagStyle"></span>
+            </div>
+          </div>
+          <div class="agev">
+            <div class="lbl" data-es="EDAD" data-pt="IDADE" data-pl="WIEK" data-fr="ÂGE" data-pt="IDADE" data-en="AGE">EDAD</div><div class="a" id="ageV">16</div>
+            <div class="lbl" data-es="FAMA" data-pt="FAMA" data-pl="SŁAWA" data-fr="RENOMMÉE" data-pt="FAMA" data-en="FAME">FAMA</div><div class="v" id="valV">Desconocido</div>
+          </div>
+        </div>
+        <div class="team" id="teamLine"><span class="team-dot" id="teamDot"></span><span class="tname" id="teamName">Sin asiento</span><span class="trole" id="teamRole"></span></div>
+        <div class="stats-row">
+          <div class="stat"><div class="k">GP</div><div class="v" id="stGP">0</div></div>
+          <div class="stat"><div class="k" data-es="Victorias" data-pt="Vitórias" data-pl="Zwycięstwa" data-fr="Victoires" data-pt="Vitórias" data-en="Wins">Victorias</div><div class="v w" id="stW">0</div></div>
+          <div class="stat"><div class="k" data-es="Podios" data-pt="Pódios" data-pl="Podia" data-fr="Podiums" data-pt="Pódios" data-en="Podiums">Podios</div><div class="v p" id="stP">0</div></div>
+          <div class="stat"><div class="k">Poles</div><div class="v pp" id="stPP">0</div></div>
+        </div>
+        <div class="trophies" id="trophyCase"><div class="empty" data-es="🏆 Vitrina vacía" data-pt="🏆 Vitrine vazia" data-pl="🏆 Pusta gablota" data-fr="🏆 Vitrine vide" data-pt="🏆 Vitrine vazia" data-en="🏆 Empty trophy case">🏆 Vitrina vacía</div></div>
+      </div>
+
+      <div id="decRecap" style="display:none"></div>
+
+      <div class="decision" id="decisionBox">
+        <h3 id="decTitle">Ofertas</h3>
+        <p id="decSub"></p>
+        <div class="offers" id="offerList"></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="card f1state" id="f1state" style="display:none">
+        <div class="cols">
+          <div class="fs-season" id="fsSeason" style="grid-column:1/-1"></div><div><h5><span data-es="👑 Mundial de pilotos" data-pt="👑 Mundial de pilotos" data-pl="👑 Mistrzostwa kierowców" data-fr="👑 Championnat pilotes" data-pt="👑 Mundial de pilotos" data-en="👑 Drivers' Championship">👑 Mundial de pilotos</span> <span id="fsYear"></span><button class="fs-more" id="fsMoreD" onclick="fsToggle()" title="Ver las dos clasificaciones enteras">▾</button></h5><div id="fsDrivers"></div></div>
+          <div><h5><span data-es="🏭 Constructores" data-pt="🏭 Construtores" data-pl="🏭 Konstruktorzy" data-fr="🏭 Constructeurs" data-pt="🏭 Construtores" data-en="🏭 Constructors">🏭 Constructores</span><button class="fs-more" id="fsMoreC" onclick="fsToggle()" title="Ver las dos clasificaciones enteras">▾</button></h5><div id="fsTeams"></div></div>
+        </div>
+      </div>
+      <div class="timeline">
+        <div class="tl-head"><span data-es="Edad" data-pt="Idade" data-pl="Wiek" data-fr="Âge" data-pt="Idade" data-en="Age">Edad</span><span data-es="Equipo" data-pt="Equipe" data-pl="Zespół" data-fr="Écurie" data-pt="Equipa" data-en="Team">Equipo</span><span>OVR</span><span data-es="V" data-pt="V" data-pl="Z" data-fr="V" data-pt="V" data-en="W">V</span><span data-es="Pod" data-pt="Pód" data-pl="Pod" data-fr="Pod" data-pt="Pód" data-en="Pod">Pod</span><span data-es="Camp." data-pt="Camp." data-pl="Mistrz." data-fr="Champ." data-pt="Camp." data-en="Champ.">Camp.</span></div>
+        <div class="tl-body" id="tlBody"><div class="tl-empty" data-es="Tu historia empieza aquí…" data-pt="A sua história começa aqui…" data-pl="Twoja historia zaczyna się tutaj…" data-fr="Ton histoire commence ici…" data-pt="A tua história começa aqui…" data-en="Your story starts here…">Tu historia empieza aquí…</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== END ========== -->
+<button id="reopenBtn" onclick="reopenSummary()" data-es="↩︎ Volver al resumen" data-pt="↩︎ Voltar ao resumo" data-pl="↩︎ Wróć do podsumowania" data-fr="↩︎ Retour au résumé" data-pt="↩︎ Voltar ao resumo" data-en="↩︎ Back to summary">↩︎ Volver al resumen</button>
+
+<div id="endModal">
+  <div class="end-card">
+    <div class="end-hero">
+      <div class="flag-line">🏁🏁🏁</div>
+      <h2 id="endName"></h2>
+      <div class="legacy" id="endLegacy"></div>
+      <div class="years" id="endYears"></div>
+    </div>
+    <div class="end-body">
+      <div class="careermap" id="careerMap"></div>
+      <div class="end-stats">
+        <div><div class="v" id="eGP">0</div><div class="k" data-es="Grandes Premios" data-pt="Grandes Prêmios" data-pl="Grand Prix" data-fr="Grands Prix" data-pt="Grandes Prémios" data-en="Grands Prix">Grandes Premios</div></div>
+        <div><div class="v" id="eW">0</div><div class="k" data-es="Victorias" data-pt="Vitórias" data-pl="Zwycięstwa" data-fr="Victoires" data-pt="Vitórias" data-en="Wins">Victorias</div></div>
+        <div><div class="v" id="eP">0</div><div class="k" data-es="Podios" data-pt="Pódios" data-pl="Podia" data-fr="Podiums" data-pt="Pódios" data-en="Podiums">Podios</div></div>
+        <div><div class="v" id="ePP">0</div><div class="k">Poles</div></div>
+        <div><div class="v" id="eT">0</div><div class="k" data-es="Mundiales F1" data-pt="Mundiais de F1" data-pl="Tytuły F1" data-fr="Titres F1" data-pt="Mundiais F1" data-en="F1 Titles">Mundiales F1</div></div>
+        <div><div class="v" id="eC">0</div><div class="k" data-es="Constructores" data-pt="Construtores" data-pl="Konstruktorzy" data-fr="Constructeurs" data-pt="Construtores" data-en="Constructors">Constructores</div></div>
+        <div><div class="v" id="eSub">0</div><div class="k" data-es="Subcampeonatos" data-pt="Vice-campeonatos" data-pl="Wicemistrzostwa" data-fr="Places de vice-champion" data-pt="Vice-campeonatos" data-en="Runner-ups">Subcampeonatos</div></div>
+        <div><div class="v" id="ePts">0</div><div class="k" data-es="Puntos F1" data-pt="Pontos de F1" data-pl="Punkty F1" data-fr="Points F1" data-pt="Pontos F1" data-en="F1 Points">Puntos F1</div></div>
+      </div>
+      <div class="shelf" id="endShelf"></div>
+      <div class="advbox" id="endAdv"></div>
+      <div class="hall" id="hallFame"></div>
+      <div class="verdict" id="endVerdict"></div>
+      <div class="legend-score" id="legendScore"></div>
+      <div class="end-actions">
+        <div class="ea-row">
+          <!-- 🔁 el botón más pulsado del final: repetir sin volver a rellenar la ficha. Va PRIMERO
+               a propósito (idea de Carlos: «daría una rejugabilidad muy buena»). -->
+          <!-- ⚠️ etiqueta CORTA: «Otra con el mismo piloto» se partía en cuatro líneas dentro de la
+               pastilla en un móvil de 375px. El detalle largo ya lo cuenta el título de al lado. -->
+          <button class="btn sm" id="againBtn" onclick="playAgainSameSettings()" title="Repite conservando apellido, dorsal, país, estilo y época" data-es="🔁 Mismo piloto" data-pt="🔁 Mesmo piloto" data-pl="🔁 Ten sam kierowca" data-fr="🔁 Même pilote" data-en="🔁 Same driver">🔁 Mismo piloto</button>
+          <button class="btn sm line" onclick="location.reload()" data-es="Empezar de cero" data-pt="Começar do zero" data-pl="Zacznij od zera" data-fr="Repartir de zéro" data-en="Start from scratch">Empezar de cero</button>
+        </div>
+        <div class="ea-row">
+          <button class="btn sm line" id="shareBtn" onclick="shareCareer()" data-es="📸 Compartir" data-pt="📸 Compartilhar" data-pl="📸 Udostępnij" data-fr="📸 Partager" data-pt="📸 Partilhar" data-en="📸 Share">📸 Compartir</button>
+          <button class="btn sm line" onclick="viewCareer()" data-es="👁️ Ver carrera" data-pt="👁️ Ver carreira" data-pl="👁️ Zobacz karierę" data-fr="👁️ Voir la carrière" data-pt="👁️ Ver carreira" data-en="👁️ View career">👁️ Ver carrera</button>
+        </div>
+        <div class="ea-row">
+          <button class="btn sm line" id="rankBtn" onclick="openRanking()">🏆 Ranking</button>
+        </div>
+      </div>
+      <div class="end-kofi">
+        <p data-es="Esto lo hago en mi tiempo libre, pero me encantaría seguir metiendo mejoras y nuevos modos de juego. Puedes invitarme a un café… o hacerte mecenas." data-pt="Faço isto no meu tempo livre, mas adoraria continuar colocando melhorias e novos modos de jogo. Você pode me pagar um café… ou virar mecenas." data-pl="Robię to po godzinach, ale chciałbym dalej dorzucać ulepszenia i nowe tryby gry. Możesz postawić mi kawę… albo zostać patronem." data-fr="Je fais ça sur mon temps libre, mais j'aimerais continuer à ajouter des améliorations et de nouveaux modes de jeu. Tu peux m'offrir un café… ou devenir mécène." data-pt="Faço isto nos meus tempos livres, mas adorava continuar a acrescentar melhorias e novos modos de jogo. Podes pagar-me um café… ou tornar-te apoiante." data-en="I build this in my free time, but I'd love to keep adding improvements and new game modes. You can buy me a coffee… or become a supporter.">Esto lo hago en mi tiempo libre, pero me encantaría seguir metiendo mejoras y nuevos modos de juego. Puedes invitarme a un café… o hacerte mecenas.</p>
+        <a class="kofi-btn" href="https://ko-fi.com/carlosperezesp" target="_blank" rel="noopener" onclick="track('kofi_click',{from:'end'})" data-es="☕ Invítame a un café" data-pt="☕ Me pague um café" data-pl="☕ Postaw mi kawę" data-fr="☕ Offre-moi un café" data-pt="☕ Paga-me um café" data-en="☕ Buy me a coffee">☕ Invítame a un café</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 🏆 RANKING (oculto tras PREVIEW) -->
+<div id="rankModal">
+  <div class="rank-card">
+    <div class="rank-head">
+      <h2>🏆 <span data-es="Ranking de leyendas" data-pt="Ranking de lendas" data-pl="Ranking legend" data-fr="Classement des légendes" data-pt="Classificação de lendas" data-en="Legends ranking">Ranking de leyendas</span></h2>
+      <button class="rank-x" onclick="closeRanking()">✕</button>
+    </div>
+    <div class="rank-tabs" id="rankTabs"></div>
+    <div class="rank-tabs sub" id="rankEras" style="display:none"></div>
+    <div class="rank-me" id="rankMe"></div>
+    <div class="rank-list" id="rankList"></div>
+  </div>
+</div>
+
+<!-- ☕ MURO DE MECENAS -->
+<div id="patronModal">
+  <div class="rank-card">
+    <div class="rank-head">
+      <h2>☕ <span data-es="Muro de mecenas" data-pt="Mural de mecenas" data-pl="Ściana patronów" data-fr="Mur des mécènes" data-pt="Mural de apoiantes" data-en="Wall of supporters">Muro de mecenas</span></h2>
+      <button class="rank-x" onclick="closePatrons()">✕</button>
+    </div>
+    <div class="rank-list" id="patronList"></div>
+  </div>
+</div>
+
+<!-- 👥 MODO TP: parrilla completa + pool de reservas (capa de información del mercado) -->
+<div id="tpGridModal">
+  <div class="rank-card">
+    <div class="rank-head">
+      <h2>👥 <span data-es="Parrilla y mercado" data-pt="Grid e mercado" data-pl="Stawka i rynek" data-fr="Plateau et marché" data-pt="Grelha e mercado" data-en="Grid & market">Parrilla y mercado</span></h2>
+      <button class="rank-x" onclick="closeTPGrid()">✕</button>
+    </div>
+    <div class="rank-list" id="tpGridList"></div>
+  </div>
+</div>
+
+  <script src="/js/game.js" defer></script>
+  <!-- Vercel Web Analytics stub -->
+  <script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments);};</script>
+  <script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>

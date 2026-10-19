@@ -1,0 +1,1258 @@
+/* 🏁 Windows no trae dibujos de banderas: pinta «ES», «BR», «IT» en vez de 🇪🇸 🇧🇷 🇮🇹.
+   Esta fuente SOLO contiene los glifos de bandera (76 KB), así que el resto del texto y
+   los demás emoji (🥇 👑 🏆) los sigue pintando el sistema. La cargamos en todos los
+   dispositivos a propósito: así el juego se ve igual en Mac, Windows, Android y Linux,
+   y la tarjeta que se comparte en redes también.
+   Dibujos: Twemoji © Twitter, Inc. y colaboradores — CC BY 4.0. Crédito en el aviso legal. */
+@font-face{
+  font-family:'Twemoji Country Flags';
+  src:url('TwemojiCountryFlags.woff2') format('woff2'); /* relativa: index.html vive en la raíz, y así también funciona abriendo el archivo en local */
+  font-display:block; /* mejor un parpadeo corto que ver la bandera cambiar delante del jugador */
+  unicode-range:U+1F1E6-1F1FF; /* 🏁 SOLO banderas: el navegador no la mezcla con nada más */
+}
+:root{
+  --bg:#f5f5f9; --panel:#ffffff; --panel2:#f2f2f7; --line:#e6e6ee;
+  --text:#15151e; --muted:#70707c; --accent:#e10600; --accent2:#ff7a00; --gold:#c98f00;
+  --shadow:0 10px 30px rgba(21,21,30,.08), 0 2px 8px rgba(21,21,30,.05);
+}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Twemoji Country Flags',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+body{color:var(--text);min-height:100vh;background:
+  radial-gradient(900px 500px at 85% -5%, rgba(225,6,0,.07), transparent 60%),
+  radial-gradient(700px 500px at -10% 100%, rgba(255,122,0,.06), transparent 55%),
+  linear-gradient(160deg,#fdfdfe,#eef0f6)}
+button{cursor:pointer;font-family:inherit}
+h1,h2,h3{font-style:italic;letter-spacing:-.5px}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes drift{0%{transform:translate(0,0) scale(1)}50%{transform:translate(30px,-20px) scale(1.15)}100%{transform:translate(0,0) scale(1)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}
+@keyframes shine{0%{background-position:-200% 0}100%{background-position:200% 0}}
+
+/* ---------- intro ---------- */
+#intro{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;padding:24px 24px 60px;position:relative;overflow:hidden}
+#intro::before{content:"";position:absolute;width:520px;height:520px;border-radius:50%;top:-160px;right:-120px;
+  background:radial-gradient(circle at 35% 35%, rgba(225,6,0,.16), rgba(255,122,0,.05) 55%, transparent 70%);
+  animation:drift 9s ease-in-out infinite}
+#intro::after{content:"";position:absolute;left:0;right:0;bottom:0;height:16px;opacity:.9;
+  background:repeating-conic-gradient(#15151e 0% 25%, #fff 0% 50%) 0 0/32px 32px}
+#intro .flag{font-size:46px;letter-spacing:6px;animation:fadeUp .6s both}
+#intro .flag svg{display:block;margin:0 auto;filter:drop-shadow(0 7px 18px rgba(225,6,0,.32))}
+#intro h1{font-size:clamp(36px,6vw,68px);font-weight:900;text-align:center;line-height:1.02;animation:fadeUp .6s .08s both}
+#intro h1 span{background:linear-gradient(92deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+#intro p{color:var(--muted);max-width:540px;text-align:center;font-size:17px;line-height:1.55;animation:fadeUp .6s .16s both}
+.btn{border:none;border-radius:999px;padding:16px 40px;font-size:17px;font-weight:800;color:#fff;
+  background:linear-gradient(135deg,#e10600,#ff4d1c);
+  box-shadow:0 8px 22px rgba(225,6,0,.35), 0 2px 6px rgba(225,6,0,.25);
+  transition:transform .15s, box-shadow .15s}
+.btn:hover{transform:translateY(-2px) scale(1.03);box-shadow:0 14px 30px rgba(225,6,0,.42)}
+.btn.ghost{background:transparent;color:var(--text);border:1.5px solid var(--text);box-shadow:none}
+.btn.ghost:hover{box-shadow:0 6px 16px rgba(21,21,30,.15)}
+.btn:disabled{opacity:.35;cursor:default;transform:none;box-shadow:none}
+#intro .btn{animation:fadeUp .6s .24s both}
+.mode-menu{display:flex;flex-direction:column;gap:11px;width:100%;max-width:430px;margin:4px auto 0;animation:fadeUp .6s .32s both}
+.mode-card{position:relative;display:flex;align-items:center;gap:13px;padding:13px 18px;border:2px solid var(--line);border-radius:16px;background:var(--panel);text-align:left}
+.mode-card.soon{opacity:.5}
+/* 🎨 LOS ICONOS DE CARLOS, EN SU TEJA (3-sep-2026). Sustituyen a los emojis del menú. Van sobre una
+   teja clara y no sueltos, porque están dibujados con trazo azul MUY oscuro (#2b3440) y el panel del
+   modo oscuro es #1d1f28: sin fondo propio, el volante negro de «carrera» y los radios de «retro»
+   desaparecían. La teja es la misma en los dos temas, así que el icono se ve igual de bien en ambos
+   y no hace falta inventarse una segunda versión de cada dibujo.
+   ⚠️ Y van redimensionados a 96px en /ico/: los originales son de 637 a 704px y pesaban 532 KB entre
+   los cuatro, medio mega que cargaba todo el que entra para verlos a 30 píxeles. Ahora, 56 KB. */
+/* 🎨 SIN TEJA (Carlos, 3-sep: «no me gusta que vengan rodeados de un cuadrado blanco. Solo quiero el
+   logo»). Los tres de las tarjetas llevan relleno claro propio —el calendario, la camisa, la llanta—
+   así que se sostienen sobre el panel oscuro sin fondo detrás. El que NO se sostenía era el volante
+   negro del botón rojo, y ese es otro caso. */
+.mode-ico{flex-shrink:0;width:38px;height:38px;
+  display:flex;align-items:center;justify-content:center}
+.mode-ico img{display:block;width:34px;height:34px;object-fit:contain}
+.mode-card{transition:border-color .15s, transform .15s, box-shadow .15s}
+.mode-card:not(.soon):hover{border-color:var(--accent);transform:translateY(-1px)}
+/* 🏁 y el botón grande estrena el volante: es el modo principal y no tenía icono ninguno */
+.btn-ico{display:inline-flex;align-items:center;justify-content:center;gap:10px}
+/* 🏁 el volante, a su tamaño y con sus colores (Carlos, 3-sep: «se ve muy pequeño, lo quiero con los
+   colores originales, mismo tamaño que los otros»). */
+.btn-ico::before{content:"";width:42px;height:42px;flex-shrink:0;
+  background:url("/ico/carrera.png") center/contain no-repeat}
+.mode-txt{display:flex;flex-direction:column;min-width:0}
+.mode-txt b{font-size:15px;font-weight:800;color:var(--text)}
+.mode-txt small{font-size:12px;color:var(--muted);margin-top:1px}
+.soon-badge{position:absolute;top:-9px;right:14px;background:linear-gradient(135deg,#ffb52e,#e10600);color:#fff;font-size:10px;font-weight:900;letter-spacing:.4px;text-transform:uppercase;padding:3px 10px;border-radius:999px;box-shadow:0 3px 8px rgba(225,6,0,.28);transform:rotate(2.5deg)}
+#previewBar{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);background:#15151e;color:#fff;font-size:12px;font-weight:700;padding:7px 16px;border-radius:999px;z-index:999;box-shadow:0 4px 14px rgba(0,0,0,.35);opacity:.94;white-space:nowrap}
+#previewBar a{color:#ffb52e;text-decoration:underline}
+/* cartel «¡Nuevo!»: misma pastilla que PRÓXIMAMENTE pero en dorado y con destello que la recorre */
+.new-badge{position:absolute;top:-9px;right:14px;z-index:2;overflow:hidden;
+  background:linear-gradient(135deg,#ffd54a,#e2a400 55%,#c9820a);color:#4a2f00;
+  font-size:10px;font-weight:900;letter-spacing:.4px;text-transform:uppercase;padding:3px 11px;border-radius:999px;
+  box-shadow:0 3px 10px rgba(226,164,0,.5),inset 0 1px 0 rgba(255,255,255,.65);transform:rotate(-2.5deg)}
+.new-badge::after{content:"";position:absolute;top:0;left:-70%;width:45%;height:100%;pointer-events:none;
+  background:linear-gradient(105deg,transparent,rgba(255,255,255,.95),transparent);transform:skewX(-18deg);
+  animation:shine 2.6s ease-in-out infinite}
+.mode-card.retro-on{opacity:1;cursor:pointer;transition:border-color .15s}
+.mode-card.retro-on:hover{border-color:var(--accent)}
+.mode-card.retro-on .mode-ico{filter:none}
+.retro-caret{margin-left:auto;font-size:15px;color:var(--muted);transition:transform .2s;flex-shrink:0}
+/* 🧭 el menú de cuatro modos (19-sep-2026) */
+.decade-grid.retro-pick{grid-template-columns:1fr 1fr}
+.decade-grid .dec.modo{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
+  min-height:92px;padding:10px 6px;font-size:13px;line-height:1.2;background:var(--panel2);color:var(--text);border-color:var(--line)}
+.decade-grid .dec.modo img{width:42px;height:42px}
+.decade-grid .dec.modo:hover{border-color:var(--accent)}
+.decade-grid .dec.modo.locked{opacity:.55}
+.decade-grid .dec.sel{outline:3px solid var(--accent);outline-offset:2px}
+.decade-grid .dec.modo.sel{border-color:var(--accent);background:var(--panel)}
+#yearGrid{margin-top:8px;border-top:2px solid var(--line);border-radius:16px}
+.reto-panel{display:block}
+.reto-strip{display:grid;grid-auto-flow:column;grid-template-rows:repeat(2,auto);
+  grid-auto-columns:calc((100% - 24px)/4);gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;
+  padding-bottom:4px;scrollbar-width:thin}
+.reto-strip .dec.reto{scroll-snap-align:start;min-height:74px;padding:8px 3px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:3px;text-align:center}
+.reto-strip .reto-n{font-size:19px;line-height:1;font-weight:900}
+.reto-strip .reto-t{font-size:10px;line-height:1.2;font-weight:700;opacity:.95;hyphens:auto;-webkit-hyphens:auto;overflow-wrap:break-word;max-width:100%}
+.reto-strip .dec.reto.actual{outline:3px solid #ffb52e;outline-offset:2px}
+.reto-strip .reto-a{font-size:10px;font-weight:800;opacity:.8;letter-spacing:.04em;font-variant-numeric:tabular-nums}
+#yearGrid{grid-template-columns:repeat(5,1fr)}
+#yearGrid .dec{min-height:48px;font-size:13px}
+#yearGrid .dec.car{min-height:62px}
+.mode-card.open .retro-caret{transform:rotate(180deg)}
+.decade-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;width:100%;max-width:430px;margin:-3px auto 0;
+  padding:13px;border:2px solid var(--line);border-top:none;border-radius:0 0 16px 16px;background:var(--panel);animation:fadeUp .25s both}
+.decade-grid .dec{font-family:inherit;font-weight:800;font-size:14px;padding:10px 0;border-radius:11px;
+  border:2px solid var(--accent);background:var(--accent);color:#fff;cursor:pointer;transition:transform .1s}
+.decade-grid .dec:active{transform:scale(.94)}
+/* el botón del RETO lleva el mismo degradado y brillo que «Iniciar carrera»: es la llamada principal */
+#challengeGrid .dec{background:linear-gradient(135deg,#e10600,#ff4d1c);border-color:transparent;
+  box-shadow:0 6px 18px rgba(225,6,0,.32), 0 2px 6px rgba(225,6,0,.22)}
+#challengeGrid .dec:hover{filter:brightness(1.06)}
+.decade-grid .dec.locked{background:var(--panel2);border-color:var(--line);color:var(--muted);opacity:.55;cursor:default}
+/* la década con cuenta atrás va en ROJO como las jugables (está a punto de llegar, no «apagada» como
+   las décadas lejanas), solo que con la cuenta debajo. Sin dorado: llamaba demasiado la atención. */
+.decade-grid .dec .dec-sub{display:block;font-size:10px;font-weight:800;letter-spacing:.3px;opacity:.85;margin-top:1px;text-transform:uppercase;font-variant-numeric:tabular-nums}
+/* 🏎️ LA DÉCADA CON SU COCHE (ilustraciones de Carlos, 3-sep-2026). La librea dice la época aunque a
+   este tamaño no distingas el coche: eso fue lo que decidió el diseño —«lo que mola es que asocias
+   cada librea a una época»—. El coche cabe ENTERO en los 81px que mide el botón en un móvil, sin
+   recortar, y el año se le monta un poco encima; probamos a ampliarlo para que llenara y se comía
+   los alerones. Las imágenes van a 420px y con la paleta recortada: 62 KB las cuatro, frente a los
+   840 KB de los originales. */
+.decade-grid .dec.car{position:relative;overflow:hidden;min-height:62px;padding:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:flex-start}
+.decade-grid .dec.car .dec-y{position:relative;z-index:2;font-size:17px;line-height:1;padding-top:9px;
+  text-shadow:0 1px 4px rgba(0,0,0,.55), 0 0 12px rgba(0,0,0,.4)}
+.decade-grid .dec.car .dec-sub{position:relative;z-index:2;text-shadow:0 1px 3px rgba(0,0,0,.5)}
+.decade-grid .dec.car img{position:absolute;left:2px;right:2px;bottom:9px;width:calc(100% - 4px);
+  filter:drop-shadow(0 2px 4px rgba(0,0,0,.35));pointer-events:none}
+/* 🩶 las décadas aún cerradas llevan su coche en GRIS (Carlos, 3-sep): se ve qué época te espera sin
+   que parezca que ya se puede jugar. El gris va en la propia imagen, no con un filtro CSS, para que
+   no cueste pintado en cada repintado. */
+.decade-grid .dec.locked.car .dec-y{text-shadow:none}
+.decade-grid .dec.locked.car img{filter:none;opacity:.75}
+/* 📏 las ocho, exactamente iguales de alto y con el año a la misma altura: las cerradas se veían más
+   bajas y el año más arriba, y la fila quedaba descuadrada (lo vio Carlos). */
+.decade-grid .dec.car{min-height:70px}
+.decade-grid .dec.car .dec-y{padding-top:13px}
+/* con una línea más de texto —la cuenta atrás, o el «¡nuevo!» de las recién abiertas— el botón
+   crece y el coche baja, para que no queden los tres apretados en 62px. Lo tenía atado solo a la
+   cuenta atrás y el «¡nuevo!» de 1990 se comía el coche. */
+.decade-grid .dec.car.con-sub{min-height:76px}
+.decade-grid .dec.car.con-sub img{bottom:5px}
+.decade-grid .dec.dec-count{opacity:1;background:#ff8168;border-color:#ff8168;color:#fff}
+/* 📚 archivo de retos: siguen jugables, pero en discreto para que destaque el actual */
+.decade-grid .dec.dec-arch{background:var(--panel2);border-color:var(--line);color:var(--ink);opacity:.8}
+.dec-note{grid-column:1/-1;text-align:center;font-size:11.5px;color:var(--muted);margin-top:3px}
+
+/* ---------- identity ---------- */
+#identity{display:none;max-width:1100px;margin:0 auto;padding:32px 20px}
+#identity h2{font-size:32px;font-weight:900;margin-bottom:6px}
+#identity .lead{color:var(--muted);margin-bottom:24px}
+.id-grid{display:grid;grid-template-columns:1fr 1.2fr 1fr;gap:22px}
+/* en un RETO solo hay dos tarjetas: se centran y se estrechan para que no queden descolgadas */
+.id-grid.duo{grid-template-columns:minmax(0,340px) minmax(0,420px);justify-content:center}
+/* retos de REGLAS (La Bestia): son CUATRO tarjetas y con 3 columnas la última caía suelta y feo.
+   En 2×2 quedan equilibradas y centradas. */
+.id-grid.cuatro{grid-template-columns:repeat(2,minmax(0,420px));justify-content:center;align-items:start}
+#identity.challenge .actions{max-width:790px;margin-left:auto;margin-right:auto}
+/* 🔘 los botones de la FICHA son más pequeños que la llamada de la portada: ahí no hay que gritar,
+   solo confirmar. Con el aviso de muertes de los 90 encima, a tamaño grande se comían la pantalla
+   (captura de Carlos). Solo afecta a #identity: «Iniciar carrera» sigue igual de grande. */
+.actions .btn{padding:12px 26px;font-size:15px}
+@media(max-width:520px){ .actions .btn{padding:11px 20px;font-size:14.5px} }
+@media(max-width:900px){.id-grid,.id-grid.duo,.id-grid.cuatro{grid-template-columns:1fr}}
+/* etiquetas fijas del reto: 2×2 en vez de una fila que se desborda */
+#chFixed{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+#chFixed .mini-badge{text-align:center}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.card::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;
+  background:linear-gradient(90deg,var(--accent),var(--accent2) 55%,transparent)}
+.card h3{font-size:14px;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:14px;text-align:center;font-style:normal}
+.numplate{width:92px;height:92px;margin:2px auto 18px;border-radius:20px;background:linear-gradient(135deg,#ffffff,#ececf4);border:2px solid var(--line);display:flex;align-items:center;justify-content:center;box-shadow:0 3px 12px rgba(0,0,0,.07)}
+.numplate span{font-family:"Arial Narrow","Impact","Haettenschweiler","Oswald",sans-serif;font-weight:800;font-style:italic;font-size:46px;line-height:1;color:#16161e;letter-spacing:1px}
+.numplate span:empty::before{content:"N\00BA";opacity:.28;font-size:34px}
+.field label{display:block;font-size:11px;letter-spacing:1px;color:var(--muted);text-transform:uppercase;margin:12px 0 5px}
+.field input{width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:12px;color:var(--text);padding:12px 14px;font-size:16px;outline:none;transition:border-color .15s, box-shadow .15s}
+.field input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(225,6,0,.12)}
+.country-list{max-height:340px;overflow-y:auto;display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px;padding-right:4px}
+.country-list::-webkit-scrollbar{width:6px}
+.country-list::-webkit-scrollbar-thumb{background:#d4d4de;border-radius:3px}
+.country-list button{display:flex;align-items:center;gap:8px;background:var(--panel2);border:1px solid transparent;border-radius:10px;color:#3a3a44;padding:9px 10px;font-size:14px;text-align:left;transition:all .12s}
+.country-list button:hover{border-color:#c9c9d4;transform:translateX(2px)}
+.country-list button.sel{background:linear-gradient(135deg,#15151e,#33333f);color:#fff;font-weight:700;box-shadow:0 4px 10px rgba(21,21,30,.25)}
+.style-cards{display:flex;flex-direction:column;gap:10px}
+.style-cards button{background:var(--panel2);border:1.5px solid var(--line);border-radius:14px;padding:14px;text-align:left;color:var(--text);transition:all .15s}
+.style-cards button:hover{transform:translateY(-1px);box-shadow:0 6px 14px rgba(21,21,30,.10)}
+.style-cards button.sel{border-color:#15151e;background:linear-gradient(135deg,#15151e,#33333f);color:#fff;box-shadow:0 8px 18px rgba(21,21,30,.3)}
+.style-cards .t{font-weight:800;font-size:15px}
+.style-cards .d{font-size:12.5px;opacity:.7;margin-top:3px;line-height:1.35}
+#identity .actions{display:flex;justify-content:space-between;margin-top:26px}
+
+/* ---------- career ---------- */
+#career{display:none;max-width:1240px;margin:0 auto;padding:26px 20px 60px}
+.career-grid{display:grid;grid-template-columns:430px 1fr;gap:22px;align-items:start}
+@media(max-width:980px){
+  /* apilar e intercalar: tarjeta → clasificación → ofertas → trayectoria,
+     para decidir viendo lo que acabas de hacer */
+  .career-grid{display:flex;flex-direction:column;gap:16px;align-items:stretch}
+  .career-grid>div{display:contents}
+  #driverCard{order:1}
+  #decRecap{order:2}
+  #f1state{order:3;margin-bottom:0}
+  #decisionBox{order:4;margin-top:0}
+  .timeline{order:5}
+}
+
+.driver-head{display:flex;gap:16px;align-items:center;position:relative}
+.ovr-badge{width:78px;height:78px;border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:900;flex-shrink:0;color:#fff;
+  box-shadow:0 8px 18px rgba(21,21,30,.25), inset 0 1px 0 rgba(255,255,255,.35);position:relative;overflow:hidden}
+.ovr-badge::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,.35) 50%,transparent 70%);
+  background-size:200% 100%;animation:shine 3.5s linear infinite}
+.ovr-badge .n{font-size:32px;line-height:1}
+.ovr-badge .l{font-size:10px;letter-spacing:1.5px;opacity:.9}
+.driver-meta{flex:1;min-width:0}
+.driver-meta .tags{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:6px}
+.tag{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:3px 9px;font-size:12px;font-weight:700;white-space:nowrap}
+/* comparación del reto (tú contra el palmarés real): duelo con barra de progreso */
+/* (las reglas .cmp-* de la tabla «lo has hecho mejor que él» se fueron con ella el 14-ago) */
+.tag.red{background:linear-gradient(135deg,rgba(225,6,0,.12),rgba(255,122,0,.10));border-color:rgba(225,6,0,.3);color:#b30500}
+#teamLine{display:flex;align-items:center;gap:9px;font-size:19px;font-weight:800;min-width:0;margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+#teamLine .tname{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#teamLine .trole{flex-shrink:0;font-size:11px;font-weight:800;letter-spacing:.3px;padding:2px 9px;border-radius:999px;background:#eef2f8;color:#3a4658;border:1px solid #dbe3ee}
+#teamLine .trole:empty{display:none}
+.agev{text-align:right;flex-shrink:0}
+.agev .a{font-size:27px;font-weight:900}
+.agev .lbl{font-size:10px;letter-spacing:1px;color:var(--muted)}
+/* 🧑‍💼 la tarjeta del JEFE lleva más chips (contrato, dueño, objetivo): se compacta para que no se pise */
+.card.tp .agev .v{font-size:15px;font-weight:800}
+.card.tp .driver-meta .tags{row-gap:5px}
+/* ⭐ estrellas de calidad→potencial en UNA sola fila: llenas=hoy · huecas de color=potencial · resto apagado */
+.st-c{color:#d9a406}
+.st-p{color:#3d8bd4}
+.st-e{color:var(--muted);opacity:.45}
+/* 🪑 tus tres asientos, con el reborde de TU equipo (aunque estén vacíos) */
+.gar-chip{display:inline-block;border:2px solid;border-radius:9px;padding:2px 9px;margin:2px 3px 2px 0;font-size:12.5px;font-weight:700;background:var(--panel2)}
+/* 📞 la probabilidad de que venga, en color y una palabra */
+.odds{display:inline-block;border-radius:7px;padding:1px 7px;font-size:11.5px;font-weight:800}
+.odds.o4{background:rgba(18,146,63,.16);color:#12923f}
+.odds.o3{background:rgba(201,138,30,.16);color:#c98a1e}
+.odds.o2{background:rgba(212,101,30,.16);color:#d4651e}
+.odds.o1{background:rgba(212,63,63,.16);color:#d43f3f}
+/* 📈 la tendencia del coche, como chip de color en la cabecera del rumbo */
+.tr-chip{display:inline-block;border-radius:7px;padding:1px 8px;font-size:12px;font-weight:800;vertical-align:1px}
+.tr-chip.up2{background:rgba(18,146,63,.18);color:#12923f}
+.tr-chip.up{background:rgba(18,146,63,.12);color:#2a9d4f}
+.tr-chip.flat{background:var(--panel2);color:var(--muted)}
+.tr-chip.down{background:rgba(212,101,30,.14);color:#d4651e}
+.tr-chip.down2{background:rgba(212,63,63,.16);color:#d43f3f}
+/* ⚠️ el precio de sacrificar el año, en su propio renglón y su propio color */
+.aviso-consejo{color:#c98a1e;font-weight:700}
+.aviso-ok{color:#12923f;font-weight:700}
+.agev .v{font-size:19px;font-weight:800;background:linear-gradient(92deg,#15151e,#55555f);-webkit-background-clip:text;background-clip:text;color:transparent}
+.team-dot{width:24px;height:24px;border-radius:50%;flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.6);box-shadow:inset 0 -2px 4px rgba(0,0,0,.25), 0 1px 3px rgba(0,0,0,.25);border:2px solid #fff}
+img.tlogo{object-fit:cover;background:transparent;padding:0;text-shadow:none;border:none;box-shadow:none;vertical-align:middle}
+img.tlogo.mb{width:20px;height:20px;border:none}
+/* 🏷️ insignia de patrocinador: círculo del color de la marca + silueta del equipo tintada con su
+   segundo color. Misma huella que un tlogo para poder sustituirlo en cualquier sitio. */
+.spbadge{border-radius:50%;display:inline-flex;align-items:center;justify-content:center;
+  vertical-align:middle;flex:none;
+  /* plana a propósito (petición de Carlos): sin el reborde blanco ni las sombras que team-dot
+     le pega a las pastillas de siglas — la insignia debe verse como sus PNG, limpia */
+  border:none !important; box-shadow:none !important; text-shadow:none}
+.spbadge i{display:block;width:82%;height:82%}
+.spbadge img{display:block;width:82%;height:82%;object-fit:contain;border:none;box-shadow:none}
+.spbadge.mb{width:20px;height:20px}
+.spbadge .capa{position:absolute;inset:9%;width:82%;height:82%}
+.spbadge img.capa{object-fit:contain;border:none;box-shadow:none;border-radius:0}
+.spbadge .capa.llena{inset:0;width:100%;height:100%}
+.spbadge .capa.mini{inset:23%;width:54%;height:54%}
+.spbadge.conCapas{position:relative;overflow:hidden}
+#teamDot.haslogo{background-size:cover;background-position:center;border:none !important;box-shadow:none}
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:18px;border-top:1px solid var(--line);padding-top:14px}
+.stat{background:var(--panel2);border-radius:12px;padding:8px 4px}
+.stat .k{font-size:10px;letter-spacing:1px;color:var(--muted);text-transform:uppercase;text-align:center}
+.stat .v{font-size:21px;font-weight:900;text-align:center;margin-top:3px}
+.stat .v.w{color:#c98f00}.stat .v.p{color:#16a34a}.stat .v.pp{color:#7c3aed}
+.trophies{margin-top:16px;border-top:1px solid var(--line);padding-top:12px;text-align:center;min-height:44px}
+.trophies .empty{color:#c6c6cf;font-size:12px;letter-spacing:2px;text-transform:uppercase;padding-top:8px}
+.trophies .shelf{font-size:24px;letter-spacing:4px;line-height:1.5}
+.trophies .cap{font-size:11px;color:var(--muted);margin-top:2px}
+
+.decision{margin-top:22px}
+.decision h3{font-size:22px;font-weight:900;margin-bottom:4px}
+.decision h3.pulsing{animation:pulse 1.2s ease-in-out infinite}
+.decision p{color:var(--muted);font-size:13.5px;margin-bottom:14px;line-height:1.45}
+.decision p.outcome{color:#15151e;font-weight:600;background:linear-gradient(135deg,#fff6d8,#fffdf4);border:1px solid #f0dfa0;border-radius:12px;padding:12px 14px}
+#decRecap{background:linear-gradient(135deg,#eef4ff,#fbfcff);border:1px solid #d8e4fb;border-radius:14px;padding:11px 14px;margin-bottom:12px}
+#decRecap .recap-t{font-size:10.5px;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);font-weight:800;display:flex;align-items:center;gap:6px}
+#decRecap .recap-b{font-size:14px;margin-top:5px;line-height:1.4}
+#decRecap .rp{font-weight:800;padding:1px 8px;border-radius:7px;margin-right:2px}
+.offers{display:flex;flex-direction:column;gap:10px}
+.offer{background:linear-gradient(135deg,#eef3ff,#e6ecfb);border:1.5px solid #d4dff3;border-radius:16px;padding:14px 16px;display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;text-align:left;color:var(--text);transition:all .15s;width:100%;box-shadow:var(--shadow);animation:fadeUp .4s both;position:relative;overflow:hidden}
+/* 🏗️ fundar tu equipo (modo jefe 2026) */
+.fund{width:100%;background:var(--panel);border:1px solid var(--line);border-radius:var(--r-card,16px);padding:14px 16px;display:flex;flex-direction:column;gap:8px;box-shadow:var(--shadow)}
+.fund-l{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.fund-in{font:inherit;font-size:17px;font-weight:700;color:var(--text);background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%}
+.fund-in:focus{outline:2px solid var(--accent);outline-offset:1px}
+.fund-pal{display:flex;flex-wrap:wrap;gap:10px;margin-top:2px}
+.fund-sw{border:2px solid transparent;background:none;border-radius:50%;padding:3px;cursor:pointer;line-height:0}
+.fund-sw .team-dot{width:44px;height:44px}
+.fund-sw.on{border-color:var(--text)}
+.fund-mix .team-dot{display:flex;align-items:center;justify-content:center;font-size:20px;background:var(--panel2);border:1.5px dashed var(--muted)}
+.fund-err{font-size:13px;color:var(--accent);min-height:0}
+/* 🏛️ marcas reales que se sugieren al escribir el nombre */
+.fund-sug{display:flex;flex-direction:column;gap:6px}
+.fund-sug:empty{display:none}
+.fund-sug button{display:flex;align-items:center;gap:10px;width:100%;text-align:left;font:inherit;color:var(--text);background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:6px 10px;cursor:pointer}
+.fund-sug .team-dot,.fund-real .team-dot{width:34px;height:34px;flex-shrink:0}
+.fund-sug b{font-size:15px}
+.fund-sug small{display:block;color:var(--muted);font-size:12px}
+.fund-real{display:flex;align-items:center;gap:12px;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:8px 10px}
+.fund-real .team-dot{width:48px;height:48px}
+.fund-real .sw2{display:inline-block;width:18px;height:18px;border-radius:5px;vertical-align:middle;margin-right:4px;border:1px solid rgba(0,0,0,.15)}
+.fund-real button{margin-left:auto;font:inherit;font-size:12px;color:var(--muted);background:none;border:none;text-decoration:underline;cursor:pointer}
+.fund-err:empty{display:none}
+.offer:nth-child(2){animation-delay:.07s}.offer:nth-child(3){animation-delay:.14s}.offer:nth-child(4){animation-delay:.21s}
+.offer:hover{border-color:#15151e;transform:translateY(-2px);box-shadow:0 14px 30px rgba(21,21,30,.14)}
+.offer .dot{width:42px;height:42px;font-size:12px}
+.offer .info{flex:1;min-width:0}
+.offer .name{font-weight:800;font-size:16px}
+.offer .sub{font-size:12.5px;color:var(--muted);margin-top:2px}
+.offer .role{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.5px;border-radius:6px;padding:2px 7px;margin-left:6px;vertical-align:1px}
+.offer .role.r1{background:linear-gradient(135deg,#ffe066,#f2ae00);color:#4a3000}
+.offer .role.r2{background:#ececf1;color:#5a5a66}
+.offer .role.rt{background:#e0ecff;color:#1d4ed8}
+.offer .perfwrap{display:flex;flex-direction:column;align-items:flex-end;gap:3px;flex-shrink:0}
+.offer .perf{font-size:13px;letter-spacing:1px;background:linear-gradient(92deg,#e2a400,#ffce3a);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:800}
+.trend{font-size:12px;font-weight:900;letter-spacing:-1px;padding:1px 6px;border-radius:6px;line-height:1.4}
+.trend.up2{color:#0a7d32;background:#d7f5e0}
+.trend.up{color:#12923f;background:#e5f7ec}
+.trend.flat{color:#8a8a94;background:#eeeef2}
+.trend.down{color:#c62a2a;background:#fbe6e6}
+.trend.down2{color:#a80f0f;background:#f8d7d7}
+.otrend{display:inline-block;margin-top:6px;font-size:11px;font-weight:800;letter-spacing:.3px;padding:2px 8px;border-radius:6px}
+.otrend.up2{color:#0a7d32;background:#d7f5e0}
+.otrend.up{color:#12923f;background:#e5f7ec}
+.otrend.flat{color:#7a7a86;background:#eeeef2}
+.otrend.down{color:#c62a2a;background:#fbe6e6}
+.otrend.down2{color:#a80f0f;background:#f8d7d7}
+.carline{display:block;margin-top:5px;font-size:11.5px;color:var(--muted)}
+.offer>.sub,.offer>.otrend,.offer>.carline{flex:1 1 100%}
+.jprofile{display:inline-block;margin-top:6px;font-size:11.5px;color:#3a4150;background:#eef4ff;border:1px solid #d8e4fb;padding:3px 9px;border-radius:7px;line-height:1.35;flex:1 1 100%;margin-top:2px}
+.fit{font-weight:800;padding:1px 6px;border-radius:5px}
+.fit.good{color:#0a7d32;background:#d7f5e0}
+.fit.bad{color:#c62a2a;background:#fbe6e6}
+.fit.neu{color:#8a8a94;background:#eeeef2}
+.fs-trend{font-size:11px;font-weight:900;letter-spacing:-1px;padding:0 4px;border-radius:5px;margin-left:4px}
+.fs-trend.up2,.fs-trend.up{color:#0a7d32}.fs-trend.down,.fs-trend.down2{color:#c62a2a}.fs-trend.flat{color:#a0a0aa}
+.offer.retire{border-style:dashed;background:linear-gradient(135deg,#fff,#f7f7fa)}
+.offer.retire:hover{border-color:var(--accent)}
+.offer.dilemma{border-color:#d9c46a;background:linear-gradient(135deg,#fffdf4,#fff)}
+.offer.dilemma:hover{border-color:#c9a227}
+/* 👁️ EL BOTÓN QUE NO DECIDE NADA VA EN AZUL (Carlos, 27-ago). «Ver parrilla y mercado» solo
+   ENSEÑA: mezclado en dorado con las opciones parecía una decisión más y encabezaba la lista. El
+   azul lo saca del grupo sin esconderlo, y además ya era el color de su chapa. */
+.offer.mirar{border-color:#9dbdf0;background:linear-gradient(135deg,#f3f7ff,#fff)}
+.offer.mirar:hover{border-color:#3671C6}
+
+/* timeline */
+.timeline{background:var(--panel);border:1px solid var(--line);border-radius:20px;overflow:hidden;box-shadow:var(--shadow)}
+.tl-head,.tl-row{display:grid;grid-template-columns:52px 1fr 52px 44px 44px 74px;gap:8px;align-items:center;padding:10px 16px}
+.tl-head{font-size:10.5px;letter-spacing:1.5px;color:var(--muted);text-transform:uppercase;background:var(--panel);position:sticky;top:0;z-index:2;
+  border-bottom:2px solid transparent;
+  border-image:linear-gradient(90deg,var(--accent),var(--accent2),transparent) 1}
+.tl-body{max-height:640px;overflow-y:auto}
+.tl-body::-webkit-scrollbar{width:6px}
+.tl-body::-webkit-scrollbar-thumb{background:#d4d4de;border-radius:3px}
+.tl-row{border-bottom:1px solid rgba(21,21,30,.05);font-size:14px;transition:background .15s}
+.tl-row:hover{background:#fafafc}
+.tl-row.new{animation:fadeUp .45s both}
+.tl-row.champ{background:linear-gradient(90deg,#fff6d8,#fffdf4 60%,transparent)}
+.tl-row.champ:hover{background:linear-gradient(90deg,#ffefc2,#fffdf4 60%,transparent)}
+.tl-row .age{font-weight:800;background:var(--panel2);border-radius:9px;text-align:center;padding:6px 11px;min-width:38px;box-sizing:border-box}
+/* 🧑‍💼 en el modo jefe ese número no es la edad, es la temporada: se dice (Carlos, 30-ago). Y en UNA
+   línea —«Temporada 6», no «Temporada» encima del 6— (Carlos, 31-ago), así que la celda deja de ser
+   una columna de 52px y pasa a ocupar su propia línea, alineada a la izquierda. */
+.tl-row.tp .age{grid-column:1/-1;justify-self:start;width:auto;text-align:left;padding:3px 10px;font-size:11px;letter-spacing:.3px}
+/* 📐 …Y AL OCUPAR LA FILA ENTERA, TODO LO DEMÁS BAJA UNA CELDA. El chip de constructores dejaba de
+   caer en la columna estrecha de 74px y aterrizaba en la ancha (411px en escritorio), donde `.pos`
+   —que de base es display:block— se estiraba hasta convertirse en una barra dorada de lado a lado.
+   En móvil no cantaba porque esa columna es estrecha. Lo cazó Carlos el día del lanzamiento.
+   Se les da columna explícita en vez de dejarlo a la colocación automática. */
+.tl-row.tp > .club{grid-column:1/3}
+/* 🏆 el chip de constructores: `.pos` de base trae `padding:5px 0` —cero margen lateral— porque
+   nació para llenar su columna. Al encogerlo a su contenido se quedaba en una pastilla diminuta en
+   escritorio; en móvil no cantaba porque la columna es estrecha y la llenaba igual. Se le da el aire
+   a mano para que tenga el mismo cuerpo en las dos pantallas. */
+.tl-row.tp > .pos{grid-column:3;justify-self:end;display:inline-block;width:auto;
+  padding:5px 13px;font-size:12.5px;white-space:nowrap}
+.tl-row.tp .age .lbl{font-size:11px;font-weight:800;letter-spacing:.3px}
+.tl-row.champ .age{background:linear-gradient(135deg,#e10600,#ff4d1c);color:#fff;box-shadow:0 4px 10px rgba(225,6,0,.3)}
+.tl-row .club{display:flex;align-items:center;gap:8px;min-width:0}
+.tl-row .club .nm{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* el veredicto ocupa TODO el ancho de la fila (grid-column), como los eventos: metido en la columna
+   de 52px salía en vertical, apretado y feo — captura de Carlos */
+.tp-verdict{grid-column:2/-1;justify-self:start;display:inline-block;font-size:12px;font-weight:800;margin:4px 0 2px;padding:4px 10px;border-radius:8px}
+.tp-verdict.ok{background:rgba(18,146,63,.13);color:#12923f}
+.tp-verdict.titulo{background:linear-gradient(90deg,rgba(230,179,37,.2),transparent);color:#b3860a}
+.tp-verdict.gracia{background:rgba(201,138,30,.14);color:#b47417}
+.tp-verdict.fundacion{background:rgba(18,146,63,.10);color:#3d7a52}
+[data-theme="dark"] .tp-verdict.fundacion{color:#7cc79a}
+.tp-verdict.fallo{background:rgba(225,6,0,.10);color:#c62222}
+.tp-verdict.fuera{background:rgba(225,6,0,.16);color:#c62222}
+[data-theme="dark"] .tp-verdict.ok{color:#4cd07f}
+[data-theme="dark"] .tp-verdict.titulo{color:#e6b325}
+[data-theme="dark"] .tp-verdict.fallo,[data-theme="dark"] .tp-verdict.fuera{color:#ff7a72}
+.tl-row .club .cat{font-size:11px;color:var(--muted)}
+.tl-row .num{text-align:center;font-weight:700}
+.tl-row .num.w{color:#c98f00}.tl-row .num.p{color:#16a34a}
+.pos{display:block;text-align:center;font-weight:800;font-size:12.5px;padding:5px 0;border-radius:9px}
+.pos.p1{background:linear-gradient(135deg,#ffe066,#f2ae00);color:#4a3000;box-shadow:0 3px 8px rgba(242,174,0,.4)}
+.pos.p2{background:linear-gradient(135deg,#fafbfe,#c4cad6);color:#3a4150;box-shadow:inset 0 0 0 1.5px #aab2c0}
+.pos.p3{background:linear-gradient(135deg,#f4c396,#d78d4b);color:#4a2800}
+.pos.top{background:linear-gradient(135deg,#dcf5e3,#b1e8c0);color:#15803d}
+.pos.rest{background:#d9e7fb;color:#2b6cb0}
+.tl-row .ev{grid-column:2/-1;font-size:12px;color:#5a5a66;padding:2px 0 4px}
+.tl-row .ev .evi+.evi::before{content:" · ";opacity:.6}   /* 📰 en línea (móvil); el escritorio las parte en renglones */
+.tl-row .ev.top3{color:#3a3a48;background:var(--panel2);border-radius:8px;padding:5px 10px;margin:2px 0 4px;line-height:2}
+.tl-row .ovrcell{text-align:center;font-weight:800;border-radius:8px;padding:5px 0;color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.3), 0 2px 6px rgba(21,21,30,.15)}
+.tl-empty{padding:60px 20px;text-align:center;color:#b9b9c2;font-size:14px}
+
+/* ---- móvil: la tabla de trayectoria pasa a tarjetas apiladas ---- */
+@media(max-width:640px){
+  #career{padding:14px 8px 50px}
+  .card{padding:16px}
+  .tl-head{display:none}
+  .tl-body{max-height:none}
+  .tl-row{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;padding:13px 14px}
+  .tl-row>.age{flex:0 0 auto;align-self:flex-start;margin-top:2px;padding-left:9px;padding-right:9px}
+  .tl-row>.club{order:1;flex:1 1 60%;min-width:0}
+  .tl-row .club .nm{white-space:normal;font-size:15px}
+  .tl-row .club .cat{white-space:normal;line-height:1.35}
+  .tl-row>.ovrcell{order:2;width:auto;min-width:40px;padding:5px 11px;margin-left:auto}
+  .tl-row>.pos{order:3;flex:0 0 auto;width:auto;padding:5px 11px}
+  .tl-row>.num{order:4;flex:0 0 auto;font-size:13px;color:var(--muted)}
+  .tl-row>.num.w{color:#c98f00}.tl-row>.num.p{color:#16a34a}
+  .tl-row .numlbl{display:inline}
+  .tl-row>.vcol::before{content:"🏆 ";font-size:11px}
+  .tl-row>.pcol::before{content:"🥉 ";font-size:11px}
+  .tl-row>.ev{order:9;flex:1 1 100%;margin-top:0}
+  .tl-row .clsep{display:none}
+  .tl-row .clin .clgrp{display:block;margin-top:1px}
+  .f1state{padding:14px 16px;margin-bottom:0}
+  .f1state .cols{gap:16px}
+  #printHeader .ps{gap:8px 12px}
+  /* evitar que la cabecera del piloto ensanche la tarjeta y lo corte todo */
+  .driver-head{gap:12px}
+  .ovr-badge{width:62px;height:62px;border-radius:15px}
+  .ovr-badge .n{font-size:25px}
+  .driver-meta{min-width:0}
+  .driver-meta .team{font-size:16px}
+  .agev{flex-shrink:0}
+  .agev .a{font-size:21px}
+  .agev .v{font-size:14px}
+  .stats-row{gap:6px}
+  .stat{padding:8px 2px}
+  .stat .v{font-size:18px}
+  /* ofertas: que el bloque de estrellas no se corte */
+  .offer{gap:6px 10px;padding:13px 12px}
+  .offer .dot{width:38px;height:38px}
+  .offer .info{min-width:0}
+  .offer .name{font-size:15px}
+  .offer .perf{font-size:12px;letter-spacing:0}
+}
+
+/* panel estado de la F1 */
+.f1state{margin-bottom:14px;padding:16px 20px}
+.f1state .cols{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:700px){
+  .f1state .cols{gap:12px 14px}
+}
+.f1state h5{font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);margin-bottom:7px;font-style:normal;display:flex;align-items:center;gap:6px}
+/* 🔽 el panel enseña el top-3 y tu puesto; el resto de la parrilla YA está en S.rankD/S.rankC,
+   así que desplegarlo no cuesta ni una consulta: es pintar lo que ya hay en memoria. */
+.fs-more{margin-left:auto;background:var(--panel2);border:1px solid var(--line);color:var(--muted);
+  border-radius:7px;width:22px;height:18px;font-size:11px;line-height:1;cursor:pointer;padding:0;
+  display:flex;align-items:center;justify-content:center;transition:transform .18s,background .15s}
+.fs-more:hover{background:var(--line);color:var(--text)}
+.fs-more.open{transform:rotate(180deg)}
+.f1state .srow.extra{animation:none;opacity:.9}
+/* 🧑‍💼 EN EL MODO JEFE LA TABLA CUENTA OTRA COSA. Un jefe no tiene OVR ni victorias propias: lo que
+   importa es dónde acabaron sus DOS pilotos y dónde acabó el equipo. Cinco columnas en vez de seis. */
+/* 🏁 TRES COLUMNAS, NO CINCO (Carlos, 28-ago: «no merece la pena tener tanto chip»). Los puestos
+   de tus dos pilotos ya salen —con su color— en la línea de debajo del equipo, así que a la derecha
+   se queda solo el de constructores, que es el que no está en ningún otro sitio. */
+.tl-head.tp{grid-template-columns:52px minmax(0,1fr)}
+.tl-row{display:block}
+.tl-row .tph{display:flex;align-items:center;gap:9px;margin-bottom:8px;flex-wrap:wrap}
+.tl-row .tpnm{font-family:var(--f-disp);font-weight:800;font-size:15.5px;letter-spacing:.01em;min-width:0;flex:1 1 0;line-height:1.25}
+.tl-row.tp .tpb{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:2px}
+.tl-row.tp .tpb .pos.circ{margin-left:0}
+.tl-row.tp .tpb .team-dot{width:30px;height:30px}
+.tl-row .ev.top3{margin-top:10px;display:block;line-height:1.9}
+.tl-row.tp .tpb .cat{display:inline}
+.tl-row .pos.posr{margin-left:auto;display:inline-block;width:auto;padding:4px 11px;white-space:nowrap;box-shadow:none}
+.tl-row .tph .ovrcell{width:auto;min-width:38px;padding:4px 9px}
+.tl-row .clin{display:block;font-size:12.5px;color:var(--muted);margin:2px 0 4px;line-height:1.5}
+.tl-row .clw{color:#c98f00;font-weight:700}
+.tl-row .clp{color:#16a34a;font-weight:700}
+[data-theme="dark"] .tl-row .clw{color:#e6b325}
+.tl-row.tp .tp-verdict{line-height:1.5;margin-top:6px;display:block;width:100%}
+.tl-row .ev{margin-top:7px;display:block}
+.tl-row.tp .pos.circ{display:inline-flex;width:30px;height:30px;border-radius:50%;align-items:center;justify-content:center;padding:0;font-size:11px;flex-shrink:0;margin-left:2px;vertical-align:middle}
+/* las pastillas de piloto, ya dentro de la línea de texto: en fila, pequeñas y que envuelvan */
+.numlbl{display:none}   /* la palabra «Victorias/Podios» solo cabe en la fila ancha del móvil */
+.tl-row .cat .pos{display:inline-block;width:auto;padding:2px 7px;font-size:11px;border-radius:7px;box-shadow:none;vertical-align:middle}
+.tl-row .cat .pos.p1{box-shadow:0 1px 3px rgba(242,174,0,.45)}
+.tl-row .cat .pos.p2{box-shadow:inset 0 0 0 1.2px #aab2c0}
+.tl-row .num.tpdrv{font-size:12px;font-weight:800;white-space:nowrap}
+.tl-row .num.tpdrv.p1{color:#c98f00} .tl-row .num.tpdrv.top{color:#12923f} .tl-row .num.tpdrv.rest{color:var(--muted);font-weight:600}
+.tl-row.tp .ovrcell{display:none}
+.f1state .srow{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;padding:4px 6px;border-radius:7px;gap:6px;animation:fsRow .7s both}
+.f1state .srow .nm{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.f1state .srow .xt{color:var(--muted);font-size:11px;flex-shrink:0}
+.f1state .srow.me{background:linear-gradient(90deg,rgba(225,6,0,.10),transparent);font-weight:800;color:#b30500}
+.f1state .fl{font-size:13px}
+/* 🕰️ una nación desaparecida no tiene emoji de bandera: lleva su código olímpico en una pastilla */
+.fl.code{display:inline-block;font-size:9.5px;font-weight:800;letter-spacing:.5px;line-height:1;
+  padding:3px 4px;border-radius:4px;background:var(--panel2);border:1px solid var(--line);
+  color:var(--muted);vertical-align:middle}
+/* la bandera dibujada ocupa lo MISMO que un emoji de bandera para que ninguna fila se mueva:
+   MEDIDO en el juego: un 🇪🇸 ocupa exactamente 1em de ancho, así que la dibujada también. */
+/* 🏳️ 15px FIJOS, no 1em: son SVG dibujadas a mano y a tamaño grande se les ve la costura
+   (Carlos, 22-ago). Pequeñas —como en el selector de países— quedan bien en todas partes. */
+.fl.hist{display:inline-block;width:15px;vertical-align:-.18em;line-height:0}
+.fl.hist .flsvg{display:block;width:100%;height:auto;border-radius:1.5px;box-shadow:0 0 0 .5px rgba(0,0,0,.25)}
+/* 🏷️ la pastilla de un equipo sin escudo: un círculo con la inicial (Carlos, 11-oct: «ocuparán menos»),
+   del mismo tamaño que los escudos redondos de al lado */
+.mini-badge.ini{width:20px;height:20px;padding:0;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:11px;letter-spacing:0;line-height:1}
+.mini-badge{flex-shrink:0;display:inline-block;font-size:9px;font-weight:800;color:#fff;padding:2px 6px;border-radius:6px;letter-spacing:.3px;text-shadow:0 1px 2px rgba(0,0,0,.55);box-shadow:inset 0 -1px 3px rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.55);vertical-align:middle}
+@keyframes fsRow{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:none}}
+.f1state .srow .rt2{display:flex;align-items:center;gap:5px;flex-shrink:0}
+.mv{font-size:10px;font-weight:900;padding:0 4px;border-radius:5px;letter-spacing:-.5px;flex-shrink:0}
+.mv.up{color:#0a7d32;background:#d7f5e0}
+.mv.down{color:#c62a2a;background:#fbe6e6}
+.mv.eq{color:#b0b0ba}
+/* ⚠️ el fotograma final NO fija el fondo: con fill-mode both, el `background:transparent` del 100%
+   se quedaba pegado para siempre y borraba el sombreado rojo de «es mío» en cualquier piloto tuyo
+   que subiera o bajara (lo cazó Carlos: Sala ▲3 sin sombra, Anagnostiadis = con ella). Sin fondo en
+   el 100%, el destello verde/rojo se funde con el fondo real de la fila, sea cual sea. */
+@keyframes climbUp{0%{transform:translateY(10px);background:rgba(16,163,74,.2)}60%{background:rgba(16,163,74,.12)}100%{transform:none}}
+@keyframes dropDown{0%{transform:translateY(-10px);background:rgba(225,6,0,.18)}60%{background:rgba(225,6,0,.1)}100%{transform:none}}
+.f1state .srow.mv-up{animation:climbUp 1.2s ease-out both}
+.f1state .srow.mv-down{animation:dropDown 1.2s ease-out both}
+.hall .hrow .nm .fl{font-size:14px}
+
+/* end modal */
+#endModal{display:none;position:fixed;inset:0;background:rgba(21,21,30,.45);backdrop-filter:blur(6px);z-index:50;align-items:center;justify-content:center;padding:20px}
+/* z-index 80 > cinta de BETA (70): un modal abierto va por encima de TODO, o su ✕ queda tapada por
+   la cinta y no se puede cerrar (captura de Carlos en la beta) */
+#rankModal,#patronModal,#tpGridModal{display:none;position:fixed;inset:0;background:rgba(21,21,30,.55);backdrop-filter:blur(6px);z-index:80;align-items:center;justify-content:center;padding:16px}
+/* muro de mecenas */
+.pt-tier{font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);margin:14px 4px 6px}
+.pt-tier:first-child{margin-top:4px}
+.pt-row{display:flex;align-items:center;gap:9px;padding:8px 12px;border-radius:10px;font-size:14px;font-weight:700}
+.pt-row:nth-child(even){background:var(--panel2)}
+/* 🏁 LA PARRILLA DEL JEFE NO SE RAYA (Carlos, 23-ago: «unos en blanco y otros en gris… NO»). Todas
+   las filas van sobre el mismo fondo, cada equipo se reconoce por su escudo, y la TUYA lleva un
+   degradado de tu color para que tus pilotos canten a la primera. */
+/* cada fila con el REBORDE DE SU EQUIPO (Carlos, 23-ago): identidad sin ruido, en vez del rayado */
+#tpGridList .pt-row,
+#tpGridList .pt-row:nth-child(even){
+  background:var(--panel);
+  border:1px solid color-mix(in srgb, var(--tc) 38%, var(--line));
+  border-left:3px solid var(--tc);
+}
+/* y la TUYA, con el degradado más largo y un halo de tu color */
+#tpGridList .pt-row.mio,
+#tpGridList .pt-row.mio:nth-child(even){
+  background:linear-gradient(100deg, color-mix(in srgb, var(--tc) 26%, var(--panel)), color-mix(in srgb, var(--tc) 14%, var(--panel)) 60%, color-mix(in srgb, var(--tc) 5%, var(--panel)));
+  border-color:var(--tc); border-left-width:5px;
+  box-shadow:0 0 0 1px var(--tc), 0 3px 14px color-mix(in srgb, var(--tc) 26%, transparent);
+}
+#tpGridList .pt-row.mio .drv{border-color:color-mix(in srgb, var(--tc) 45%, transparent); background:var(--panel)}
+.pt-empty{text-align:center;padding:18px 10px 6px;color:var(--muted);font-size:13px;line-height:1.55}
+.pt-cta{display:inline-block;margin-top:12px;background:linear-gradient(135deg,#ff5e5b,#e10600);color:#fff;font-weight:800;font-size:13.5px;padding:9px 20px;border-radius:999px;text-decoration:none}
+.intro-links{margin-top:14px;font-size:13px;color:var(--muted)}
+.intro-links a{color:var(--accent);font-weight:700;cursor:pointer;text-decoration:none}
+.intro-links .il-sep{margin:0 8px;opacity:.55}
+/* 📱 en pantalla estrecha cada enlace en SU línea (Carlos, 23-sep): juntos partían por la mitad
+   («Muro de / mecenas»). En escritorio caben de sobra y siguen en una sola línea. */
+@media(max-width:560px){
+  .intro-links a{display:block;margin:5px 0}
+  .intro-links .il-sep{display:none}
+}
+/* 📲 aviso de «añádelo como app»: discreto, ancho del menú, con su aspa para cerrarlo */
+#installHint{display:none;flex-direction:column;gap:8px;max-width:430px;margin:16px auto 0;padding:10px 12px;
+  background:var(--panel2,rgba(127,127,127,.10));border:1px solid var(--line);border-radius:12px;
+  font-size:12.5px;line-height:1.4;color:var(--muted);text-align:left;cursor:pointer}
+#installHint .ih-top{display:flex;align-items:center;gap:10px}
+#installHint b{color:var(--ink,inherit)}
+#installSteps{margin:2px 0 0;padding-left:20px;display:none}
+#installSteps li{margin:3px 0}
+#installHint.open #installSteps{display:block}
+#installBtn{flex:0 0 auto;border:0;border-radius:999px;padding:7px 13px;font:inherit;font-weight:800;font-size:12px;
+  background:linear-gradient(135deg,#e10600,#ff6a1a);color:#fff;cursor:pointer}
+#installX{flex:0 0 auto;margin-left:auto;background:none;border:0;color:var(--muted);font-size:15px;cursor:pointer;padding:2px 4px;line-height:1}
+/* aviso legal: discreto, al pie de la portada */
+/* sin animación a propósito: el aviso legal debe verse siempre, no depender de que la animación corra */
+#intro p.legal{max-width:520px;margin:22px auto 0;font-size:10.5px;line-height:1.5;color:var(--muted);opacity:.62;animation:none}
+.rank-card{background:var(--panel);border-radius:22px;max-width:520px;width:100%;max-height:88vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 30px 80px rgba(21,21,30,.4);animation:fadeUp .4s both}
+.rank-head{display:flex;align-items:center;justify-content:space-between;padding:15px 20px;background:linear-gradient(135deg,#15151e,#2b0a08 130%);color:#fff}
+.rank-head h2{font-size:18px;margin:0}
+.rank-x{background:rgba(255,255,255,.15);border:none;color:#fff;width:32px;height:32px;border-radius:50%;font-size:15px;cursor:pointer}
+.rank-tabs.sub{margin-top:-4px}
+.rank-tabs.sub button{font-size:11px;padding:5px 11px}
+.rank-tabs{display:flex;gap:8px;padding:12px 16px 4px}
+.rank-tabs button{flex:1;padding:9px;border:1px solid var(--line);background:var(--panel2);color:var(--muted);border-radius:11px;font-weight:800;font-size:13px;cursor:pointer}
+.rank-tabs button.on{background:var(--accent);color:#fff;border-color:transparent}
+.rank-me{padding:6px 16px 0}
+.rank-list{padding:8px 16px 18px;overflow-y:auto}
+/* 📱 el panel de parrilla+mercado apretaba en móvil (Carlos): filas y estrellas más chicas */
+@media(max-width:520px){
+  #tpGridList{padding:6px 10px 14px}
+  #tpGridList .pt-row{padding:7px 9px;gap:4px}
+  #tpGridList .pt-row > b{font-size:13px}
+  #tpGridList .pt-row span[style*="border-radius:8px"]{font-size:11px;padding:2px 6px !important}
+}
+.rank-note{font-size:12px;color:var(--muted);text-align:center;padding:10px 4px 14px;line-height:1.45}
+.rank-row{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:10px;font-size:14px}
+.rank-row:nth-child(even){background:var(--panel2)}
+.rank-row.me{background:rgba(225,6,0,.12);border:1px solid rgba(225,6,0,.38);font-weight:800}
+.rank-row .rk{width:34px;color:var(--muted);font-weight:800;font-variant-numeric:tabular-nums}
+.rank-row .nm{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rank-row .g{font-weight:900;font-variant-numeric:tabular-nums}
+.end-card{background:var(--panel);border-radius:26px;max-width:620px;width:100%;padding:0 0 34px;text-align:center;max-height:92vh;overflow-y:auto;box-shadow:0 30px 80px rgba(21,21,30,.35);animation:fadeUp .5s both}
+.end-hero{background:linear-gradient(135deg,#15151e 0%,#2b0a08 55%,#e10600 140%);border-radius:26px 26px 0 0;padding:30px 34px 22px;margin-bottom:22px;position:relative;overflow:hidden}
+.end-hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:10px;opacity:.85;
+  background:repeating-conic-gradient(#15151e 0% 25%, #fff 0% 50%) 0 0/20px 20px}
+.end-hero .flag-line{font-size:24px;letter-spacing:4px}
+.end-hero h2{font-size:30px;font-weight:900;color:#fff;margin:8px 0 2px}
+.end-hero .legacy{font-size:17px;font-weight:800;letter-spacing:.5px;background:linear-gradient(92deg,#ffce3a,#ffb800,#ffe066);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:4px}
+.end-hero .years{color:rgba(255,255,255,.65);font-size:13px;padding-bottom:8px}
+.end-body{padding:0 34px}
+.end-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px}
+.advbox{margin:2px 0 14px;text-align:center}
+.advbox .advtitle{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);font-weight:800;margin-bottom:6px}
+.advbox .advline{font-size:13px;font-weight:700;color:#334}
+.advbox .triplecrown{display:inline-block;font-weight:900;font-size:13px;letter-spacing:.5px;color:#7a3b00;
+  background:linear-gradient(135deg,#ffdd82,#ffb52e);border:1px solid #e4be3f;border-radius:999px;padding:5px 14px;margin-bottom:7px;
+  box-shadow:0 4px 14px rgba(214,164,44,.45)}
+.end-stats > div{background:var(--panel2);border-radius:12px;padding:9px 6px}
+.end-stats .v{font-size:20px;font-weight:900;line-height:1.1}
+.end-stats .k{font-size:9px;letter-spacing:.4px;color:var(--muted);text-transform:uppercase;margin-top:1px}
+/* celda dorada: si ganaste algún título; shiny: si ganaste muchos */
+.end-stats div.gold{background:linear-gradient(160deg,#ffe6a0 0%,#f3c866 100%);border:1px solid #dfae3c;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.55)}
+.end-stats div.gold .v{color:#6f4e00}
+.end-stats div.gold .k{color:#7c5e0f}
+.end-stats div.shiny{position:relative;overflow:hidden;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.55),0 6px 20px rgba(214,164,44,.6)}
+/* 🐞 EL NÚMERO DESAPARECÍA EN ALGUNOS MÓVILES (captura de un jugador, 17-ago). Esto pintaba el número
+   con un degradado recortado a la forma de las letras y `color:transparent`: si el navegador no
+   soporta bien `background-clip:text` —o falla al combinarlo con la animación— el texto se queda
+   transparente sobre el fondo y el número no se ve. Lo tenía TODO el que ganaba 3+ títulos, o sea
+   justo las mejores partidas.
+   Ahora el color legible es la BASE y el degradado solo se aplica donde el recorte existe de verdad.
+   Si falla, se ve un número marrón oscuro sobre dorado: menos vistoso, perfectamente legible. */
+.end-stats div.shiny .v{color:#6f4e00}
+@supports ((-webkit-background-clip:text) or (background-clip:text)){
+  .end-stats div.shiny .v{background:linear-gradient(92deg,#6b4a00,#a9770a,#6b4a00);background-size:200% 100%;
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+    animation:goldshift 3s linear infinite}
+}
+.end-stats div.shiny::after{content:"";position:absolute;top:0;left:-70%;width:45%;height:100%;pointer-events:none;
+  background:linear-gradient(105deg,transparent,rgba(255,255,255,.9),transparent);transform:skewX(-18deg);
+  animation:shine 2.8s ease-in-out infinite}
+@keyframes shine{0%{left:-70%}60%{left:135%}100%{left:135%}}
+@keyframes goldshift{0%{background-position:0% 0}100%{background-position:200% 0}}
+/* casilla "Puntos de leyenda": color según la magnitud del legado */
+.legend-score{margin-top:10px;margin-bottom:16px;border-radius:14px;padding:13px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;position:relative;overflow:hidden;border:1px solid var(--line)}
+.legend-score .ls-k{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;opacity:.9}
+.legend-score .ls-tier{font-size:15px;font-weight:900;margin-top:1px}
+.legend-score .ls-v{font-size:36px;font-weight:900;line-height:1;letter-spacing:-1px}
+.legend-score.shiny::after{content:"";position:absolute;top:0;left:-70%;width:45%;height:100%;pointer-events:none;
+  background:linear-gradient(105deg,transparent,rgba(255,255,255,.85),transparent);transform:skewX(-18deg);animation:shine 2.8s ease-in-out infinite}
+@media(max-width:520px){
+  .end-stats{grid-template-columns:repeat(2,1fr);gap:6px}
+  .end-stats > div{padding:7px 4px;border-radius:9px;min-width:0}
+  .end-stats .v{font-size:18px}
+  .end-stats .k{font-size:8.5px;letter-spacing:.2px}
+}
+.end-card .shelf{font-size:26px;letter-spacing:5px;margin-bottom:6px;line-height:1.5}
+.end-card .verdict{color:#4a4a55;font-size:14.5px;line-height:1.55;margin:14px 0 20px}
+.end-actions{display:flex;flex-direction:column;gap:10px;align-items:center}
+.ea-row{display:flex;gap:10px;justify-content:center;width:100%;max-width:430px;margin:0 auto}
+.ea-row .btn{flex:1}
+.end-kofi{margin:18px auto 0;max-width:430px;padding-top:16px;border-top:1px solid var(--line);text-align:center}
+.intro-kofi{text-align:center;margin:20px 0 2px}
+.end-kofi p{font-size:12.5px;line-height:1.5;color:var(--muted);margin:0 0 12px}
+.kofi-btn{display:inline-block;background:linear-gradient(135deg,#ff5e5b,#e10600);color:#fff;font-weight:800;font-size:14px;padding:10px 24px;border-radius:999px;text-decoration:none;box-shadow:0 4px 14px rgba(225,6,0,.25)}
+.btn.sm{padding:13px 24px;font-size:15px}
+.btn.line{background:transparent;color:var(--text);border:1.5px solid var(--text);box-shadow:none}
+
+/* encabezado imprimible + botón flotante para reabrir el resumen */
+.print-only{display:none}
+#reopenBtn{position:fixed;right:16px;bottom:16px;z-index:40;display:none;
+  border:none;border-radius:999px;padding:12px 20px;font-weight:800;color:#fff;
+  background:linear-gradient(135deg,#15151e,#33333f);box-shadow:0 8px 20px rgba(21,21,30,.3)}
+#printHeader{background:linear-gradient(135deg,#15151e,#2b0a08 60%,#e10600);border-radius:18px;padding:20px 24px;margin-bottom:16px;color:#fff}
+#printHeader h2{font-size:24px;font-weight:900;margin-bottom:2px}
+#printHeader .pl{font-weight:800;color:#ffce3a;font-style:normal}
+#printHeader .ps{display:flex;flex-wrap:wrap;gap:14px;margin-top:10px;font-size:13px}
+#printHeader .ps b{font-size:16px}
+@media print{
+  @page{margin:12mm}
+  body{background:#fff !important}
+  #intro,#identity,#endModal,.decision,#reopenBtn,.f1state{display:none !important}
+  #career{display:block !important}
+  .career-grid{display:block !important}
+  #driverCard{margin-bottom:16px}
+  .tl-body{max-height:none !important;overflow:visible !important}
+  .timeline{box-shadow:none;border:1px solid #ccc}
+  .tl-row,.tl-head{break-inside:avoid}
+  .print-only{display:block !important}
+}
+.careermap{margin:4px 0 18px;text-align:left}
+.careermap h4{font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:10px;font-style:normal;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:5px 7px}
+.cmstint{display:flex;align-items:flex-start;gap:6px;padding:6px 2px;border-bottom:1px solid var(--line)}
+.cmstint:last-child{border-bottom:none}
+.cmmeta{display:flex;align-items:center;gap:6px;min-width:116px;min-height:24px;flex-shrink:0}
+/* las casillas de posición viven en su propia columna: al partirse a la línea siguiente
+   quedan alineadas justo bajo la primera casilla (no bajo el logo del equipo) */
+.cmcells{display:flex;flex-wrap:wrap;gap:5px;flex:1;min-width:0}
+.cmname{font-weight:800;font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:118px}
+.cmyears{font-size:10.5px;color:var(--muted);font-weight:700;flex-shrink:0}
+.cmtit{font-size:10.5px;font-weight:800;background:linear-gradient(135deg,#ffe066,#f2ae00);color:#4a3000;padding:1px 6px;border-radius:5px;flex-shrink:0}
+.cmtit.b{background:#dcf5e3;color:#15803d}
+.cmdot{width:22px;height:22px;font-size:8px;flex-shrink:0}
+.cmcell{display:inline-flex;align-items:center;justify-content:center;min-width:28px;height:24px;padding:0 6px;border-radius:7px;font-weight:800;font-size:12.5px;flex-shrink:0}
+.cmcell.p1{background:linear-gradient(135deg,#ffe066,#f2ae00);color:#4a3000}
+.cmcell.p2{background:linear-gradient(135deg,#fafbfe,#c4cad6);color:#3a4150;box-shadow:inset 0 0 0 1.5px #aab2c0}
+.cmcell.p3{background:linear-gradient(135deg,#f4c396,#d78d4b);color:#4a2800}
+.cmcell.top{background:#dcf5e3;color:#15803d}
+.cmcell.rest{background:#d9e7fb;color:#2b6cb0}
+.cmpeakbadge{font-style:normal;font-size:11px;font-weight:900;letter-spacing:.3px;color:#fff;background:linear-gradient(135deg,#8b5cf6,#6d28d9);padding:2px 9px;border-radius:6px;white-space:nowrap;flex-shrink:0}
+/* modo denso para carreras muy largas: celdas y espacios mínimos */
+.careermap.dense .cmstint{padding:4px 2px;gap:4px}
+.careermap.dense .cmcell{min-width:24px;height:22px;padding:0 4px;font-size:11px}
+.cmjun{font-size:11px;color:var(--muted);text-align:center;margin-top:8px}
+.hall{margin:0 0 22px;text-align:left}
+.hall h4{font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:8px;font-style:normal}
+.hall .hrow{display:flex;justify-content:space-between;align-items:center;padding:6px 12px;border-radius:9px;font-size:13.5px}
+.hall .hrow.me{background:linear-gradient(90deg,#fff6d8,#fffdf4);font-weight:800;border:1px solid #f0dfa0}
+.hall .hrow .rk{color:var(--muted);width:26px;font-weight:700}
+.hall .hrow .nm{flex:1}
+.hall .hrow .tt{font-weight:800;color:var(--gold)}
+/* 🏁 los puestos de cada año de una etapa, en pastillas del MISMO código de color que la
+   trayectoria del modo clásico (petición de Carlos, 27-ago: antes eran «7º 6º 5º 4º» en gris y no
+   se leía nada). Reusan `.pos` y `posClass()`, o sea que un 1º es dorado aquí y allí. Van en su
+   propia línea y con `flex-wrap` porque una etapa larga trae once, y en un móvil no caben al lado
+   del nombre del equipo. */
+/* «.tpst» y no `.hrow` a secas: estas reglas SOLO son de las etapas del jefe. El salón de la fama
+   del modo clásico usa las mismas filas y no hay que tocarlo. Y `flex-start` porque con las
+   pastillas la fila crece hacia abajo: centrado, los trofeos de la derecha quedaban flotando a
+   media altura en vez de junto al nombre del equipo. */
+.hall .hrow.tpst{flex-wrap:wrap;align-items:flex-start}
+.hall .hrow.tpst .tt{padding-top:1px;white-space:nowrap}
+.hall .hrow.tpst .posline{display:flex;flex-wrap:wrap;gap:3px;margin-top:5px}
+.hall .hrow.tpst .posline .pos{display:inline-block;width:auto;padding:2px 6px;font-size:10.5px;border-radius:6px;box-shadow:none}
+.hall .hrow.tpst .posline .pos.p1{box-shadow:0 1px 3px rgba(242,174,0,.45)}
+.hall .hrow.tpst .posline .pos.p2{box-shadow:inset 0 0 0 1.2px #aab2c0}
+/* 🏁 PARRILLA Y MERCADO: los puestos —el del equipo y el de cada piloto— en pastilla de color,
+   con el mismo código que la trayectoria (Carlos, 28-ago: «ese 13º debería estar en el chip de color
+   apropiado»). Y TODOS lo llevan: quien no tiene puesto lleva un guión, no un hueco — antes Piastri
+   y Antonelli salían sin nada y parecía una errata. */
+.pt-row .pos{display:inline-block;width:auto;padding:1px 6px;font-size:11px;border-radius:6px;box-shadow:none;vertical-align:middle}
+.pt-row .pos.p1{box-shadow:0 1px 3px rgba(242,174,0,.45)}
+.pt-row .pos.p2{box-shadow:inset 0 0 0 1.2px #aab2c0}
+.pt-row .pos.nada{background:var(--panel2,rgba(127,127,127,.14));color:var(--muted)}
+.hall .hrow .yrs{color:var(--muted);font-weight:600}
+/* 🔧 LOS DOS BOTONES DE ARRIBA VAN EN UNA BARRA FLEX, NO A DEDO. Antes cada uno era `fixed` con su
+   propio `right` (12px y 70px), o sea que la separación dependía de que el botón de idioma midiera lo
+   que se suponía. Con DOS idiomas dice «EN» y cabía; en cuanto hay tres o más pasa a «🌐 ES», crece
+   28px y los botones se comían el uno al otro (medido: hueco de −3px). Lo cazó Carlos en pantalla.
+   Con flex + gap, el hueco está garantizado diga lo que diga el botón. */
+#betaBar{position:fixed;top:0;left:0;right:0;z-index:70;background:#15151e;color:#ffce3a;
+  font:600 12px/1.35 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  padding:7px 14px;text-align:center}
+#betaBar b{color:#fff;letter-spacing:.06em}
+body.conBeta{padding-top:34px}
+body.conBeta #topBtns{top:44px}
+/* 🔽 EN COLUMNA, NO EN FILA (Carlos, 28-ago). En horizontal los dos botones ocupaban ~150px de
+   ancho arriba a la derecha y se comían el bloque de «TEMPORADA / CONSEJO» de la tarjeta, que vive
+   justo debajo. En columna ocupan la mitad de ancho y ese hueco queda libre.
+   `column-reverse` y no `column` a propósito: en el HTML va primero el tema y luego el idioma, y
+   Carlos lo quiere al revés —el idioma arriba, el claro/oscuro debajo—. Así se consigue sin tocar
+   el marcado, que lo comparten las dos pantallas y los dos modos. */
+#topBtns{position:fixed;top:12px;right:12px;z-index:60;display:flex;flex-direction:column-reverse;align-items:flex-end;gap:7px}
+/* ⚙️ plegado por defecto: solo se ve el engranaje, pequeño y medio transparente; al abrirlo bajan
+   el idioma y el tema. Se cierra tocando en cualquier otro sitio (listener junto al deck). */
+#cogToggle{background:var(--panel);border:1px solid var(--line);color:var(--text);border-radius:999px;
+  width:32px;height:32px;flex:0 0 32px;font-size:15px;line-height:1;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;opacity:.55;transition:opacity .15s,transform .2s;
+  box-shadow:0 2px 8px rgba(20,25,40,.14)}
+#cogToggle:hover,#topBtns.open #cogToggle{opacity:1}
+#topBtns.open #cogToggle{transform:rotate(90deg)}
+#topBtns:not(.open) #langToggle,#topBtns:not(.open) #themeToggle,#topBtns:not(.open) #viewToggle{display:none}
+#langToggle{background:rgba(255,255,255,.92);border:1px solid var(--line);
+  border-radius:999px;padding:6px 13px;font-weight:800;font-size:13px;color:var(--ink);box-shadow:0 3px 10px rgba(20,25,40,.12);cursor:pointer;white-space:nowrap}
+#langToggle:hover{background:#fff}
+#themeToggle,#viewToggle{background:rgba(255,255,255,.92);border:1px solid var(--line);
+  border-radius:999px;width:34px;height:34px;flex:0 0 34px;font-size:16px;line-height:1;box-shadow:0 3px 10px rgba(20,25,40,.12);cursor:pointer;display:flex;align-items:center;justify-content:center}
+@media(min-width:981px){ #viewToggle{display:none} }   /* el deck solo existe en móvil: en escritorio el botón no significa nada */
+@media print{#topBtns{display:none}}
+/* 📱 LAS DOS TARJETAS en pantallas estrechas: los chips y la edad/fama no se pisan.
+   Esto nació sólo para la del jefe (`.card.tp`) y la de carrera clásica se quedó fuera, así que
+   en móvil el chip de estilo («🔥 Agresivo») se montaba encima de «Desconocido»: hasta 68 px de
+   solape a 320 px de tarjeta, y los chips saliéndose 80 px de su columna. Medido 28-ago con
+   Carlos mirándolo en su móvil. Al quitar el `.card.tp` las reglas valen para ambas y el solape
+   baja a 0 en todo el rango de 320 a 900. Para el jefe no cambia nada: ya las tenía.
+   Va aquí abajo del todo A PROPÓSITO: `.agev .v` suelta y el bloque de 640px aparecen más
+   adelante en la hoja y, con el mismo peso, ganaban por orden. Con `.card.tp` delante pesaba
+   más y no se notaba; al quitarlo hay que moverlo. */
+@media (max-width:520px){
+  .agev{max-width:44%}
+  /* el `.card.tp` repetido no es copia y pega perezoso: arriba hay un
+     `.card.tp .agev .v{font-size:15px}` que pesa más que el selector suelto y le ganaría al
+     jefe en móvil. Nombrando las dos, ambas tarjetas acaban igual. */
+  .agev .v, .card.tp .agev .v{font-size:12.5px;white-space:normal;line-height:1.25}
+  .agev .a{font-size:22px}
+  .tag{font-size:11px;padding:2px 7px}
+  .driver-meta .tags, .card.tp .driver-meta .tags{gap:5px;row-gap:4px}
+}
+
+/* en la maqueta apilada la tarjeta ocupa todo el ancho: al hacer scroll, los botones
+   fijos (idioma/tema) pasarían por encima de la edad/fama. Reservamos esa esquina.
+   La reserva iba dimensionada para la barra en horizontal (~150 px de ancho); ahora que va
+   apilada mide 61 px + 12 de margen, así que sobraba hueco y ese hueco era el que estrujaba
+   la columna de los chips. Ajustada a la barra nueva. */
+@media(max-width:980px){ .agev{padding-right:46px} }   /* ⚙️ ya solo flota el engranaje */
+@media(max-width:360px){ .agev{padding-right:42px} }
+
+/* ================= MODO OSCURO ================= */
+:root[data-theme="dark"]{
+  --bg:#14151b; --panel:#1d1f28; --panel2:#262a34; --line:#333743;
+  --text:#eceef4; --muted:#9aa0ae; --gold:#e6b325;
+  --shadow:0 14px 36px rgba(0,0,0,.55), 0 2px 8px rgba(0,0,0,.4);
+}
+[data-theme="dark"] body{background:
+  radial-gradient(900px 500px at 85% -5%, rgba(225,6,0,.16), transparent 60%),
+  radial-gradient(700px 500px at -10% 100%, rgba(255,122,0,.11), transparent 55%),
+  linear-gradient(160deg,#181a22,#0e0f14)}
+[data-theme="dark"] #themeToggle,[data-theme="dark"] #langToggle{background:rgba(30,32,40,.94);color:var(--text)}
+[data-theme="dark"] #langToggle:hover,[data-theme="dark"] #themeToggle:hover{background:#2a2e38}
+[data-theme="dark"] .numplate{background:linear-gradient(135deg,#262a34,#1a1c24)}
+/* ofertas y caja de decisión */
+[data-theme="dark"] .offer{background:linear-gradient(135deg,#232732,#1c1e27);border-color:#3a4152}
+[data-theme="dark"] .offer.retire{background:linear-gradient(135deg,#22242d,#1b1d25)}
+[data-theme="dark"] .offer.dilemma{background:linear-gradient(135deg,#2b2720,#211f1a);border-color:#7a6a2e}
+[data-theme="dark"] .offer.mirar{background:linear-gradient(135deg,#1d2432,#181d27);border-color:#33507e}
+[data-theme="dark"] .decision p.outcome{background:linear-gradient(135deg,#2e2a1c,#26241a);border-color:#5a4e2a;color:#f0e6c8}
+/* recap de temporada: fondo claro fijo → oscuro en modo noche (si no, texto claro sobre claro = ilegible) */
+[data-theme="dark"] #decRecap{background:linear-gradient(135deg,#242834,#1b1e27);border-color:#3a4152}
+/* pastillas (fondo claro → oscuro) */
+[data-theme="dark"] #teamLine .trole{background:#2a2e38;color:#c4ccda;border-color:#3a4152}
+[data-theme="dark"] .offer .role.r2{background:#2a2e38;color:#c4ccda}
+[data-theme="dark"] .offer .role.rt{background:#1e2f4d;color:#8db4f5}
+[data-theme="dark"] .trend.up,[data-theme="dark"] .otrend.up{background:rgba(18,146,63,.20);color:#4cd07f}
+[data-theme="dark"] .trend.flat,[data-theme="dark"] .otrend.flat{background:#2a2e38;color:#9aa0ae}
+[data-theme="dark"] .jprofile{background:#20293b;color:#b8c4dd;border-color:#33415e}
+[data-theme="dark"] .fit.neu{background:#2a2e38;color:#9aa0ae}
+[data-theme="dark"] .fit.good{background:rgba(10,125,50,.22);color:#5fd98a}
+[data-theme="dark"] .fit.bad{background:rgba(198,42,42,.22);color:#f19a9a}
+/* celdas de posición "resto" (azul claro → oscuro) */
+[data-theme="dark"] .pos.rest,[data-theme="dark"] .cmcell.rest{background:#22344d;color:#8db4f5}
+/* trayectoria + paneles */
+[data-theme="dark"] .tl-row:hover{background:#22242d}
+[data-theme="dark"] .tl-row .ev{color:#aab0be}
+[data-theme="dark"] .tl-row .ev.top3{color:#d7dbe4;background:var(--panel2)}
+[data-theme="dark"] .tl-row.champ{background:linear-gradient(90deg,rgba(230,179,37,.18),transparent 62%)}
+[data-theme="dark"] .tl-row.champ:hover{background:linear-gradient(90deg,rgba(230,179,37,.26),transparent 62%)}
+[data-theme="dark"] .tl-empty{color:#6b7280}
+[data-theme="dark"] .cmstint{border-bottom-color:#2c313c}
+[data-theme="dark"] .tl-body::-webkit-scrollbar-thumb,[data-theme="dark"] .country-list::-webkit-scrollbar-thumb{background:#3a3f4a}
+[data-theme="dark"] .f1state .srow.me{background:linear-gradient(90deg,rgba(225,6,0,.24),transparent);color:#ff7a72}
+/* fila "TÚ" del palmarés: fondo dorado pálido → texto oscuro para que se lea */
+[data-theme="dark"] .hall .hrow.me{color:#2a2200;border-color:#c9a94a}
+[data-theme="dark"] .hall .hrow.me .rk{color:#6a5410}
+[data-theme="dark"] .hall .hrow.me .tt{color:#7a5600}
+/* textos oscuros → claros */
+[data-theme="dark"] .advbox .advline,[data-theme="dark"] .end-card .verdict{color:#c4ccda}
+/* pantalla de identidad: lista de países, matrícula y tarjetas de estilo */
+[data-theme="dark"] .numplate span{color:#eceef4}
+[data-theme="dark"] .country-list button{color:#c8cdd8}
+[data-theme="dark"] .country-list button:hover{border-color:#454b58}
+[data-theme="dark"] .country-list button.sel{background:linear-gradient(135deg,#e10600,#ff6a1a);color:#fff}
+[data-theme="dark"] .country-list::-webkit-scrollbar-thumb{background:#3a3f4a}
+[data-theme="dark"] .style-cards button{background:var(--panel2)}
+[data-theme="dark"] .style-cards button.sel{background:linear-gradient(135deg,#e10600,#ff6a1a);border-color:#e10600;color:#fff}
+[data-theme="dark"] .style-cards button .d{color:var(--muted)}
+
+/* ════════════════════════════════════════════════════════════════════════════════════════════════
+   🎨 LA MUDANZA (13-sep-2026 · rama `mudanza`, VERSIÓN DE PRUEBA). Una capa encima de la de siempre:
+   se puede quitar entera borrando este bloque. Oscuro = «Racing Modernity», claro = «Kinetic Velocity»
+   (los dos diseños de Stitch de Carlos). El acento deja de ser el rojo fijo y pasa a ser EL COLOR DE
+   TU EQUIPO (`pintaColorEquipo`), elegido para que se lea sobre el fondo del tema.
+   ════════════════════════════════════════════════════════════════════════════════════════════════ */
+:root{
+  --bg:#e5e8ea; --panel:#ffffff; --panel2:#f1f2f4; --line:#d8dbe0;
+  --text:#1a1a1a; --muted:#5a5e66; --accent:#bb152c; --accent2:#e10600; --gold:#a87700;
+  --shadow:0 1px 2px rgba(20,22,28,.05), 0 10px 26px rgba(20,22,28,.07);
+  --team:var(--accent); --team-ink:var(--accent); --team-soft:rgba(187,21,44,.09); --team-on:#ffffff;
+  --r-card:16px; --r-in:10px;
+  --f-disp:'Anybody','Twemoji Country Flags',system-ui,sans-serif;
+  --f-body:'Twemoji Country Flags','Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --f-mono:'Twemoji Country Flags','Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;   /* etiquetas y cifras: Inter, sin el 0 con punto */
+}
+:root[data-theme="dark"]{
+  --bg:#13131b; --panel:#1f1f27; --panel2:#292933; --line:rgba(255,255,255,.10);
+  --text:#e4e1ee; --muted:#9d9aab; --accent:#e10600; --gold:#ffb52e;
+  --shadow:none; --r-card:6px; --r-in:4px; --team-soft:rgba(225,6,0,.12);
+}
+*{font-family:var(--f-body)}
+body,[data-theme="dark"] body{background:var(--bg);-webkit-font-smoothing:antialiased}
+h1,h2,h3,.decision h3,#intro h1{font-family:var(--f-disp);font-weight:800;letter-spacing:-.02em}
+*,*::before,*::after{font-style:normal!important}   /* ninguna cursiva, tampoco las que pone el código en línea */
+.stat .k,.tl-head,.f1state h5,.agev .lbl,.card h3,.offer .role,.tag,.trophies .empty,.pt-tier,.mode-txt small{font-family:var(--f-mono);letter-spacing:.08em}
+.stat .v,.ovr-badge .n,.tl-row .num,.agev .a,.f1state .srow .rt2,.f1state .srow .nm{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.stat .k,.tl-head,.f1state h5,.agev .lbl,.card h3,.offer .role,.tag,.trophies .empty,.pt-tier{font-weight:600;text-transform:uppercase}
+.card,.timeline{border-radius:var(--r-card);border:1px solid var(--line);box-shadow:var(--shadow)}
+.card::before{height:3px;background:var(--team-ink)}
+[data-theme="dark"] .card,[data-theme="dark"] .timeline{background-color:var(--panel)}
+.tag{border-radius:999px;padding:3px 10px;font-size:11px;background:var(--panel2);border-color:var(--line)}
+.tag.red{background:var(--team-ink);border-color:transparent;color:var(--team-on)}
+.stat{border-radius:var(--r-in);background:var(--panel2)}
+[data-theme="dark"] .stat{border:1px solid var(--line);background:var(--bg)}
+.stat .k{font-size:9.5px}
+.ovr-badge{border-radius:50%}
+[data-theme="dark"] .ovr-badge{border-radius:8px;box-shadow:0 0 0 1px var(--line),0 0 22px rgba(255,181,46,.10)}
+.trophies .empty{color:var(--muted);opacity:.8;font-size:11px}
+.decision h3{font-size:26px;line-height:1.1}
+.offer,[data-theme="dark"] .offer{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-card);box-shadow:var(--shadow)}
+[data-theme="dark"] .offer{border-top-color:var(--line)!important;border-right-color:var(--line)!important;border-bottom-color:var(--line)!important;border-width:1px!important;border-left-width:4px!important}
+.offer{border-width:1px!important;border-left-width:5px!important}
+.offer .name{font-family:var(--f-disp);font-weight:700;font-size:17px}
+.offer.dilemma,[data-theme="dark"] .offer.dilemma{background:var(--panel);border-color:var(--line)!important;border-left:4px solid var(--gold)!important}
+.offer.retire,[data-theme="dark"] .offer.retire{background:transparent;border-style:dashed!important}
+.offer:hover{transform:translateY(-1px)}
+#decRecap,[data-theme="dark"] #decRecap{background:var(--panel2);border:1px solid var(--line);border-left:3px solid var(--team-ink);border-radius:var(--r-in)}
+.decision p.outcome{border-radius:var(--r-in);border-left:3px solid var(--gold)}
+.f1state h5{font-size:10.5px;text-transform:uppercase;color:var(--muted)}
+.f1state .srow{border-radius:var(--r-in)}
+.f1state .srow.me,[data-theme="dark"] .f1state .srow.me{background:var(--team-soft);box-shadow:inset 3px 0 0 var(--team-ink);font-weight:700;color:var(--text)}
+.tl-head{background:var(--panel);font-size:10px}
+.tl-row{border-bottom:1px solid var(--line)}
+.tl-row:hover{background:var(--panel2)}
+.tl-body::-webkit-scrollbar-thumb{background:var(--line)}
+.btn{border-radius:999px;background:var(--team-ink);color:var(--team-on);box-shadow:0 8px 22px var(--team-soft);font-family:var(--f-disp);font-weight:800;letter-spacing:.01em}
+.btn:hover{box-shadow:0 12px 30px var(--team-soft)}
+#intro{background:transparent}
+#intro::before{background:radial-gradient(circle at 35% 35%, var(--team-soft), transparent 70%)}
+#intro h1{font-weight:900;letter-spacing:-.035em}
+#intro h1 span{background:none;-webkit-background-clip:initial;background-clip:initial;color:var(--accent)}
+.mode-card{border:1px solid var(--line);border-radius:var(--r-card);box-shadow:var(--shadow)}
+.mode-txt b{font-family:var(--f-disp);font-weight:700;font-size:16px}
+.mode-txt small{font-size:10.5px;text-transform:none;letter-spacing:.02em}
+#themeToggle,#langToggle,#viewToggle,[data-theme="dark"] #themeToggle,[data-theme="dark"] #langToggle,[data-theme="dark"] #viewToggle{background:var(--panel);border:1px solid var(--line);color:var(--text)}
+/* 🫧 CUERPO PROPIO AL DESPLEGARSE (Carlos, 23-sep): abiertos se posan ENCIMA de la tarjeta —sobre
+   EDAD/FAMA— y con el mismo color que ella parecían iconos sueltos flotando sobre el texto. Un aro
+   y una sombra de verdad los separan del fondo en los dos temas. */
+#topBtns.open #langToggle,#topBtns.open #themeToggle,#topBtns.open #viewToggle{
+  box-shadow:0 0 0 1px var(--line), 0 8px 22px rgba(10,12,20,.30)}
+[data-theme="dark"] #topBtns.open #langToggle,[data-theme="dark"] #topBtns.open #themeToggle,[data-theme="dark"] #topBtns.open #viewToggle{
+  box-shadow:0 0 0 1px rgba(255,255,255,.14), 0 8px 22px rgba(0,0,0,.55)}
+
+/* 🖥️ TRES COLUMNAS EN ESCRITORIO — 2ª versión (Carlos, 19-sep: «demasiado grande el panel mío», «una
+   cagada que las elecciones estén abajo a la izquierda», «pilotos y constructores a la par», «un Edad y
+   Equipo en mitad de la nada», «los textos de El mercado muy grandes»).
+   · Izquierda, estrecha y quieta al bajar: tu panel, compacto.
+   · Centro: LA DECISIÓN ARRIBA DEL TODO —se decide todo el rato— y la trayectoria debajo.
+   · Derecha, quieta: pilotos y constructores lado a lado, y los años anteriores debajo.
+   Sin mover HTML: las dos columnas del HTML pasan a `display:contents` y cada pieza va a su celda. */
+@media (min-width:1180px){
+  #career{max-width:1560px!important;width:100%;margin-left:auto;margin-right:auto}
+  #career .career-grid{grid-template-columns:290px minmax(0,1fr) 480px;max-width:1560px;margin:0 auto;align-items:start;gap:18px}
+  #career .career-grid>div{display:contents}
+  #career #driverCard{grid-column:1;grid-row:1 / span 2;position:sticky;top:16px;padding:16px}
+  #career #decisionBox{grid-column:2;grid-row:1;margin:0}
+  #career .timeline{grid-column:2;grid-row:2}
+  #career #f1state{grid-column:3;grid-row:1 / span 2;margin:0;position:sticky;top:16px;max-height:calc(100vh - 32px);overflow-y:auto}
+  #career .f1state .cols{grid-template-columns:1fr 1fr;gap:14px}
+  #career .tl-head{display:none}
+  /* el panel, compacto */
+  #career #driverCard .driver-head{gap:10px;flex-wrap:wrap}
+  #career #driverCard .ovr-badge{width:52px;height:52px;border-radius:14px}
+  #career #driverCard .ovr-badge .n{font-size:20px}
+  #career #driverCard .ovr-badge .l{font-size:8.5px}
+  #career #driverCard .tag{font-size:10px;padding:2px 8px}
+  /* la columna es estrecha: EDAD/FAMA (o TEMPORADA/CONSEJO en el jefe) dejan la esquina derecha y
+     pasan a una fila propia debajo de los chips, en dos pares ordenados */
+  #career #driverCard .driver-head{flex-wrap:wrap}
+  #career #driverCard .agev{order:9;flex:1 0 100%;max-width:none;padding-right:0;margin-top:8px;text-align:left;
+    display:grid;grid-auto-flow:column;grid-template-rows:auto auto;justify-content:start;column-gap:26px;row-gap:0}
+  #career #driverCard .agev .a{font-size:18px}
+  #career #driverCard .team{margin-top:12px;padding-top:10px}
+  #career #driverCard .team{flex-wrap:wrap}   /* la etiqueta baja de línea antes que cortar «McLaren» */
+  #career #driverCard .team .tname{font-size:15px}
+  #career #driverCard .stats-row{gap:6px;margin-top:12px;padding-top:10px}
+  #career #driverCard .stat{padding:7px 2px}
+  #career #driverCard .stat .k{font-size:8.5px;letter-spacing:.04em}
+  #career #driverCard .stat .v{font-size:15px}
+  #career #driverCard .trophies{margin-top:10px;padding-top:8px;font-size:11px}
+  /* la decisión, a su tamaño */
+  #career #decTitle{font-size:22px;line-height:1.2}
+  #career #decSub{font-size:13px;line-height:1.5;margin:6px 0 10px}
+  #career #decisionBox .offer .name{font-size:14.5px}
+  #career #decisionBox .offer .sub{font-size:12px;line-height:1.45}
+  #career .offer .dot{width:32px;height:32px;font-size:10px}
+  #career .gar-chip{font-size:11.5px;padding:3px 8px}
+}
+/* 🖥️ CUATRO COLUMNAS desde 1280px (Carlos, 19-sep, con la referencia del Football Manager: «ahí
+   hay hueco para muchas columnas»): panel · decidir · resumen (las temporadas, ya no quedan abajo) ·
+   mundial. Cada una con su propio scroll, como los paneles del FM, y todo un punto más pequeño. */
+/* 🖥️ LA PORTADA Y LA IDENTIDAD, A ESCALA DE ESCRITORIO (Carlos, 19-sep: «¿POR QUÉ LO TIENES QUE HACER
+   TODO TAN GRANDE?»). El juego nació para el móvil; en un monitor al 100% el titular y las tarjetas de
+   identidad eran gigantes y los botones de abajo se salían de la pantalla. */
+@media (min-width:1180px){
+  #intro{zoom:.82}
+  #intro h1{font-size:clamp(32px,4.2vw,56px)}
+  #identity{zoom:.82}
+}
+.garwrap{display:none}   /* 🧹 la copia de pilotos en Decidir sobra en TODOS los anchos: viven en el panel (Carlos, 22-sep) */
+/* 🧑‍💼 EL PANEL DEL JEFE EN TODOS LOS ANCHOS (Carlos, 22-sep: «lo adaptas para móvil con lo que
+   ya tenemos?»): las nueve líneas, el garaje en tarjetas y la temporada titulando los números salen
+   del @media de escritorio y valen también para el deck del móvil y el tramo intermedio. La copia
+   .garwrap de Decidir sigue existiendo solo en escritorio-oculta: en el móvil decides sin ver el panel. */
+  /* 🧑‍💼 las nueve líneas del panel del jefe (Carlos, 20-sep) */
+  /* 🏷️ nombre en su línea; país y fama debajo (Carlos, 23-sep: con nombres largos se apelotonaba) */
+  #career #driverCard.tp .tpl-l1{flex-wrap:wrap;row-gap:1px}
+  #career #driverCard.tp .tpl-l1>b{flex:1 0 100%}
+  #career #driverCard.tp{display:flex;flex-direction:column}
+  #career #driverCard.tp .driver-head,#career #driverCard.tp .team{display:none}
+  #career #driverCard.tp #tpPanelA{display:block;order:1}
+  #career #driverCard.tp #panelGaraje{order:2;border-top:0;padding-top:0}
+  #career #driverCard.tp #tpPanelB{display:block;order:3;margin-top:9px;border-top:1px solid var(--line);padding-top:7px}
+  #career #driverCard.tp #tpSeasonHead{display:block;order:4;margin-top:9px;border-top:1px solid var(--line);padding-top:7px;font-size:12px}
+  #career #driverCard.tp #tpSeasonHead .k{color:var(--muted);font-weight:700;text-transform:uppercase;font-size:10.5px;letter-spacing:.05em}
+  #career #driverCard.tp .stats-row{order:5;margin-top:6px;border-top:0;padding-top:0}
+  #career #driverCard.tp .trophies{order:6}
+  .tpl-l1{display:flex;align-items:center;gap:7px;font-size:12.5px}
+  .tpl-l1>b{font-size:13.5px;letter-spacing:.02em}
+  .tpl-nat{color:var(--muted);font-size:11.5px;font-weight:700}
+  .tpl-right{margin-left:auto;font-size:11px}
+  .tpl-con{color:var(--muted);font-weight:700;font-size:11px;white-space:nowrap;flex-shrink:0}
+  .tpl-l2{display:flex;align-items:center;gap:5px;margin-top:9px;min-width:0}
+  .tpl-l2 .team-dot{width:24px;height:24px;flex-shrink:0}
+  .tpl-car{width:52px;height:52px;border-radius:14px;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;font-weight:900;flex-shrink:0}
+  .tpl-car .n{font-size:20px;line-height:1}
+  .tpl-car .l{font-size:7.5px;letter-spacing:1px;opacity:.9}
+  .tpl-l2r{min-width:0;flex:1}
+  .tpl-l2a{display:flex;align-items:center;gap:6px;min-width:0}
+  .tpl-team{font-family:var(--f-disp);font-weight:800;font-size:13.5px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .tpl-con{margin-top:2px}
+  .tpl-kv{font-size:12px;margin:4px 0;line-height:1.45}
+  .tpl-kv .k{color:var(--muted);font-weight:700;text-transform:uppercase;font-size:10.5px;letter-spacing:.05em}
+  #panelGaraje .gpil{border:1px solid var(--line);border-left:3px solid var(--team,var(--line));border-radius:8px;padding:5px 9px;margin:6px 0;background:var(--panel2)}
+  #panelGaraje .gpil.libre{color:var(--muted);font-size:10.5px;font-weight:800;letter-spacing:.05em}
+  #panelGaraje .gp1{font-weight:700;font-size:12.5px}
+  #panelGaraje .gp2{font-size:11px;color:var(--muted);margin-top:1px}
+  #panelGaraje .gpil.gswap{cursor:pointer;font-weight:700;font-size:12px;user-select:none}
+  #career #driverCard.tp #teamRole{display:none}
+  #career #driverCard.tp .stats-row{grid-template-columns:repeat(3,1fr)}
+  #career #driverCard.tp .stats-row .stat:first-child{display:none}
+  #career #driverCard.tp #panelGaraje{display:block;margin-top:9px}
+  #panelGaraje .gar-chip{display:inline-block;margin:2px 4px 2px 0;font-size:11px;padding:3px 7px}
+
+@media (min-width:1280px){
+  #career{max-width:1800px!important}
+  #career .career-grid{grid-template-columns:240px minmax(0,.8fr) minmax(0,1fr) minmax(330px,440px);max-width:1800px;gap:14px}   /* 🎨 el encaje de Carlos en Stitch (20-sep) */
+  #career #driverCard{grid-row:1;padding:14px}
+  #career #decisionBox{grid-column:2;grid-row:1}
+  #career .timeline{grid-column:3;grid-row:1;position:sticky;top:16px;max-height:calc(100vh - 32px);overflow-y:auto;
+    background:transparent;border:0;box-shadow:none;border-radius:0;
+    padding:2px 10px 24px;margin:0 -10px;scrollbar-width:none}
+  #career .timeline::-webkit-scrollbar{display:none}
+  #career .timeline .tl-row{background:var(--panel);border:1px solid var(--line);border-radius:14px;margin-bottom:10px;box-shadow:var(--shadow);padding:12px 14px}
+  #career .timeline .tl-empty{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px}
+  #career .timeline .tl-body{max-height:none}
+  #career #f1state{grid-column:4;grid-row:1;background:transparent;border:0;box-shadow:none;border-radius:0;
+    padding:2px 10px 24px;margin:0 -10px;scrollbar-width:none}
+  #career #f1state::-webkit-scrollbar{display:none}
+  #career #f1state::before{display:none}
+  /* 🟥 la línea de acento vive ahora en CADA tarjeta, no en el contenedor transparente */
+  #career .timeline .tl-row,#career #f1state .cols,#career #f1state .fs-prev .fp{position:relative;overflow:hidden}
+  #career .timeline .tl-row::before,#career #f1state .cols::before,#career #f1state .fs-prev .fp::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--team-ink,var(--accent))}
+  #career #f1state .cols{background:var(--panel);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:12px 14px;margin:0}
+  #career #f1state .fs-prev{border-top:0;padding-top:4px}
+  #career #f1state .fs-prev .fp{background:var(--panel);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:10px 14px;margin-bottom:10px}
+  #career #f1state .fs-prev .fp:last-child{border-bottom:1px solid var(--line)}
+  /* densidad de panel de gestión */
+  #career .f1state{font-size:13px}
+  #career .f1state .cols{gap:10px}
+  #career .f1state .srow{font-size:12px;padding:3px 5px}
+  #career .fs-prev{margin-top:12px;padding-top:8px}
+  #career .fs-prev .fpg{font-size:11.5px;gap:2px 8px}
+  /* 🧑‍💼 en el panel del jefe sobran el chip «TEAM PRINCIPAL» (ya se sabe) y la celda TEMPORADAS
+     (arriba ya pone «Temporada 2») — Carlos, 20-sep */
+  /* 🧑‍🔧 el garaje vive en el panel (Stitch de Carlos): la copia del mercado se esconde */
+
+  /* 🎨 sombras de contacto también aquí (Carlos, 23-sep: «las columnas de diferente color»): la
+     difusa de 26px acumulada carril a carril teñía el fondo de tonos distintos */
+  #career .offer,#career .timeline .tl-row,#career #f1state .cols,#career #f1state .fs-prev .fp,#career .card{box-shadow:0 1px 2px rgba(20,22,28,.05)}
+  /* 🖱️ cada columna con su propio scroll (Carlos, 20-sep): la página no baja entera */
+  #career #decisionBox{position:sticky;top:16px;max-height:calc(100vh - 32px);overflow-y:auto;
+    padding:2px 12px 24px;margin:0 -12px;scrollbar-width:none}
+  #career #decisionBox::-webkit-scrollbar{display:none}
+  #career .timeline{font-size:13.5px}
+  #career .timeline .tl-row{grid-template-columns:38px 1fr 38px 34px 34px 56px;gap:6px;padding:8px 10px}
+  /* 📰 cada noticia del año, en su renglón y con su borde (Carlos, 19-sep). Y a ancho completo:
+     el hueco de la columna del año se lo queda el texto, fuera el margen gigante. */
+  #career .tl-row .ev{grid-column:1/-1}
+  #career .tl-row .tp-verdict{grid-column:1/-1;justify-self:start}
+  #career .tl-row:hover{background:var(--panel)}
+  #career .tl-row .ev .evi{display:block;padding:6px 10px;margin:5px 0;font-size:11.5px;line-height:1.45;border:1px solid var(--line);border-radius:8px;background:var(--panel)}
+  #career .tl-row .ev .evi+.evi::before{content:""}
+  #career .tl-row .ev.top3{font-size:12px;line-height:1.6;padding:8px 10px;border-radius:9px}
+  #career #decisionBox .offer{padding:10px 12px;margin-bottom:0;border-radius:12px;gap:6px 12px;align-items:flex-start}
+  #career #decisionBox .offer .team-dot{margin-top:1px}
+  #career #decisionBox .offers{gap:6px}
+}
+/* 📜 los años anteriores, debajo de la clasificación del año */
+.fs-prev{margin-top:18px;border-top:1px solid var(--line);padding-top:12px}
+.fs-prev h5{margin-bottom:8px}
+.fs-prev .fp{padding:8px 0;border-bottom:1px solid var(--line);font-size:12.5px;line-height:1.55}
+.fs-prev .fp:last-child{border-bottom:0}
+.fs-season{font-weight:800;font-size:15px;margin-bottom:2px}
+.fs-prev .fp b{font-variant-numeric:tabular-nums;margin-right:6px}
+.fs-prev .fpn{display:inline-block;min-width:27px;font-variant-numeric:tabular-nums}
+.fs-prev details.fp summary{cursor:pointer;list-style:none;position:relative;padding-right:16px}
+.fs-prev details.fp summary::-webkit-details-marker{display:none}
+.fs-prev details.fp summary::after{content:"▾";position:absolute;right:2px;top:2px;color:var(--muted);transition:transform .2s}
+.fs-prev details.fp[open] summary::after{transform:rotate(180deg)}
+.fs-prev .fpg{display:grid;grid-template-columns:1.15fr 1fr;gap:4px 12px;padding:9px 0 4px;font-size:12px;line-height:1.5;border-top:1px solid var(--line);margin-top:9px}
+.fs-prev .fpr{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fs-prev .fpt{opacity:.9}
+#panelGaraje{display:none}
+#tpPanelA,#tpPanelB,#tpSeasonHead{display:none}
+.pl-name{font-family:var(--f-disp);font-weight:800;font-size:16px;letter-spacing:.02em;margin-bottom:8px}
+.pl-name:empty,#driverCard.tp .pl-name{display:none}
+
+/* 📱 LOS CUATRO BLOQUES EN MÓVIL (Carlos, 13-sep, en todos los modos): A panel · B dilemas y
+   elecciones · C resumen del año · D clasificación. Se deslizan de lado y C y D bajan hacia los años
+   anteriores. No se mueve HTML: las columnas de la rejilla pasan a `display:contents`. */
+#decisionBox #decRecap{display:none!important}   /* 🧹 «TU TEMPORADA…» fuera de Decidir (Carlos, 22-sep): ya lo cuenta el Resumen */
+#deckTabs{display:none}
+#deckGo{display:none}
+#deckMas{display:none}
+@media (max-width:980px){
+  body.deck-movil #deckGo{display:flex;position:fixed;left:50%;transform:translateX(-50%);
+    bottom:calc(14px + env(safe-area-inset-bottom));z-index:60;align-items:center;gap:8px;
+    border:0;border-radius:999px;padding:12px 26px;background:var(--team-ink);color:var(--team-on);
+    font-family:var(--f-disp);font-weight:800;font-size:15px;box-shadow:0 8px 24px rgba(0,0,0,.28)}
+  body.deck-movil #deckGo[hidden]{display:none}
+  body.deck-movil #deckMas{display:flex;position:fixed;left:50%;transform:translateX(-50%);
+    bottom:calc(16px + env(safe-area-inset-bottom));z-index:59;width:42px;height:42px;border-radius:50%;
+    align-items:center;justify-content:center;border:1px solid var(--line);background:var(--panel);
+    color:var(--muted);font-size:20px;line-height:1;box-shadow:0 2px 8px rgba(20,22,28,.12);padding:0}
+  body.deck-movil #deckMas[hidden]{display:none}
+  body.deck-movil #driverCard,body.deck-movil #decisionBox,body.deck-movil .timeline,body.deck-movil #f1state{padding-bottom:78px}
+  body.deck-movil #decisionBox{padding-bottom:58px}   /* en Decidir no hay flotante: solo el hueco de la flecha */
+}
+@media (max-width:980px){
+  body.deck-movil #betaBar,body.deck-movil #previewBar{display:none!important}   /* !important: el betaBar se enciende con estilo EN LÍNEA */   /* 🧹 faldones fuera (Carlos, 22-sep): el BETA fijo tapaba las pestañas y el de pruebas solo estorba (el público no lo ve) */
+  body.deck-movil.conBeta{padding-top:0}
+  body.deck-movil #deckTabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr)) 42px;gap:4px;position:sticky;top:0;z-index:30;
+    background:var(--bg);padding:8px 0 0;margin:0 0 10px;
+    box-shadow:0 10px 12px -12px rgba(20,22,28,.4)}   /* a todo el ancho; la sombrita hace que el contenido que pasa por debajo se lea como corte, no como «me tapa» */
+  /* `>button`: SOLO las pestañas. #topBtns vive dentro de la barra, así que sus botones heredaban
+     este `background:none` y salían transparentes sobre la tarjeta (Carlos, 23-sep). */
+  body.deck-movil #deckTabs>button{appearance:none;border:0;background:none;padding:8px 2px 9px;font-family:var(--f-mono);
+    font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);border-bottom:3px solid var(--line)}
+  body.deck-movil #deckTabs button.on{color:var(--team-ink);border-bottom-color:var(--team-ink)}
+  body.deck-movil #deckTabs button[hidden]{display:none}
+  /* ⚠️ `flex-direction:row` A MANO: la regla móvil de siempre apila la rejilla en columna, y sin esto
+     los paneles salían uno debajo de otro aunque las pestañas funcionasen */
+  body.deck-movil .career-grid{display:flex;flex-direction:row;gap:14px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;
+    scrollbar-width:none;align-items:flex-start}
+  body.deck-movil .career-grid::-webkit-scrollbar{display:none}
+  body.deck-movil .career-grid > div{display:contents}
+  body.deck-movil #driverCard,body.deck-movil #decisionBox,body.deck-movil .timeline,body.deck-movil #f1state{
+    flex:0 0 100%;min-width:0;max-width:100%;scroll-snap-align:start;scroll-snap-stop:always;margin:0;
+    /* ⚠️ `overscroll-behavior:contain` A SECAS mataba el deslizar en Android (Brave de Carlos, 22-sep):
+       contiene TAMBIÉN el eje X y el gesto horizontal nunca llegaba al carrusel. Solo el vertical. */
+    /* ⚠️ overscroll-y:contain bloqueaba SUBIR la página cuando el panel ya estaba arriba (Carlos,
+       23-sep: «no me deja hacer scroll hacia arriba… se ve tapado por el menú»): el gesto moría en
+       el panel. Con auto, al agotar el panel el gesto encadena a la página. */
+    max-height:calc(100dvh - 88px);overflow-y:auto;overscroll-behavior-y:auto;overscroll-behavior-x:auto;
+    scrollbar-width:none}
+  body.deck-movil #driverCard::-webkit-scrollbar,body.deck-movil #decisionBox::-webkit-scrollbar,body.deck-movil .timeline::-webkit-scrollbar,body.deck-movil #f1state::-webkit-scrollbar{display:none}
+  /* ⚙️ el engranaje vive DENTRO de la barra de pestañas, en su quinta celda (Carlos: «flotando
+     perdido en el éter»): deckActualiza lo muda ahí al entrar en modo baraja y lo devuelve al salir */
+  /* ⚙️ el desplegable en VOLADIZO (Carlos, 22-sep: «cuando salen las opciones el menú se hace más
+     largo»): idioma y tema se posicionan en absoluto bajo el engranaje y la barra no crece. */
+  body.deck-movil #topBtns{position:relative;top:0;right:0;grid-column:5;display:flex;flex-direction:column-reverse;align-items:center;justify-content:flex-start;gap:6px;padding:2px 0}   /* top/right a cero: el relative heredaba el top:44px del modo banner y el ⚙️ se caía de la barra */
+  body.deck-movil #topBtns.open #langToggle,body.deck-movil #topBtns.open #themeToggle,body.deck-movil #topBtns.open #viewToggle{position:absolute;right:2px;z-index:35}
+  body.deck-movil #topBtns.open #viewToggle{top:44px}
+  body.deck-movil #topBtns.open #langToggle{top:90px}
+  body.deck-movil #topBtns.open #themeToggle{top:136px}
+  body.deck-movil #cogToggle{background:transparent;border:0;box-shadow:none;width:32px;height:32px;opacity:.75;filter:grayscale(1)}
+  body.deck-movil #topBtns.open #cogToggle{background:var(--panel2);border:1px solid var(--line);opacity:1}
+  /* 🎨 sombras planas en el deck (Carlos, 22-sep: «el fondo sigue teniendo otro color»): la sombra
+     difusa de 26px pintaba una mancha gris bajo cada tarjeta; en pantallas pequeñas, borde y una
+     sombra de contacto bastan */
+  body.deck-movil .offer,body.deck-movil .tl-row,body.deck-movil #f1state .cols,body.deck-movil #f1state .fs-prev .fp,body.deck-movil .card{box-shadow:0 1px 2px rgba(20,22,28,.05)}
+  body.deck-movil #decTitle{font-size:18px;line-height:1.25}   /* «El mercado · 2028 · McLaren» era grandísimo (Carlos) */
+  /* 📰 en el móvil las noticias también van en cajitas (Stitch de Carlos, 20-sep) */
+  body.deck-movil .tl-row .ev{width:100%}
+  /* 🧹 el hueco de 27px entre el top-3 y las noticias (Carlos, 22-sep): eran tres capas sumadas */
+  body.deck-movil .tl-row .ev.top3{margin-bottom:0}
+  body.deck-movil .tl-row .ev:not(.top3){padding-top:0}
+  body.deck-movil .tl-row .ev .evi:first-child{margin-top:0}
+  /* 🔍 en el deck sobra ancho: el nombre y la fama del jefe suben de cuerpo (Carlos, 22-sep) */
+  body.deck-movil #driverCard:not(.tp) .agev{padding-right:0}   /* EDAD/FAMA al borde (Carlos, 23-sep): arrastraba 46px de padding del layout viejo */
+  body.deck-movil .tpl-l1{font-size:14px}
+  body.deck-movil .tpl-l1>b{font-size:17px}
+  body.deck-movil .tpl-nat{font-size:13px}
+  body.deck-movil .tpl-right{font-size:13.5px}
+  body.deck-movil .tpl-team{font-size:16px}
+  body.deck-movil .tpl-con{font-size:12.5px}
+  body.deck-movil .tl-row .ev .evi{display:block;padding:9px 12px;margin:7px 0;border:1px solid var(--line);border-radius:8px;background:var(--panel)}
+  body.deck-movil .tl-row .ev .evi+.evi::before{content:""}
+  body.deck-movil .tl-row .ev.top3{padding:10px 12px;line-height:1.75;margin-bottom:12px}
+  body.deck-movil .offer{padding:14px;margin-bottom:12px;gap:6px 12px}
+  body.deck-movil #decSub{font-size:13px}
+  body.deck-movil #driverCard{order:1} body.deck-movil #decisionBox{order:2;padding:2px 2px 30px}
+  body.deck-movil .timeline{order:3} body.deck-movil #f1state{order:4}
+  /* 🃏 los chips de temporada del escritorio, también en el deck (Carlos, 22-sep) */
+  body.deck-movil .timeline{background:transparent;border:0;box-shadow:none;border-radius:0}
+  body.deck-movil .timeline .tl-row{background:var(--panel);border:1px solid var(--line);border-radius:14px;margin-bottom:10px;box-shadow:var(--shadow);padding:12px 14px;position:relative;overflow:hidden}
+  body.deck-movil .timeline .tl-row::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--team-ink,var(--accent))}
+  body.deck-movil #f1state{background:transparent;border:0;box-shadow:none;padding-top:0}   /* el padding:16px de .f1state lo dejaba más abajo que los otros tres paneles (Carlos, 22-sep) */
+  body.deck-movil #f1state::before{display:none}
+  body.deck-movil #f1state .cols,body.deck-movil #f1state .fs-prev .fp{background:var(--panel);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:12px 14px;margin-bottom:10px;position:relative;overflow:hidden}
+  body.deck-movil #f1state .cols::before,body.deck-movil #f1state .fs-prev .fp::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--team-ink,var(--accent))}
+  body.deck-movil #f1state .fs-prev{border-top:0}
+  body.deck-movil .fs-prev details.fp summary::after{right:-8px}   /* la ▾ pegada al borde de la tarjeta (Carlos, 23-sep) */
+  body.deck-movil .tl-body{max-height:none}
+  body.deck-movil .f1state .cols{grid-template-columns:1fr;display:grid;gap:18px}   /* en el panel del móvil, pilotos y constructores uno debajo del otro */
+}
+@media (prefers-reduced-motion: reduce){ body.deck-movil .career-grid{scroll-behavior:auto} }

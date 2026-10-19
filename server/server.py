@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
 """
 F1 Glory - Standalone Local Server & API
-Run with: python3 server.py [PORT]
+Run with: python3 server/server.py [PORT]
 """
 
 import sys, os, json, time, urllib.parse
 from http.server import HTTPServer, BaseHTTPRequestHandler
 
 PORT = int(sys.argv[1]) if len(sys.argv) > 1 else 3000
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DATA_DIR = os.path.join(BASE_DIR, 'data')
+SERVER_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.realpath(os.path.join(SERVER_DIR, '..', 'public'))
+DATA_DIR = os.path.join(SERVER_DIR, 'data')
 DB_FILE = os.path.join(DATA_DIR, 'leaderboard.json')
 SEED_FILE = os.path.join(DATA_DIR, 'seed_leaderboard.json')
 
@@ -133,7 +134,7 @@ class Handler(BaseHTTPRequestHandler):
             self.wfile.write(body)
             return
 
-        # Static files
+        # Static files from BASE_DIR (public/)
         rel_path = urllib.parse.unquote(pathname.lstrip('/'))
         if not rel_path:
             rel_path = 'index.html'
@@ -241,6 +242,7 @@ if __name__ == '__main__':
     print(f"\n========================================")
     print(f"🏁 F1 Glory Server (Python) is running!")
     print(f"👉 http://localhost:{PORT}")
+    print(f"📁 Serving files from: {BASE_DIR}")
     print(f"========================================\n")
     try:
         server.serve_forever()

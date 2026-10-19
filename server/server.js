@@ -4,7 +4,9 @@ const path = require('path');
 const url = require('url');
 
 const PORT = process.env.PORT || 3000;
-const DATA_DIR = path.join(__dirname, 'data');
+const SERVER_DIR = __dirname;
+const PUBLIC_DIR = path.join(SERVER_DIR, '..', 'public');
+const DATA_DIR = path.join(SERVER_DIR, 'data');
 const DB_FILE = path.join(DATA_DIR, 'leaderboard.json');
 const SEED_FILE = path.join(DATA_DIR, 'seed_leaderboard.json');
 
@@ -194,12 +196,12 @@ const server = http.createServer((req, res) => {
     return;
   }
 
-  // Static file serving
+  // Static file serving from PUBLIC_DIR
   let reqPath = decodeURIComponent(pathname);
   if (reqPath === '/' || reqPath === '') reqPath = '/index.html';
 
-  const safePath = path.normalize(path.join(__dirname, reqPath));
-  if (!safePath.startsWith(__dirname)) {
+  const safePath = path.normalize(path.join(PUBLIC_DIR, reqPath));
+  if (!safePath.startsWith(PUBLIC_DIR)) {
     res.writeHead(403, { 'Content-Type': 'text/plain' });
     res.end('Access Denied');
     return;
@@ -230,5 +232,6 @@ server.listen(PORT, () => {
   console.log(`\n========================================`);
   console.log(`🏁 F1 Glory Server is running!`);
   console.log(`👉 http://localhost:${PORT}`);
+  console.log(`📁 Serving files from: ${PUBLIC_DIR}`);
   console.log(`========================================\n`);
 });
