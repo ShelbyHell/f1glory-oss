@@ -3,7 +3,7 @@
    sola puerta, al final del archivo (LANGS): antes había dos listas y la de aquí se quedó sin polaco
    ni francés, así que el idioma se degradaba a español antes de llegar al candado y este ya no tenía
    nada que limpiar — el valor viejo se quedaba pegado en el navegador. Una lista, un sitio. */
-const LANG_ALL = ["es","en","pt","pl","fr"];
+const LANG_ALL = ["es","en","pt","pl","fr","ru"];
 let LANG = (function(){ try{ const l=localStorage.getItem("f1lang")||"es"; return LANG_ALL.includes(l)?l:"es"; }catch(e){ return "es"; } })();
 // 🔒 modo PREVIEW (oculto): entra con ?preview=glory26 para activar funciones en pruebas SOLO para el dev
 // (persiste en localStorage; ?preview=off lo apaga). El resto de la gente no ve absolutamente nada distinto.
@@ -37,11 +37,21 @@ const L = (es,en,x)=>{
   if(LANG==="en") return en!=null?en:es;
   const t = (x && typeof x==="object") ? x[LANG] : null;
   if(t!=null) return t;
+  if(LANG==="ru"){
+    if(typeof RU_DICT!=="undefined"){
+      const r = RU_DICT[en] || RU_DICT[es];
+      if(r!=null) return r;
+    }
+    if(typeof ruTranslate==="function"){
+      const dyn = ruTranslate(en!=null?en:es);
+      if(dyn!=null) return dyn;
+    }
+  }
   return FALLBACK[LANG]==="en" ? (en!=null?en:es) : es;
 };
 /* 🪜 A QUÉ IDIOMA SE CAE CUANDO FALTA UNA FRASE. No es capricho: a un lector de Brasil el español
    roto se le entiende mucho mejor que el inglés, y a uno de Polonia le pasa justo al revés. */
-const FALLBACK = {pt:"es", pl:"en", fr:"en"};
+const FALLBACK = {pt:"es", pl:"en", fr:"en", ru:"en"};
 /* 📚 Muchos textos no están escritos en el código sino en TABLAS DE DATOS, guardados como ["es","en"].
    LA() traduce uno de esos pares sin tener que reescribir cada llamada: basta con añadirle un tercer
    elemento a la tabla. Si no lo tiene, cae por el mismo escalón que L(). */
@@ -50,6 +60,10 @@ const LANGS = ["es","en"];   // los idiomas en obras se añaden abajo solo si el
 function applyLang(){
   // mismo escalón de reserva que L(): idioma pedido → su reserva → español
   const dsFall = (d,k)=>{ const v=d[LANG+k]; if(v!=null) return v;
+    if(LANG==="ru" && typeof RU_DICT!=="undefined"){
+      const key = d["en"+k] || d["es"+k];
+      if(RU_DICT[key] || RU_DICT[d["es"+k]]) return RU_DICT[key] || RU_DICT[d["es"+k]];
+    }
     const f=FALLBACK[LANG]; if(f && d[f+k]!=null) return d[f+k];
     return d["es"+k]; };
   document.querySelectorAll("[data-es]").forEach(el=>{ el.innerHTML = dsFall(el.dataset,""); });
@@ -75,7 +89,7 @@ function pintarActualizacion(){
   const el=document.getElementById("updFecha"), p=document.getElementById("newsUpd");
   if(!el || !p) return;
   const pinta=()=>{
-    const loc = LANG==="pt"?"pt-BR":LANG==="en"?"en-GB":LANG==="pl"?"pl-PL":LANG==="fr"?"fr-FR":"es-ES";
+    const loc = LANG==="pt"?"pt-BR":LANG==="en"?"en-GB":LANG==="ru"?"ru-RU":LANG==="pl"?"pl-PL":LANG==="fr"?"fr-FR":"es-ES";
     try{
       el.textContent = _updLM.toLocaleDateString(loc,{day:"numeric",month:"long",year:"numeric"})
         + ", " + _updLM.toLocaleTimeString(loc,{hour:"2-digit",minute:"2-digit"});
@@ -96,7 +110,7 @@ function pintarActualizacion(){
    · con TRES o más se convierte en un SELECTOR: pinchas y ves los disponibles.
    Así, el día que el portugués esté traducido y se quite el candado, el botón cambia de
    comportamiento sin tocar nada más. Hoy el público ve dos idiomas, o sea el interruptor de siempre. */
-const LANG_NAME={es:"Español",en:"English",pt:"Português",pl:"Polski",fr:"Français"};
+const LANG_NAME={es:"Español",en:"English",pt:"Português",pl:"Polski",fr:"Français",ru:"Русский"};
 function nextLang(){
   if(LANGS.length<=2){ const i=LANGS.indexOf(LANG); setLang(LANGS[(i+1)%LANGS.length]||"es"); return; }
   const m=document.getElementById("langMenu");
@@ -531,7 +545,8 @@ function countryLabel(c, yr){
   // el error de inicialización tumbaba el resto del script (cazado al probarlo, 10-oct)
   let y=yr; if(!y){ try{ y=(ERAS[SELECTED_ERA]||{}).baseYear; }catch(e){} y=y||2026; }
   const e=(NOMBRE_EPOCA[c[0]]||[]).find(x=>y<=x[0] && (x[4]==null || y>=x[4]));
-  if(e) return LANG==="en" ? e[2] : LANG==="pt" ? e[3] : e[1];
+  if(e) return LANG==="ru" ? (e[5]||e[2]||e[1]) : LANG==="en" ? e[2] : LANG==="pt" ? e[3] : e[1];
+  if(LANG==="ru") return (typeof RU_COUNTRIES!=="undefined" && RU_COUNTRIES[c[0]]) || c[2] || c[0];
   if(LANG==="en") return c[2]||c[0]; if(LANG==="pt") return c[3]||c[0]; return c[0]; }
 // sin acentos y en minúsculas: "mexico" encuentra "México" y "banglades" encuentra "Bangladés"
 function sinTildes(s){ return (s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase(); }
@@ -2969,7 +2984,8 @@ const STYLES = {
 const CHARS=["agresivo","tecnico","consistente"];
 const CHAR_LABEL={agresivo:"🔥 nervioso", tecnico:"🧠 técnico", consistente:"📈 noble"};
 const CHAR_LABEL_EN={agresivo:"🔥 twitchy", tecnico:"🧠 technical", consistente:"📈 forgiving"};
-function charLabel(c){ return (LANG==="en"?CHAR_LABEL_EN:CHAR_LABEL)[c]||""; }
+const CHAR_LABEL_RU={agresivo:"🔥 резкий", tecnico:"🧠 техничный", consistente:"📈 послушный"};
+function charLabel(c){ return (LANG==="ru"?CHAR_LABEL_RU:LANG==="en"?CHAR_LABEL_EN:CHAR_LABEL)[c]||""; }
 function styleLabel(k){ return k==="agresivo"?L("🔥 Agresivo","🔥 Aggressive",{pt:"🔥 Agressivo"}):k==="tecnico"?L("🧠 Técnico","🧠 Technical",{pt:"🧠 Técnico"}):k==="consistente"?L("📈 Consistente","📈 Consistent",{pt:"📈 Consistente"}):""; }
 const CAR_AFFINITY={
   tecnico:    {tecnico:1.7, consistente:0.3, agresivo:-1.4},
@@ -20564,7 +20580,7 @@ const TP_DILEMAS=[
      cinco temporadas. Ahora cada uno lleva DENTRO tu apellido y el dato que lo aterriza: el nombre
      del equipo, el año y el número. Se lee como un titular de verdad y se entiende sin memoria. */
   d:()=>{ const p=S._pm||{}, q=p.dato||{}, yo=surname(sel.name);
-    const pos = n => n===1 ? L("campeón","champion",{pt:"campeão"}) : (LANG==="en" ? "P"+n : n+"º");
+    const pos = n => n===1 ? L("campeón","champion",{pt:"campeão",ru:"чемпион"}) : ((LANG==="en"||LANG==="ru") ? "P"+n : n+"º");
     const PP = S._pmPuesto||{p:0,n:0};
     const puesto = L(`${PP.p}º de ${PP.n}`, `P${PP.p} of ${PP.n}`, {pt:`${PP.p}º de ${PP.n}`});
     const tit = p.k==="venta"  ? L(`«Ganó, cobró y se fue: ${yo} levantó el título con ${q.team} y lo vendió en ${q.year}»`,`«He won, he cashed in, he left: ${yo} took the title with ${q.team} and sold it in ${q.year}»`,{pt:`«Venceu, embolsou e foi embora: ${yo} levantou o título com a ${q.team} e a vendeu em ${q.year}»`})
@@ -23417,6 +23433,7 @@ function endTPCareer(){
    tablas de datos, y el filtro de nombres del ranking sabe portugués. El polaco y el francés siguen
    en obras: cada idioma sale del candado cuando esté entero, no antes y no todos a la vez. */
 LANGS.push("pt");
+LANGS.push("ru");
 if(PREVIEW) LANGS.push("pl","fr");   // en obras: solo visibles en modo pruebas
 /* 🌐 PRIMERA VISITA: EL IDIOMA DEL NAVEGADOR (8-sep-2026). El juego arrancaba SIEMPRE en español y no
    miraba de dónde entrabas, así que un jugador de Brasil veía el juego en español, no descubría el
@@ -23441,6 +23458,7 @@ try{
     const _pref=_nav[0]||"";
     LANG = (_pref==="es") ? "es"
          : (_pref==="pt" && LANGS.indexOf("pt")>=0) ? "pt"
+         : (_pref==="ru" && LANGS.indexOf("ru")>=0) ? "ru"
          : "en";
   }
 }catch(e){}
