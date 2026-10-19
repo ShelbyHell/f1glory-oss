@@ -3225,6 +3225,169 @@ h1,h2,h3,.decision h3,#intro h1{font-family:var(--f-disp);font-weight:800;letter
   line-height: 1.4;
 }
 
+/* =====================================================================
+   📻 TEAM RADIO BOX & AUDIO HUD
+   ===================================================================== */
+.hud-radio-btn {
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  color: #38bdf8;
+  border-radius: 999px;
+  padding: 3px 10px;
+  font-family: var(--f-mono, monospace);
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.hud-radio-btn:hover {
+  background: rgba(56, 189, 248, 0.25);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(56, 189, 248, 0.25);
+}
+.hrb-txt {
+  font-size: 10px;
+  letter-spacing: 0.05em;
+}
+.team-radio-box {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  z-index: 250;
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.96) 0%, rgba(10, 15, 30, 0.98) 100%);
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  border-left: 5px solid #38bdf8;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.7), 0 0 25px rgba(56, 189, 248, 0.2);
+  border-radius: 14px;
+  padding: 14px 18px;
+  max-width: 440px;
+  width: calc(100% - 48px);
+  transform: translateY(120%);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.team-radio-box.show {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+.tr-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+.tr-title {
+  font-family: var(--f-mono);
+  font-size: 10.5px;
+  font-weight: 800;
+  color: #38bdf8;
+  letter-spacing: 0.06em;
+}
+.tr-x {
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  font-size: 14px;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+.tr-x:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+.tr-msg-ru {
+  font-size: 13.5px;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.4;
+  margin-bottom: 4px;
+}
+.tr-msg-orig {
+  font-size: 11px;
+  color: var(--muted);
+  font-style: italic;
+  line-height: 1.35;
+}
+.tr-wave {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  margin-right: 6px;
+}
+.tr-wave span {
+  width: 3px;
+  height: 10px;
+  background: #38bdf8;
+  border-radius: 2px;
+  animation: soundWave 0.8s infinite ease-in-out alternate;
+}
+.tr-wave span:nth-child(2) { animation-delay: 0.2s; height: 16px; }
+.tr-wave span:nth-child(3) { animation-delay: 0.4s; height: 8px; }
+.tr-wave span:nth-child(4) { animation-delay: 0.6s; height: 14px; }
+@keyframes soundWave {
+  0% { transform: scaleY(0.4); opacity: 0.4; }
+  100% { transform: scaleY(1); opacity: 1; }
+}
+
+/* =====================================================================
+   🇳🇱 VERSTAPPEN HISTORIC CHALLENGE CARD
+   ===================================================================== */
+.verstappen-challenge-card {
+  background: linear-gradient(135deg, rgba(234, 88, 12, 0.15) 0%, rgba(15, 23, 42, 0.85) 60%), #151924 !important;
+  border: 1px solid rgba(234, 88, 12, 0.45) !important;
+  border-left: 6px solid #ea580c !important;
+  border-radius: 16px !important;
+  padding: 16px 20px !important;
+  margin-bottom: 14px !important;
+  text-align: left !important;
+  box-shadow: 0 8px 24px rgba(234, 88, 12, 0.15) !important;
+  transition: all 0.25s ease !important;
+}
+.verstappen-challenge-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(234, 88, 12, 0.25) !important;
+  border-color: #ea580c !important;
+}
+.v-card-tag {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  font-weight: 800;
+  color: #ea580c;
+  letter-spacing: 0.08em;
+  margin-bottom: 4px;
+}
+.v-card-title {
+  font-family: var(--f-disp);
+  font-size: 18px;
+  font-weight: 900;
+  color: #fff;
+  margin-bottom: 6px;
+}
+.v-card-desc {
+  font-size: 12.5px;
+  color: var(--muted);
+  line-height: 1.45;
+  margin-bottom: 14px;
+}
+.v-card-btn-wrap {
+  display: flex;
+}
+.v-play-btn {
+  background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%) !important;
+  color: #fff !important;
+  font-weight: 800;
+  font-size: 12.5px;
+  padding: 8px 18px;
+  box-shadow: 0 4px 16px rgba(234, 88, 12, 0.35);
+}
+
+
 
 
 
