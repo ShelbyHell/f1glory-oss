@@ -201,7 +201,12 @@ function setTheme(t){
    amarillo o el McLaren plateado desaparecían en claro, y el Red Bull azul marino en oscuro. */
 function pintaColorEquipo(t){
   const R=document.documentElement.style;
-  if(!t || !t.color){ ["--team","--team-ink","--team-soft","--team-on"].forEach(v=>R.removeProperty(v)); return; }
+  if(!t || !t.color){
+    ["--team","--team-ink","--team-soft","--team-on","--team-grad","--team-glow","--team-border"].forEach(v=>R.removeProperty(v));
+    const led = document.getElementById("hudLedBar");
+    if(led) led.style.background = "linear-gradient(90deg, #e10600, #ff1801, #e10600)";
+    return;
+  }
   const rgb=h=>{ let s=String(h||"").replace("#",""); if(s.length===3) s=s.split("").map(c=>c+c).join("");
     const n=parseInt(s.slice(0,6),16); return isNaN(n)?null:[n>>16&255,n>>8&255,n&255]; };
   const lum=c=>{ const v=c.map(x=>{x/=255; return x<=.03928?x/12.92:Math.pow((x+.055)/1.055,2.4);}); return .2126*v[0]+.7152*v[1]+.0722*v[2]; };
@@ -212,11 +217,18 @@ function pintaColorEquipo(t){
   let ink = c1 && ratio(c1)>=3 ? c1 : (c2 && ratio(c2)>=3 ? c2 : null);
   if(!ink){ ink=(c1||c2||[225,6,0]).slice(); const meta=oscuro?255:0;
     for(let k=0;k<12 && ratio(ink)<3;k++) ink=ink.map(x=>x+(meta-x)*.18); }
-  R.setProperty("--team", hex(c1||ink));
+  const colMain = hex(c1||ink);
+  const colSub = hex(c2||ink);
+  R.setProperty("--team", colMain);
   R.setProperty("--team-ink", hex(ink));
   R.setProperty("--team-soft", `rgba(${ink.map(Math.round).join(",")},${oscuro?.16:.11})`);
-  /* ✍️ y el texto que va ENCIMA del color: negro sobre los claros (Renault amarillo), blanco sobre el resto */
+  R.setProperty("--team-grad", `linear-gradient(135deg, ${colMain} 0%, ${colSub} 100%)`);
+  R.setProperty("--team-glow", `0 0 16px rgba(${ink.map(Math.round).join(",")},0.45)`);
+  R.setProperty("--team-border", `rgba(${ink.map(Math.round).join(",")},0.4)`);
   R.setProperty("--team-on", lum(ink)>.45 ? "#15151e" : "#ffffff");
+
+  const led = document.getElementById("hudLedBar");
+  if(led) led.style.background = `linear-gradient(90deg, ${colMain}, ${colSub}, ${colMain})`;
 }
 /* 📱 COCKPIT NAVIGATION TABS: universal tabbed dashboard for career mode */
 const DECK_PANELES=[
@@ -240,15 +252,26 @@ function updateCareerHud(){
   }
   hud.style.display="flex";
 
+  // Ensure top LED strip exists
+  let led = document.getElementById("hudLedBar");
+  if(!led){
+    led = document.createElement("div");
+    led.id = "hudLedBar";
+    led.className = "hud-led-bar";
+    hud.insertBefore(led, hud.firstChild);
+  }
+
+  const isTP = S.cat==="TP" || (typeof TP_MODE!=="undefined" && TP_MODE);
+
   const flgEl = document.getElementById("hudFlag");
   if(flgEl) flgEl.textContent = (typeof sel!=="undefined" && sel.flag) ? natLabel() : "🌍";
 
   const nameEl = document.getElementById("hudDriver");
-  if(nameEl) nameEl.textContent = (typeof sel!=="undefined" && sel.name) ? sel.name.toUpperCase() : "DRIVER";
+  if(nameEl) nameEl.textContent = (typeof sel!=="undefined" && sel.name) ? sel.name.toUpperCase() : (isTP ? "TEAM PRINCIPAL" : "DRIVER");
 
   const numEl = document.getElementById("hudNum");
   if(numEl){
-    if(S.cat==="TP"){
+    if(isTP){
       numEl.textContent = "TP";
       numEl.className = "hud-num tp";
     } else {
@@ -273,9 +296,13 @@ function updateCareerHud(){
       roleEl.textContent = roleTxt;
       roleEl.style.display = roleTxt ? "inline-block" : "none";
     }
-  } else if(S.cat==="TP" && S.tpTeam){
+  } else if(isTP && S.tpTeam){
     if(teamEl) teamEl.textContent = S.tpTeam;
-    if(dotEl) dotEl.style.display = "inline-block";
+    if(dotEl){
+      dotEl.style.display = "inline-block";
+      const tpTeamObj = typeof F1_TEAMS!=="undefined" ? F1_TEAMS.find(t=>t.name===S.tpTeam) : null;
+      dotEl.style.background = (tpTeamObj && tpTeamObj.color) || "#e10600";
+    }
     if(roleEl){
       roleEl.textContent = L("JEFE","PRINCIPAL",{ru:"РУКОВОДИТЕЛЬ",pt:"CHEFE"});
       roleEl.style.display = "inline-block";
@@ -288,26 +315,40 @@ function updateCareerHud(){
 
   const ageEl = document.getElementById("hudAge");
   if(ageEl){
-    if(S.cat==="TP"){
-      ageEl.textContent = (S.tpSeasonNum ? `${L("AÑO","YEAR",{ru:"СЕЗОН",pt:"ANO"})} ${S.tpSeasonNum}` : "");
+    if(isTP){
+      ageEl.textContent = `${L("AÑO","YEAR",{ru:"СЕЗОН",pt:"ANO"})} ${(S.age ? S.age + 1 : 1)}`;
     } else {
       ageEl.textContent = `${S.age} ${L("años","y/o",{ru:"лет",pt:"anos"})}`;
     }
   }
 
   const ovrEl = document.getElementById("hudOvrVal");
-  if(ovrEl) ovrEl.textContent = S.ovr || 50;
   const ovrBadge = document.getElementById("hudOvr");
-  if(ovrBadge && S.ovr) ovrBadge.style.background = ovrColor(S.ovr);
+  if(isTP){
+    const carP = (S.f1perf && S.tpTeam) ? Math.round(S.f1perf[S.tpTeam] ?? 75) : 75;
+    if(ovrEl) ovrEl.textContent = carP;
+    if(ovrBadge){
+      const bl = ovrBadge.querySelector(".l");
+      if(bl) bl.textContent = L("COCHE","CAR",{ru:"БОЛИД",pt:"CARRO"});
+      ovrBadge.style.background = ovrColor(carP);
+    }
+  } else {
+    if(ovrEl) ovrEl.textContent = S.ovr || 50;
+    if(ovrBadge){
+      const bl = ovrBadge.querySelector(".l");
+      if(bl) bl.textContent = "OVR";
+      if(S.ovr) ovrBadge.style.background = ovrColor(S.ovr);
+    }
+  }
 
   const wEl = document.getElementById("hudW");
   if(wEl) wEl.textContent = S.wins || 0;
   const pEl = document.getElementById("hudP");
   if(pEl) pEl.textContent = S.podiums || 0;
   const ppEl = document.getElementById("hudPP");
-  if(ppEl) ppEl.textContent = S.poles || 0;
+  if(ppEl) ppEl.textContent = isTP ? ((S.titles ? S.titles.constr : 0) + " 🏎️") : (S.poles || 0);
   const gpEl = document.getElementById("hudGP");
-  if(gpEl) gpEl.textContent = S.gp || 0;
+  if(gpEl) gpEl.textContent = isTP ? (S.age || 0) : (S.gp || 0);
 }
 
 function deckIr(id){
@@ -5650,6 +5691,120 @@ function refreshCard(){
     if(S.titles.f3)caps.push(S.titles.f3+"× F3");
     tc.innerHTML=`<div class="shelf">${shelf.join("")}</div><div class="cap">${caps.join(" · ")}</div>`;
   } else tc.innerHTML=`<div class="empty">${L("🏆 Vitrina vacía","🏆 Empty trophy case",{pt:"🏆 Vitrine vazia"})}</div>`;
+
+  try{ renderDriverH2H(); }catch(e){}
+}
+
+function renderDriverH2H(){
+  let el = document.getElementById("driverH2H");
+  if(typeof S==="undefined" || !S || S.cat==="TP"){
+    if(el) el.style.display="none";
+    return;
+  }
+  const dc = document.getElementById("driverCard");
+  if(!dc) return;
+  if(!el){
+    el = document.createElement("div");
+    el.id = "driverH2H";
+    el.className = "driver-h2h";
+    dc.appendChild(el);
+  }
+
+  // Find active teammate
+  let mate = null;
+  if(S.team && S.seats && S.seats[S.team.name]){
+    mate = S.seats[S.team.name].find(d => d && d !== "PLAYER");
+  }
+
+  // Aggregate H2H across all F1 seasons
+  let totalH2HWins = 0;
+  let totalH2HLosses = 0;
+  let totalH2HTies = 0;
+  let totalMyPts = 0;
+  let totalMatePts = 0;
+  let f1SeasonsCount = 0;
+
+  (S.seasons || []).forEach(s => {
+    if(s.cat === "F1" && s.mateName){
+      f1SeasonsCount++;
+      const sMatePts = s.matePts != null ? s.matePts : 0;
+      const sMyPts = s.pts || 0;
+      totalMyPts += sMyPts;
+      totalMatePts += sMatePts;
+      if(s.pos != null && s.matePos != null){
+        if(s.pos < s.matePos) totalH2HWins++;
+        else if(s.pos > s.matePos) totalH2HLosses++;
+        else totalH2HTies++;
+      } else {
+        if(sMyPts > sMatePts) totalH2HWins++;
+        else if(sMyPts < sMatePts) totalH2HLosses++;
+        else totalH2HTies++;
+      }
+    }
+  });
+
+  if(!mate && f1SeasonsCount === 0){
+    el.style.display = "none";
+    return;
+  }
+
+  el.style.display = "block";
+
+  const mateOvr = mate ? (mate.skill || 75) : 75;
+  const myOvr = S.ovr || 50;
+  const totalDuelRaces = totalH2HWins + totalH2HLosses + totalH2HTies;
+  const winRate = totalDuelRaces > 0 ? Math.round((totalH2HWins / totalDuelRaces) * 100) : 0;
+
+  let currentDuelHTML = "";
+  if(mate){
+    const mateSurname = surname(mate.name);
+    const mateNum = mate.num ? `#${mate.num}` : "";
+    const mateFlag = mate.flag || "🏁";
+    const myRole = S.role ? `Nº${S.role}` : "DRIVER";
+    const mateRole = S.role === "1" ? "Nº2" : (S.role === "2" ? "Nº1" : "MATE");
+
+    currentDuelHTML = `
+      <div class="h2h-current">
+        <div class="h2h-side me">
+          <div class="h2h-name"><span class="h2h-flag">${sel.flag || "🏁"}</span> <b>${sel.name || "YOU"}</b></div>
+          <div class="h2h-sub"><span class="h2h-role">${myRole}</span> · <span class="h2h-ovr-chip" style="background:${ovrColor(myOvr)}">${myOvr} OVR</span></div>
+        </div>
+        <div class="h2h-vs">VS</div>
+        <div class="h2h-side mate">
+          <div class="h2h-name"><b>${mateSurname}</b> ${mateNum} <span class="h2h-flag">${mateFlag}</span></div>
+          <div class="h2h-sub"><span class="h2h-ovr-chip" style="background:${ovrColor(mateOvr)}">${mateOvr} OVR</span> · <span class="h2h-role">${mateRole}</span></div>
+        </div>
+      </div>
+      <div class="h2h-meter-wrap">
+        <div class="h2h-meter" style="--split:${Math.max(20, Math.min(80, Math.round((myOvr / (myOvr + mateOvr)) * 100)))}%"></div>
+      </div>
+    `;
+  }
+
+  let careerRecordHTML = "";
+  if(totalDuelRaces > 0){
+    careerRecordHTML = `
+      <div class="h2h-career-record">
+        <div class="h2h-rec-title">
+          <span>🏆 ${L("DUELOS DE TEMPORADA","SEASON HEAD-TO-HEAD",{ru:"СЕЗОННЫЕ ДУЭЛИ В F1"})}</span>
+          <b>${totalH2HWins} — ${totalH2HLosses}</b>
+        </div>
+        <div class="h2h-rec-stat">
+          <span>${L("Puntos","Points",{ru:"Очки"})}: <b>${totalMyPts}</b> vs <b>${totalMatePts}</b></span>
+          <span class="h2h-winrate">🔥 ${winRate}% ${L("ganados","won",{ru:"побед"})}</span>
+        </div>
+      </div>
+    `;
+  }
+
+  el.innerHTML = `
+    <div class="h2h-header">
+      <span class="h2h-title">⚔️ ${L("DUELO CON COMPAÑERO","TEAMMATE HEAD-TO-HEAD",{ru:"ДУЭЛЬ С НАПАРНИКОМ"})}</span>
+      <span class="h2h-badge-tag">${mate ? L("ACTIVO","ACTIVE",{ru:"СЕЗОН"}) : L("HISTÓRICO","CAREER",{ru:"КАРЬЕРА"})}</span>
+    </div>
+    ${currentDuelHTML}
+    ${careerRecordHTML}
+  `;
 }
 
 /* ---------- gestión de asientos y mercado NPC ---------- */
@@ -11270,6 +11425,7 @@ function simSeason(){
   renderTimeline();
   renderF1State();
   S.age++;
+  try{ if(window.triggerF1Autosave) window.triggerF1Autosave(); }catch(e){}
 }
 
 /* 🅱️ EL FILIAL NUNCA SUPERA A LA MADRE (regla firme de Carlos, 17-ago). El comentario viejo prometía
@@ -12950,7 +13106,16 @@ function simF1(row,st){
   // 🥇 posición de TU COMPAÑERO en el campeonato. La jerarquía del año siguiente tiene que mirar
   // RESULTADOS y no solo el OVR: un Nº2 que gana el Mundial no puede seguir siendo Nº2.
   const _mIdx=standings.findIndex(d=>!d.isP && d.team===myTeam);
-  if(_mIdx>=0){ row.matePos=_mIdx+1; row.mateName=standings[_mIdx].name; }
+  if(_mIdx>=0){
+    const _m = standings[_mIdx];
+    row.matePos=_mIdx+1;
+    row.mateName=_m.name;
+    row.matePts=_m.ptsAll!=null ? _m.ptsAll : (_m.pts||0);
+    row.mateWins=_m.wins||0;
+    row.matePods=_m.pods||0;
+    row.mateFlag=_m.flag||"🏁";
+    row.mateSkill=_m.skill||75;
+  }
   row.top3c=constrRank.slice(0,3).map(e=>e[0]);
   // 🏆 el palmarés vivo. Si el campeón eres tú se guarda "__ME__": años después, el equipo al que
   // dejaste dormido puede decirte a la cara que la última vez que ganaron fuiste tú.
@@ -14392,9 +14557,19 @@ function renderTimeline(){
       const _grpWP=[_w==null?null:`<span class="clw">🏆 ${_w} ${L("Victorias","Wins",{pt:"Vitórias"})}</span>`,
         _p==null?null:`<span class="clp">🥉 ${_p} ${L("Podios","Podiums",{pt:"Pódios"})}</span>`].filter(Boolean).join(" · ");
       const _grpPts=[ptsTxt, constr].filter(Boolean).join(" · ");
+      /* ⚔️ H2H дуэль с напарником по сезону */
+      let _h2hPill = null;
+      if(r.cat==="F1" && r.mateName){
+        const mPts = r.matePts != null ? r.matePts : 0;
+        const myP = r.pts || 0;
+        const myBeat = (r.pos!=null && r.matePos!=null) ? (r.pos < r.matePos) : (myP >= mPts);
+        const diff = myP - mPts;
+        const diffTxt = diff > 0 ? `+${diff}` : `${diff}`;
+        _h2hPill = `<span class="h2h-tl-pill ${myBeat ? 'win' : 'loss'}" title="Напарник: ${r.mateName}">⚔️ vs ${surname(r.mateName)}: ${myP}—${mPts} (${diffTxt}) ${myBeat ? '🏆' : '🔻'}</span>`;
+      }
       /* 📱 en móvil victorias y podios bajan a su propia línea (Carlos, 23-sep): el separador
          intermedio lleva su clase para poder esconderse y .clgrp pasa a block por CSS */
-      const linea2=[_grpPts, _grpWP?`<span class="clsep"> · </span><span class="clgrp">${_grpWP}</span>`:null].filter(Boolean).join("");
+      const linea2=[_grpPts, _grpWP?`<span class="clsep"> · </span><span class="clgrp">${_grpWP}</span>`:null, _h2hPill?`<span class="clsep"> · </span>${_h2hPill}`:null].filter(Boolean).join("");
       return `
       <span class="tph"><span class="age" title="${L("Temporada","Season",{pt:"Temporada"})} ${r.year}">${r.age}</span>${r.ovr!=null?`<span class="ovrcell" style="background:${ovrColor(r.ovr)}">${r.ovr}</span>`:""}${r.paron ? "" : r.team2 ? badge(r.team,"",r.year)+badge(r.team2,"",r.year) : badge(r.team,"",r.year)}<span class="tpnm">${r.paron
             ? `${catLbl} · ${r.year}`   // 🏠 el año en casa no es de ningún equipo
@@ -16153,6 +16328,12 @@ function tpSignTeam(t, how, ownerK){
       {pt:`🧑‍💼 Nova etapa: você assume o muro da ${S.tpTeam}. ${S.tpOwner.intro()}`}));
   }
   refreshCard();
+  try{
+    const curTeam = F1_TEAMS.find(t=>t.name===S.tpTeam);
+    if(curTeam) pintaColorEquipo(curTeam);
+    updateCareerHud();
+    if(window.triggerF1Autosave) window.triggerF1Autosave();
+  }catch(e){}
   tpYearStart();
 }
 
