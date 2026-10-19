@@ -492,7 +492,8 @@
           <div class="cheat-sec-title">Разблокировки игры</div>
           <div class="cheat-row">
             <button class="cheat-btn gold" onclick="cheatUnlockAllDecades()">🔓 Разблокировать все ретро-эпохи (1950–2020)</button>
-            <button class="cheat-btn gold" onclick="closeCheatMenu(); window.openCeoModal();">🏛️ Кабинет CEO и Владельца команды F1</button>
+            <button class="cheat-btn gold" onclick="closeCheatMenu(); window.transitionToCeoPage(false);">🏛️ Кабинет CEO и Владельца команды F1</button>
+            <button class="cheat-btn danger" onclick="window.resetCeoMode(); notify('Состояние CEO полностью сброшено!');">🗑️ Сбросить команду CEO (resetCeoMode)</button>
             <button class="cheat-btn gold" onclick="cheatUnlockChallenges()">📅 Разблокировать все испытания</button>
             <button class="cheat-btn" onclick="cheatTogglePreview()">🧪 Preview-режим разработчика: ${typeof PREVIEW !== "undefined" && PREVIEW ? "ВКЛ" : "ВЫКЛ"}</button>
           </div>
