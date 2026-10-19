@@ -3161,18 +3161,79 @@ window.RU_DICT = {
   "🌱 Joya por pulir": "🌱Необработанный алмаз",
   "🔒 At his ceiling": "🔒 У своего потолка",
   "🔒 En su techo": "🔒 У своего потолка",
-  "🎯 Maximum demands: here you fight for the title": "🎯 Максимальные требования: здесь вы сражаетесь за титул",
-  "🎯 Exigencia máxima: aquí se pelea el Mundial": "🎯 Максимальные требования: здесь вы сражаетесь за титул",
-  "🎯 Project: lift the team off the floor, with time": "🎯 Проект: поднять команду с пола со временем",
-  "🎯 Proyecto: sacar al equipo del fondo, con tiempo": "🎯 Проект: поднять команду с пола со временем",
+  "🎯 Maximum demands: here you fight for the title": "🎯 Максимальные требования: здесь сражаются за титул",
+  "🎯 Exigencia máxima: aquí se pelea el Mundial": "🎯 Максимальные требования: здесь сражаются за титул",
+  "🎯 Project: lift the team off the floor, with time": "🎯 Проект: поднять команду со дна, не торопясь",
+  "🎯 Proyecto: sacar al equipo del fondo, con tiempo": "🎯 Проект: поднять команду со дна, не торопясь",
   "expired": "истекший",
   "vencido": "истекший",
   "OPEN": "ОТКРЫТЬ",
   "LIBRE": "ОТКРЫТЬ",
   "1·No.1": "1·№1",
   "1·Nº1": "1·№1",
-  "🎯 Midfield: points, podiums and a cool head": "🎯 Полузащита: очки, подиумы и хладнокровная голова",
-  "🎯 Media tabla: puntos, podios y cabeza": "🎯 Полузащита: очки, подиумы и хладнокровная голова",
+  "🎯 Midfield: points, podiums and a cool head": "🎯 Середина пелотона: очки, подиумы и холодная голова",
+  "🎯 Media tabla: puntos, podios y cabeza": "🎯 Середина пелотона: очки, подиумы и холодная голова",
+
+  // Junior project profiles & descriptions
+  "🏆 Winning project": "🏆 Победный проект",
+  "🏆 Proyecto ganador": "🏆 Победный проект",
+  "Good car: if you WIN titles you arrive with pedigree and experience. If not, you end up in no man's land": "Хороший болид: если ВЫИГРАЕТЕ титулы, придёте с репутацией и опытом. Если нет — останетесь ни с чем",
+  "Buen coche: si GANAS títulos, llegas con galones y experiencia. Si no, te quedas en tierra de nadie": "Хороший болид: если ВЫИГРАЕТЕ титулы, придёте с репутацией и опытом. Если нет — останетесь ни с чем",
+  "⚖️ Balanced": "⚖️ Сбалансированный",
+  "⚖️ Equilibrado": "⚖️ Сбалансированный",
+  "Results and development in equal measure": "Результаты и развитие в равных долях",
+  "Resultados y formación a partes iguales": "Результаты и развитие в равных долях",
+  "🎓 Development programme": "🎓 Программа развития",
+  "🎓 Programa de desarrollo": "🎓 Программа развития",
+  "Weak car, but they develop you: you arrive stronger even without winning": "Слабый болид, но вас обучают: станете сильнее даже без побед",
+  "Coche flojo, pero te forman: llegas más fuerte aunque no ganes": "Слабый болид, но вас обучают: станете сильнее даже без побед",
+
+  // Contract offer notes & tags
+  "Direct jump, you arrive raw": "Прямой переход: вы ещё не набрались опыта",
+  "Salto directo, llegas verde": "Прямой переход: вы ещё не набрались опыта",
+  "Wait and arrive stronger": "Подождать и прийти более подготовленным",
+  "Esperar y llegar más fuerte": "Подождать и прийти более подготовленным",
+  "Stay one more year: go for the title": "Остаться ещё на год: бороться за титул",
+  "Quédate un año más: ve a por el título": "Остаться ещё на год: бороться за титул",
+  "Internal promotion": "Повышение внутри команды",
+  "Ascenso interno": "Повышение внутри команды",
+  "Stay as reserve one more year": "Остаться резервистом ещё на год",
+  "Seguir de probador un año más": "Остаться резервистом ещё на год",
+  "🤝 Commitment": "🤝 Обязательства по контракту",
+  "🤝 Compromiso": "🤝 Обязательства по контракту",
+  "Last chance": "Последний шанс",
+  "Última oportunidad": "Последний шанс",
+  "✍️ Contract renewal": "✍️ Продление контракта",
+  "✍️ Renewal": "✍️ Продление контракта",
+  "✍️ Renovación": "✍️ Продление контракта",
+  "Reserve & mentor: bow out with the big boys": "Резервист и наставник: завершить карьеру в топ-команде",
+  "Probador y mentor: cerrar con los grandes": "Резервист и наставник: завершить карьеру в топ-команде",
+  "«One last shot» 🎬": "«Один последний шанс» 🎬",
+  "«Una última oportunidad» 🎬": "«Один последний шанс» 🎬",
+  "🔮 The rumoured one": "🔮 Команда из слухов",
+  "🔮 El del rumor": "🔮 Команда из слухов",
+  "🛌 What you came for": "🛌 То, ради чего вы сюда пришли",
+  "🛌 Lo que fuiste a buscar": "🛌 То, ради чего вы сюда пришли",
+  "✍️ Signed back in the summer": "✍️ Подписано ещё летом",
+  "✍️ Lo firmado en verano": "✍️ Подписано ещё летом",
+  "⏸️ As promised": "⏸️ Как и обещали",
+  "⏸️ Lo prometido": "⏸️ Как и обещали",
+  "⏸️ The blank year": "⏸️ Год без гонок",
+  "⏸️ El año en blanco": "⏸️ Год без гонок",
+  "Your debut": "Ваш дебют",
+  "Tu debut": "Ваш дебют",
+  "📜 They owe you by contract": "📜 Они обязаны предоставить место по контракту",
+  "📜 Te lo deben por contrato": "📜 Они обязаны предоставить место по контракту",
+  "A season to learn the ropes and, if you're quick, you move up": "Сезон на обкатку, а если будете быстры — пойдёте на повышение",
+  "Una temporada para foguearte y, si eres rápido, subes": "Сезон на обкатку, а если будете быстры — пойдёте на повышение",
+  "The feeder team that took Massa to Ferrari": "Кузница кадров, через которую Масса попал в Ferrari",
+  "La cantera por la que Massa llegó a Ferrari": "Кузница кадров, через которую Масса попал в Ferrari",
+  "Peter Sauber knows you and looks after you · Petronas engine, a sibling of the Ferrari": "Петер Заубер знает и ценит вас · двигатель Petronas — родной брат Ferrari",
+  "Peter Sauber te conoce y te cuida · motor Petronas, hermano del Ferrari": "Петер Заубер знает и ценит вас · двигатель Petronas — родной брат Ferrari",
+  "Eddie Jordan, your boss in 1990 F3000 · the seat Mansell turned down": "Эдди Джордан, ваш босс в Ф3000 1990 года · место, от которого отказался Мэнселл",
+  "Eddie Jordan, tu jefe en la F3000 de 1990 · el asiento que rechazó Mansell": "Эдди Джордан, ваш босс в Ф3000 1990 года · место, от которого отказался Мэнселл",
+  "Walkinshaw wanted a champion · Yamaha, Bridgestone and everything to prove": "Уокиншоу искал чемпиона · Yamaha, Bridgestone и необходимость всё доказать",
+  "Walkinshaw quería un campeón · Yamaha, Bridgestone y todo por demostrar": "Уокиншоу искал чемпиона · Yamaha, Bridgestone и todo por demostrar",
   "📋 Rule change: the sliding scale of wind-tunnel hours by championship position is over. From now on every team gets the same.": "📋 Изменение правил: скользящая шкала аэродинамических часов по позициям в чемпионате прекращена. Отныне каждая команда получает одинаково.",
   "📋 Cambio en el reglamento: se acaba el reparto de horas de túnel de viento por puesto. A partir de ahora todos los equipos tienen las mismas.": "📋 Изменение правил: скользящая шкала аэродинамических часов по позициям в чемпионате прекращена. Отныне каждая команда получает одинаково.",
   "🧻 The board absorbs the regulation blow: clean slate.": "🧻совет директоров принимает на себя удар регулирования: чистый лист.",
@@ -4799,6 +4860,19 @@ window.ruTranslate = function(str) {
   if ((m = str.match(/^✍️ You sign free agent (.*?): he'd been waiting by that phone a while\.$/i)) ||
       (m = str.match(/^✍️ Fichas al agente libre (.*?): llevaba tiempo esperando ese teléfono\.$/i))) {
     return "✍️ Вы подписываете свободного агента (" + m[1] + "): он долго ждал этого телефонного звонка.";
+  }
+
+  if ((m = str.match(/^Direct jump, skipping (.*?)$/i)) ||
+      (m = str.match(/^Salto directo, te saltas la (.*?)$/i))) {
+    return "Прямой переход, минуя " + m[1];
+  }
+  if ((m = str.match(/^Do (.*?), more mileage$/i)) ||
+      (m = str.match(/^Hacer (.*?), más rodaje$/i))) {
+    return "Выступить в " + m[1] + ", набрать накат";
+  }
+  if ((m = str.match(/^(.*?): development, less pressure$/i)) ||
+      (m = str.match(/^(.*?): desarrollo, menos presión$/i))) {
+    return m[1] + ": развитие, меньше давления";
   }
 
   return str;
