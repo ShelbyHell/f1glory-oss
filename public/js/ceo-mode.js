@@ -45,16 +45,79 @@
     { id: "drv_pay_zhou", name: "Чжоу Тянь", ovr: 74, salary: -18000000, isPay: true, tag: "Коммерческий пилот (+ $18M)" }
   ];
 
+  const HQ_LOCATIONS = [
+    { id: "silverstone", name: "Сильверстоун", country: "Великобритания", flag: "🇬🇧", desc: "Сердце Моторспорт-долины, доступ к лучшим инженерам F1" },
+    { id: "maranello", name: "Болонья / Фаэнца", country: "Италия", flag: "🇮🇹", desc: "Итальянские традиции, страсть и аэродинамический дизайн" },
+    { id: "stuttgart", name: "Штутгарт / Кёльн", country: "Германия", flag: "🇩🇪", desc: "Немецкие заводские технологии, автоклавы и педантичность" },
+    { id: "charlotte", name: "Шарлотт / Остин", country: "США", flag: "🇺🇸", desc: "Американский капитал, медийный размах и цифровые симуляторы" },
+    { id: "hinwil", name: "Хинвил", country: "Швейцария", flag: "🇨🇭", desc: "Швейцарская точность и одна из лучших в мире аэродинамических труб" },
+    { id: "viry", name: "Вири-Шатийон / Ницца", country: "Франция", flag: "🇫🇷", desc: "Французская школа моторостроения и композитов" }
+  ];
+
+  const LIVERY_PALETTES = [
+    { id: "teal", name: "Petronas Teal", primary: "#00d2be", preview: "linear-gradient(135deg, #00d2be 0%, #0f172a 75%)" },
+    { id: "red", name: "Corsa Rosso", primary: "#e10600", preview: "linear-gradient(135deg, #e10600 0%, #1e1b18 75%)" },
+    { id: "papaya", name: "Papaya Orange", primary: "#ff8700", preview: "linear-gradient(135deg, #ff8700 0%, #0369a1 75%)" },
+    { id: "green", name: "British Racing Green", primary: "#00593b", preview: "linear-gradient(135deg, #00593b 0%, #022c22 75%)" },
+    { id: "gulf", name: "Gulf Sky Blue", primary: "#38bdf8", preview: "linear-gradient(135deg, #38bdf8 0%, #ea580c 75%)" },
+    { id: "gold", name: "Carbon & Midnight Gold", primary: "#d4af37", preview: "linear-gradient(135deg, #d4af37 0%, #09090b 75%)" },
+    { id: "purple", name: "Ultraviolet Purple", primary: "#a855f7", preview: "linear-gradient(135deg, #a855f7 0%, #1e1b4b 75%)" },
+    { id: "white", name: "Alpine Blue & White", primary: "#0090ff", preview: "linear-gradient(135deg, #0090ff 0%, #f8fafc 75%)" }
+  ];
+
+  const ORIGIN_STORIES = [
+    { id: "buyout", title: "Выкуп команды-аутсайдера", tag: "Сделка поглощения", desc: "Поглощение существующей конюшни с её базой, лицензией FIA и долгами. Полный ребрендинг и перезапуск концепции." },
+    { id: "new_team", title: "Создание новой 11-й команды", tag: "Новая франшиза FIA", desc: "Официальное внесение вступительного взноса ($200M) и регистрация нового конструктора Формулы-1 с чистого листа." },
+    { id: "revival", title: "Возрождение культового бренда", tag: "Историческое наследие", desc: "Выкуп прав на легендарное историческое имя из золотой эпохи автоспорта (Brabham, Tyrrell, Lotus) и возвращение в паддок." }
+  ];
+
+  function getDefaultTeamName() {
+    let base = "Shelby";
+    if(typeof pName === "function" && pName()) {
+      const parts = pName().trim().split(/\s+/);
+      base = parts[parts.length - 1];
+    } else if(typeof S !== "undefined" && S && S.name) {
+      const parts = S.name.trim().split(/\s+/);
+      base = parts[parts.length - 1];
+    }
+    return base + " F1 Team";
+  }
+
+  function getTeamNamePresets() {
+    let sn = "Shelby";
+    if(typeof pName === "function" && pName()) {
+      const parts = pName().trim().split(/\s+/);
+      sn = parts[parts.length - 1];
+    } else if(typeof S !== "undefined" && S && S.name) {
+      const parts = S.name.trim().split(/\s+/);
+      sn = parts[parts.length - 1];
+    }
+    return [
+      `${sn} F1 Team`,
+      `Scuderia ${sn}`,
+      `${sn} Grand Prix`,
+      `Apex Formula Racing`,
+      `Andretti Global`,
+      `Brabham Racing`,
+      `Audi Sport F1`
+    ];
+  }
+
   let CEO_STATE = null;
 
   function initCeoState() {
-    let teamName = "Shelby F1 Team";
+    let teamName = getDefaultTeamName();
     if(typeof S !== "undefined" && S && S.team && S.team.name) {
       teamName = S.team.name + " Racing";
     }
 
     CEO_STATE = {
       teamName: teamName,
+      teamHq: "Сильверстоун (Великобритания)",
+      teamFlag: "🇬🇧",
+      teamColor: "#00d2be",
+      teamLivery: "teal",
+      teamStory: "Выкуп команды-аутсайдера",
       year: (typeof yearNow === "function" ? yearNow() : 2026),
       seasonNum: 1,
       budget: 85000000,
@@ -517,6 +580,146 @@
   }
 
   // =====================================================================
+  // TEAM CREATION & REBRANDING MODAL
+  // =====================================================================
+  let tempTeamData = {
+    name: "",
+    hqId: "silverstone",
+    liveryId: "teal",
+    storyId: "buyout"
+  };
+
+  function openTeamCreationModal(isEditing) {
+    if(!CEO_STATE) loadCeoState();
+
+    tempTeamData = {
+      name: CEO_STATE.teamName || getDefaultTeamName(),
+      hqId: (HQ_LOCATIONS.find(h => (CEO_STATE.teamHq || '').includes(h.name)) || HQ_LOCATIONS[0]).id,
+      liveryId: CEO_STATE.teamLivery || "teal",
+      storyId: (ORIGIN_STORIES.find(s => s.title === CEO_STATE.teamStory) || ORIGIN_STORIES[0]).id
+    };
+
+    let m = document.getElementById("teamCreationModal");
+    if(!m) {
+      m = document.createElement("div");
+      m.id = "teamCreationModal";
+      m.className = "f1-modal-overlay";
+      document.body.appendChild(m);
+    }
+
+    renderTeamCreationModal(isEditing);
+    m.style.display = "flex";
+  }
+
+  function renderTeamCreationModal(isEditing) {
+    const m = document.getElementById("teamCreationModal");
+    if(!m) return;
+
+    const hq = HQ_LOCATIONS.find(h => h.id === tempTeamData.hqId) || HQ_LOCATIONS[0];
+    const livery = LIVERY_PALETTES.find(l => l.id === tempTeamData.liveryId) || LIVERY_PALETTES[0];
+    const story = ORIGIN_STORIES.find(s => s.id === tempTeamData.storyId) || ORIGIN_STORIES[0];
+    const presets = getTeamNamePresets();
+
+    m.innerHTML = `
+      <div class="f1-modal-card team-creation-card">
+        <div class="wealth-head">
+          <div>
+            <span class="f1-mono-sub">FIA CONSTRUCTOR ENTRY & BRAND IDENTITY</span>
+            <h2>${isEditing ? '✏️ РЕБРЕНДИНГ И НАСТРОЙКА КОМАНДЫ' : '🏛️ УЧРЕЖДЕНИЕ И БРЕНДИНГ КОМАНДЫ ФОРМУЛЫ-1'}</h2>
+          </div>
+          <button class="rank-x" onclick="document.getElementById('teamCreationModal').style.display='none'">✕</button>
+        </div>
+
+        <div class="tc-modal-body">
+          <!-- Live Preview Banner -->
+          <div class="tc-preview-card" style="background: ${livery.preview};">
+            <div class="tcp-top">
+              <span class="tcp-lic">FIA SUPER ENTRY // LICENSED CONSTRUCTOR</span>
+              <span class="tcp-flag">${hq.flag}</span>
+            </div>
+            <div class="tcp-name">${tempTeamData.name || 'Shelby F1 Team'}</div>
+            <div class="tcp-bottom">
+              <span class="tcp-hq">📍 ${hq.name} (${hq.country})</span>
+              <span class="tcp-story">${story.title}</span>
+            </div>
+          </div>
+
+          <!-- Section 1: Team Name & Presets -->
+          <div class="tc-section">
+            <label class="tc-label">НАЗВАНИЕ КОНЮШНИ (TEAM NAME)</label>
+            <input type="text" id="tcInputName" class="f1-text-input tc-name-input" maxlength="32" value="${tempTeamData.name}" oninput="window.updateTcName(this.value)" placeholder="Например: Shelby F1 Team">
+            <div class="tc-presets-label">БЫСТРЫЕ ВАРИАНТЫ:</div>
+            <div class="tc-presets-strip">
+              ${presets.map(p => `
+                <button type="button" class="tc-preset-chip" onclick="window.applyTcPreset('${p}')">${p}</button>
+              `).join("")}
+            </div>
+          </div>
+
+          <!-- Section 2: Headquarters & Country -->
+          <div class="tc-section">
+            <label class="tc-label">ШТАБ-КВАРТИРА И СТРАНА РЕГИСТРАЦИИ (HQ & LICENSE)</label>
+            <div class="tc-hq-grid">
+              ${HQ_LOCATIONS.map(h => {
+                const isSel = (h.id === tempTeamData.hqId);
+                return `
+                  <div class="tc-hq-card ${isSel ? 'selected' : ''}" onclick="window.setTcHq('${h.id}')">
+                    <div class="thc-head">
+                      <span class="thc-flag">${h.flag}</span>
+                      <span class="thc-name">${h.name}</span>
+                    </div>
+                    <div class="thc-country">${h.country}</div>
+                    <div class="thc-desc">${h.desc}</div>
+                  </div>
+                `;
+              }).join("")}
+            </div>
+          </div>
+
+          <!-- Section 3: Livery Palette -->
+          <div class="tc-section">
+            <label class="tc-label">ФИРМЕННАЯ РАСЦВЕТКА И ЛИВРЕЯ БОЛИДА</label>
+            <div class="tc-livery-strip">
+              ${LIVERY_PALETTES.map(l => {
+                const isSel = (l.id === tempTeamData.liveryId);
+                return `
+                  <div class="tc-livery-chip ${isSel ? 'selected' : ''}" onclick="window.setTcLivery('${l.id}')">
+                    <span class="tc-color-dot" style="background: ${l.primary};"></span>
+                    <span class="tc-color-name">${l.name}</span>
+                  </div>
+                `;
+              }).join("")}
+            </div>
+          </div>
+
+          <!-- Section 4: Origin Story -->
+          <div class="tc-section">
+            <label class="tc-label">ИСТОРИЯ ПРИХОДА В ЧЕМПИОНАТ (TEAM ORIGIN)</label>
+            <div class="tc-story-grid">
+              ${ORIGIN_STORIES.map(s => {
+                const isSel = (s.id === tempTeamData.storyId);
+                return `
+                  <div class="tc-story-card ${isSel ? 'selected' : ''}" onclick="window.setTcStory('${s.id}')">
+                    <div class="tsc-tag">${s.tag}</div>
+                    <div class="tsc-title">${s.title}</div>
+                    <div class="tsc-desc">${s.desc}</div>
+                  </div>
+                `;
+              }).join("")}
+            </div>
+          </div>
+        </div>
+
+        <div class="tc-modal-footer">
+          <button class="btn btn-ceo-confirm" onclick="window.confirmTeamCreation(${isEditing})">
+            🏛️ ${isEditing ? 'СОХРАНИТЬ ИЗМЕНЕНИЯ И ВЕРНУТЬСЯ' : 'УТВЕРДИТЬ В FIA И ПРИНЯТЬ УПРАВЛЕНИЕ КОМАНДОЙ'}
+          </button>
+        </div>
+      </div>
+    `;
+  }
+
+  // =====================================================================
   // MAIN CEO DASHBOARD MODAL
   // =====================================================================
   let activeCeoTab = "overview"; // "overview", "factory", "board"
@@ -531,7 +734,11 @@
         <div class="wealth-head ceo-head">
           <div>
             <span class="f1-mono-sub">FIA FORMULA 1 CONSTRUCTOR · CHAIR OF THE BOARD & CEO</span>
-            <h2 id="ceoTeamTitle">🏛️ <span id="ceoTeamNameVal">Shelby F1 Team</span></h2>
+            <div class="ceo-title-row">
+              <h2 id="ceoTeamTitle"><span id="ceoTeamFlagVal">🇬🇧</span> <span id="ceoTeamNameVal">Shelby F1 Team</span></h2>
+              <button class="ceo-edit-brand-btn" onclick="window.openTeamCreationModal(true)" title="Ребрендинг команды, смена названия и ливреи">✏️ Настроить бренд</button>
+            </div>
+            <div class="ceo-hq-sub" id="ceoTeamHqVal">📍 База: Сильверстоун (Великобритания) · Ливрея: Petronas Teal</div>
           </div>
           <button class="rank-x" onclick="closeCeoModal()">✕</button>
         </div>
@@ -582,7 +789,11 @@
     createCeoModalDOM();
     if(!CEO_STATE) loadCeoState();
 
+    document.getElementById("ceoTeamFlagVal").textContent = CEO_STATE.teamFlag || "🇬🇧";
     document.getElementById("ceoTeamNameVal").textContent = CEO_STATE.teamName;
+    const liveryObj = LIVERY_PALETTES.find(l => l.id === CEO_STATE.teamLivery) || LIVERY_PALETTES[0];
+    document.getElementById("ceoTeamHqVal").textContent = `📍 База: ${CEO_STATE.teamHq || 'Сильверстоун (Великобритания)'} · Ливрея: ${liveryObj.name}`;
+
     document.getElementById("ceoBudgetVal").textContent = formatMoney(CEO_STATE.budget);
     document.getElementById("ceoMarketCapVal").textContent = formatMoney(CEO_STATE.marketCap);
     document.getElementById("ceoApprovalVal").textContent = `${CEO_STATE.boardApproval}%`;
@@ -989,6 +1200,61 @@
     simulateCeoSeason();
   };
 
+  window.updateTcName = function(val) {
+    tempTeamData.name = val;
+    const tcp = document.querySelector(".tc-preview-card .tcp-name");
+    if(tcp) tcp.textContent = val || 'Shelby F1 Team';
+  };
+
+  window.applyTcPreset = function(preset) {
+    tempTeamData.name = preset;
+    const input = document.getElementById("tcInputName");
+    if(input) input.value = preset;
+    const tcp = document.querySelector(".tc-preview-card .tcp-name");
+    if(tcp) tcp.textContent = preset;
+  };
+
+  window.setTcHq = function(id) {
+    tempTeamData.hqId = id;
+    renderTeamCreationModal(window._tcIsEditing || false);
+  };
+
+  window.setTcLivery = function(id) {
+    tempTeamData.liveryId = id;
+    renderTeamCreationModal(window._tcIsEditing || false);
+  };
+
+  window.setTcStory = function(id) {
+    tempTeamData.storyId = id;
+    renderTeamCreationModal(window._tcIsEditing || false);
+  };
+
+  window.openTeamCreationModal = function(isEditing) {
+    window._tcIsEditing = !!isEditing;
+    openTeamCreationModal(!!isEditing);
+  };
+
+  window.confirmTeamCreation = function(isEditing) {
+    const hq = HQ_LOCATIONS.find(h => h.id === tempTeamData.hqId) || HQ_LOCATIONS[0];
+    const livery = LIVERY_PALETTES.find(l => l.id === tempTeamData.liveryId) || LIVERY_PALETTES[0];
+    const story = ORIGIN_STORIES.find(s => s.id === tempTeamData.storyId) || ORIGIN_STORIES[0];
+
+    CEO_STATE.teamName = (tempTeamData.name || getDefaultTeamName()).trim();
+    CEO_STATE.teamHq = `${hq.name} (${hq.country})`;
+    CEO_STATE.teamFlag = hq.flag;
+    CEO_STATE.teamColor = livery.primary;
+    CEO_STATE.teamLivery = livery.id;
+    CEO_STATE.teamStory = story.title;
+
+    saveCeoState();
+    const m = document.getElementById("teamCreationModal");
+    if(m) m.style.display = "none";
+    openCeoModal();
+    if(window.showF1Toast) {
+      window.showF1Toast(`🏛️ Конюшня «${CEO_STATE.teamName}» официально зарегистрирована в FIA!`, "success");
+    }
+  };
+
   // Wire up retirement / career end transition to CEO
   window.launchCeoFromRetirement = function() {
     if(typeof S !== "undefined" && S) {
@@ -998,12 +1264,7 @@
     const endM = document.getElementById("endModal");
     if(endM) endM.style.display = "none";
     initCeoState();
-    if(typeof S !== "undefined" && S && S.team && S.team.name) {
-      CEO_STATE.teamName = S.team.name + " Racing";
-      saveCeoState();
-    }
-    openCeoModal();
-    if(window.showF1Toast) window.showF1Toast("🏛️ Поздравляем! Вы официально вступили в должность CEO и владельца команды Формулы-1!", "success");
+    openTeamCreationModal(false);
   };
 
   // Expose global init

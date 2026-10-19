@@ -126,7 +126,16 @@
     S.assets.push(assetId);
     renderWealthModal();
     updateWealthUI();
-    if(window.showF1Toast) window.showF1Toast(`💼 Сделка закрыта: ${asset.name}! Активы перешли под ваш контроль!`, "success");
+    if(assetId === "f1_team_share") {
+      closeWealthModal();
+      if(typeof window.openTeamCreationModal === "function") {
+        window.openTeamCreationModal(false);
+      } else if(typeof window.openCeoModal === "function") {
+        window.openCeoModal();
+      }
+    } else {
+      if(window.showF1Toast) window.showF1Toast(`💼 Сделка закрыта: ${asset.name}! Активы перешли под ваш контроль!`, "success");
+    }
   }
 
   function updateWealthUI() {
