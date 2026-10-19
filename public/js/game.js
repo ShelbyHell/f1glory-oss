@@ -58,7 +58,7 @@ const FALLBACK = {pt:"es", pl:"en", fr:"en", ru:"en"};
 /* 📚 Muchos textos no están escritos en el código sino en TABLAS DE DATOS, guardados como ["es","en"].
    LA() traduce uno de esos pares sin tener que reescribir cada llamada: basta con añadirle un tercer
    elemento a la tabla. Si no lo tiene, cae por el mismo escalón que L(). */
-const LA = a => Array.isArray(a) ? L(a[0], a[1], a[2]!=null?{pt:a[2]}:null) : a;
+const LA = a => Array.isArray(a) ? L(a[0], a[1], (a[2]!=null && typeof a[2]==="object") ? a[2] : (a[2]!=null?{pt:a[2]}:null)) : a;
 const LANGS = ["es","en"];   // los idiomas en obras se añaden abajo solo si el modo pruebas está activo
 function applyLang(){
   // mismo escalón de reserva que L(): idioma pedido → su reserva → español
@@ -218,171 +218,245 @@ function pintaColorEquipo(t){
   /* ✍️ y el texto que va ENCIMA del color: negro sobre los claros (Renault amarillo), blanco sobre el resto */
   R.setProperty("--team-on", lum(ink)>.45 ? "#15151e" : "#ffffff");
 }
-/* 📱 EL MURO EN PANELES: pestañas que llevan a cada panel y se encienden al deslizar. */
-const DECK_PANELES=[["driverCard",["Panel","Panel","Painel"]],["decisionBox",["Decidir","Decide","Decidir"]],
-                    ["tlPanel",["Resumen","Recap","Resumo"]],["f1state",["Mundial","Standings","Mundial"]]];
-let _deckIrTimer=null;
-function deckIr(id){ const g=document.querySelector("#career .career-grid"), el=document.getElementById(id);
-  if(!g||!el) return;
-  /* 📄 la PÁGINA se realinea al inicio del juego en cada viaje: si quedó scrolleada a media
-     tarjeta, la cabecera del panel aterrizaba tapada bajo las pestañas (Carlos, 23-sep) */
-  try{ const c=document.getElementById("career");
-    if(c && Math.abs(c.getBoundingClientRect().top)>6) c.scrollIntoView({block:"start"}); }catch(e){}
-  const dest=()=>el.offsetLeft-g.offsetLeft;
-  /* 🎯 ANIMADO TAMBIÉN EN LOS VIAJES LARGOS (Carlos, 22-sep: «me gustaba más la animación»):
-     scroll-snap-stop:always frenaba el scroll suave en el panel intermedio (Mundial→Decidir quedaba
-     torcido), así que el imán del snap se APAGA durante el viaje y el remate lo reenciende. */
-  const _lejos=Math.abs(g.scrollLeft-dest())>g.clientWidth*1.2;
-  g.style.scrollSnapType="none";
-  g.scrollTo({left:dest(), behavior:"smooth"});
-  /* 🩹 un repintado a mitad de camino ABORTA el scroll suave (cazado el 19-sep: tras simular, el salto
-     al resumen se quedaba en el panel). Si a los 450 ms no hemos llegado, se remata en seco.
-     ⚠️ CANCELABLE (22-sep): dos deckIr seguidos —invertir orden desde el Panel repinta el mercado,
-     que salta a Decidir, y luego volvemos al Panel— dejaban DOS remates programados y ganaba el
-     viejo: el jugador acababa en Decidir sin quererlo. El último deckIr manda. */
-  if(_deckIrTimer) clearTimeout(_deckIrTimer);
-  _deckIrTimer=setTimeout(()=>{ _deckIrTimer=null; g.style.scrollSnapType="";
-    /* umbral a 2px (era 40): un desvío de 10-20px dejaba la tarjeta con el borde comido (Carlos, 23-sep) */
-    if(Math.abs(g.scrollLeft-dest())>2) g.scrollLeft=dest();
-    /* …y un SEGUNDO remate: al restaurar el imán, Brave re-snapea un frame después y volvía a
-       torcer el panel ~20px (Carlos, 23-sep, «se ven raras todas las pestañas») */
-    setTimeout(()=>{ if(!_deckIrTimer && Math.abs(g.scrollLeft-dest())>2) g.scrollLeft=dest(); }, 150); }, _lejos?650:450);
-}
+/* 📱 COCKPIT NAVIGATION TABS: universal tabbed dashboard for career mode */
+const DECK_PANELES=[
+  ["decisionBox", ["🏁 Decisiones", "🏁 Decisions & Race", {ru:"🏁 Решения & Гонка", pt:"🏁 Decisões"}]],
+  ["driverCard",  ["👤 Piloto", "👤 Driver & Team", {ru:"👤 Пилот & Команда", pt:"👤 Piloto"}]],
+  ["f1state",     ["📊 F1", "📊 F1 Standings", {ru:"📊 Таблицы F1", pt:"📊 Classificação"}]],
+  ["tlPanel",     ["📜 Trayectoria", "📜 Career History", {ru:"📜 История карьеры", pt:"📜 Histórico"}]]
+];
+
+let _activePanel = "decisionBox";
+
 function deckPanelActivo(){
-  /* 📐 por POSICIÓN REAL del carrusel, no por la pestaña subrayada: el subrayado lo pinta el evento
-     scroll y hay llegadas (recolocación en seco, primera pantalla) donde nunca dispara — deckGo y la
-     flecha se creían en el Panel estando en Decidir (cazado el 22-sep). */
-  const g=document.querySelector("#career .career-grid");
-  if(g && document.body.classList.contains("deck-movil")){
-    let mejor="driverCard", d=1e9;
-    DECK_PANELES.forEach(([id])=>{ const el=document.getElementById(id); if(!el) return;
-      const x=Math.abs(el.offsetLeft-g.offsetLeft-g.scrollLeft); if(x<d){ d=x; mejor=id; } });
-    return mejor;
-  }
-  const b=document.querySelector("#deckTabs button.on"); return b ? b.dataset.p : "driverCard"; }
-/* 🔻 «cuando las opciones queden muy abajo, una flecha» (Carlos, 22-sep): vive en el hueco del
-   flotante, solo en Decidir y solo si de verdad queda contenido por debajo. Tocarla baja un tramo. */
-function deckMasPinta(){
-  const mas=document.getElementById("deckMas"); if(!mas) return;
-  const on=document.body.classList.contains("deck-movil");
-  const enB=deckPanelActivo()==="decisionBox";
-  const el=document.getElementById("decisionBox");
-  const resto=el ? el.scrollHeight-el.scrollTop-el.clientHeight : 0;
-  mas.hidden = !on || !enB || resto<=90;   /* 90 ≈ el padding inferior del panel: sin él, la flecha nunca se apagaba */
+  return _activePanel || "decisionBox";
 }
+
+function updateCareerHud(){
+  const hud = document.getElementById("careerHud");
+  if(!hud) return;
+  if(typeof S==="undefined" || !S || !S.cat){
+    hud.style.display="none";
+    return;
+  }
+  hud.style.display="flex";
+
+  const flgEl = document.getElementById("hudFlag");
+  if(flgEl) flgEl.textContent = (typeof sel!=="undefined" && sel.flag) ? natLabel() : "🌍";
+
+  const nameEl = document.getElementById("hudDriver");
+  if(nameEl) nameEl.textContent = (typeof sel!=="undefined" && sel.name) ? sel.name.toUpperCase() : "DRIVER";
+
+  const numEl = document.getElementById("hudNum");
+  if(numEl){
+    if(S.cat==="TP"){
+      numEl.textContent = "TP";
+      numEl.className = "hud-num tp";
+    } else {
+      numEl.textContent = (typeof sel!=="undefined" && sel.num) ? "#"+sel.num : "#10";
+      numEl.className = "hud-num";
+    }
+  }
+
+  const dotEl = document.getElementById("hudDot");
+  const teamEl = document.getElementById("hudTeam");
+  const roleEl = document.getElementById("hudRole");
+
+  if(S.team){
+    if(teamEl) teamEl.textContent = S.team.name;
+    if(dotEl){
+      dotEl.style.display = "inline-block";
+      dotEl.style.background = S.team.color || "#e10600";
+    }
+    if(roleEl){
+      const roleTxt = S.cat==="TEST" ? L("PROBADOR","RESERVE",{ru:"ТЕСТ-ПИЛОТ",pt:"TESTES"}) :
+                      (S.cat==="F1" && S.role) ? L(`Nº${S.role}`,`No.${S.role}`,{ru:`№${S.role}`,pt:`N.º${S.role}`}) : "";
+      roleEl.textContent = roleTxt;
+      roleEl.style.display = roleTxt ? "inline-block" : "none";
+    }
+  } else if(S.cat==="TP" && S.tpTeam){
+    if(teamEl) teamEl.textContent = S.tpTeam;
+    if(dotEl) dotEl.style.display = "inline-block";
+    if(roleEl){
+      roleEl.textContent = L("JEFE","PRINCIPAL",{ru:"РУКОВОДИТЕЛЬ",pt:"CHEFE"});
+      roleEl.style.display = "inline-block";
+    }
+  } else {
+    if(teamEl) teamEl.textContent = L("Sin asiento","Free agent",{ru:"Свободный агент",pt:"Sem equipe"});
+    if(dotEl) dotEl.style.display = "none";
+    if(roleEl) roleEl.style.display = "none";
+  }
+
+  const ageEl = document.getElementById("hudAge");
+  if(ageEl){
+    if(S.cat==="TP"){
+      ageEl.textContent = (S.tpSeasonNum ? `${L("AÑO","YEAR",{ru:"СЕЗОН",pt:"ANO"})} ${S.tpSeasonNum}` : "");
+    } else {
+      ageEl.textContent = `${S.age} ${L("años","y/o",{ru:"лет",pt:"anos"})}`;
+    }
+  }
+
+  const ovrEl = document.getElementById("hudOvrVal");
+  if(ovrEl) ovrEl.textContent = S.ovr || 50;
+  const ovrBadge = document.getElementById("hudOvr");
+  if(ovrBadge && S.ovr) ovrBadge.style.background = ovrColor(S.ovr);
+
+  const wEl = document.getElementById("hudW");
+  if(wEl) wEl.textContent = S.wins || 0;
+  const pEl = document.getElementById("hudP");
+  if(pEl) pEl.textContent = S.podiums || 0;
+  const ppEl = document.getElementById("hudPP");
+  if(ppEl) ppEl.textContent = S.poles || 0;
+  const gpEl = document.getElementById("hudGP");
+  if(gpEl) gpEl.textContent = S.gp || 0;
+}
+
+function deckIr(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  _activePanel = id;
+
+  // 1. Update tab buttons
+  const tabs = document.getElementById("deckTabs");
+  if(tabs){
+    [...tabs.children].filter(b => b.dataset && b.dataset.p).forEach(b => {
+      b.classList.toggle("on", b.dataset.p === id);
+    });
+  }
+
+  // 2. Update panel classes
+  const panelIds = ["decisionBox", "driverCard", "f1state", "tlPanel"];
+  panelIds.forEach(pid => {
+    const pEl = document.getElementById(pid);
+    if(!pEl) return;
+    if(pid === id){
+      pEl.classList.add("tab-panel-active");
+      pEl.classList.remove("tab-panel-hidden");
+    } else {
+      pEl.classList.remove("tab-panel-active");
+      pEl.classList.add("tab-panel-hidden");
+    }
+  });
+
+  // 3. Scroll to top of career view
+  try{
+    const c = document.getElementById("career");
+    if(c && Math.abs(c.getBoundingClientRect().top)>10){
+      c.scrollIntoView({block:"start", behavior:"smooth"});
+    }
+  }catch(e){}
+
+  deckGoPinta();
+  deckMasPinta();
+  try{ updateCareerHud(); }catch(e){}
+}
+
+function deckMasPinta(){
+  const mas = document.getElementById("deckMas"); if(!mas) return;
+  const enB = deckPanelActivo()==="decisionBox";
+  const el = document.getElementById("decisionBox");
+  const resto = el ? el.scrollHeight-el.scrollTop-el.clientHeight : 0;
+  mas.hidden = !enB || resto<=90;
+}
+
 function deckBotones(){ return [...document.querySelectorAll("#offerList button")].filter(b=>!b.disabled); }
+
 function deckGoPinta(){
-  const go=document.getElementById("deckGo"); if(!go) return;
-  const on=document.body.classList.contains("deck-movil"), bs=deckBotones(), enB=deckPanelActivo()==="decisionBox";
-  /* 🧹 dentro de Decidir NUNCA: con una sola opción salían DOS «Continuar», el de la lista y el
-     flotante (Carlos, 22-sep). El flotante es solo el camino de vuelta desde las otras pestañas. */
-  go.hidden = !on || !bs.length || enB;
-  go.textContent = L("Continuar ▸","Continue ▸",{pt:"Continuar ▸"});
+  const go = document.getElementById("deckGo"); if(!go) return;
+  const bs = deckBotones(), enB = deckPanelActivo()==="decisionBox";
+  go.hidden = !bs.length || enB;
+  go.textContent = L("Continuar ▸","Continue ▸",{ru:"Продолжить ▸",pt:"Continuar ▸"});
   deckMasPinta();
 }
-/* 📱 DOS VISTAS EN EL MÓVIL (Carlos, 23-sep: «varios usuarios dicen que prefieren el anterior,
-   todo en una sola pestaña»). El deck de pestañas sigue siendo lo de serie; quien prefiera la
-   página única lo dice en el engranaje y se recuerda en este aparato.
-   ⚠️ Es SOLO la distribución: las tarjetas de temporada, el panel del jefe y las clasificaciones
-   completas se quedan en las DOS vistas. Nada de mantener dos diseños en paralelo. */
-let VISTA_1PAG = (function(){ try{ return localStorage.getItem("f1g_vista")==="1pag"; }catch(e){ return false; } })();
-function vistaPinta(){
-  const b=document.getElementById("viewToggle"); if(!b) return;
-  b.textContent = VISTA_1PAG ? "🗂️" : "📄";
-  b.title = VISTA_1PAG ? L("Ver en pestañas","Show as tabs",{pt:"Ver em abas"})
-                       : L("Ver todo en una página","Show all on one page",{pt:"Ver tudo numa página"});
-}
-function toggleVista(){
-  VISTA_1PAG=!VISTA_1PAG;
-  try{ localStorage.setItem("f1g_vista", VISTA_1PAG?"1pag":"deck"); }catch(e){}
-  /* 📊 cuánta gente la usa DE VERDAD: en un mes dirá si merece la pena mantener las dos (Carlos) */
-  try{ track("vista_movil",{a: VISTA_1PAG?"1pag":"deck"}); }catch(e){}
-  vistaPinta();
-  const tb=document.getElementById("topBtns"); if(tb) tb.classList.remove("open");
-  try{ deckActualiza(); }catch(e){}
-  try{ const c=document.getElementById("career"); if(c && getComputedStyle(c).display!=="none") c.scrollIntoView({block:"start"}); }catch(e){}
-}
+
 function deckActualiza(){
-  const _car=document.getElementById("career");
-  const on = typeof S!=="undefined" && S && S.cat && _car && getComputedStyle(_car).display!=="none"
-             && window.matchMedia("(max-width:980px)").matches
-             && !VISTA_1PAG;   /* 📱 el jugador puede pedir la página única desde el engranaje */
-  document.body.classList.toggle("deck-movil", !!on);
-  /* 📐 re-encaje del carrusel (Carlos, 22-sep: el panel salía «comido hacia la izquierda»): si el
-     scroll quedó a medio camino entre paneles —snap desalineado tras un cambio de pantalla o un
-     redimensionado—, se recoloca en seco sobre el panel activo. Al salir del deck, a cero. */
-  try{ const g=document.querySelector("#career .career-grid");
-    if(g){ if(!on){ g.scrollLeft=0; }
-      /* ⚠️ con un deckIr EN VUELO no se re-encaja: el snap en seco al panel más cercano abortaba el
-         viaje al Resumen tras simular (cazado en el clásico, 22-sep) */
-      else if(!_deckIrTimer){ const el=document.getElementById(deckPanelActivo());
-        if(el){ const d=el.offsetLeft-g.offsetLeft; if(Math.abs(g.scrollLeft-d)>4) g.scrollLeft=d; } } }
+  const _car = document.getElementById("career");
+  if(!_car || getComputedStyle(_car).display==="none") return;
+
+  const tabs = document.getElementById("deckTabs");
+  if(!tabs) return;
+
+  // Move #topBtns inside #deckTabs if not already there
+  try{
+    const tb = document.getElementById("topBtns");
+    if(tb && tb.parentNode!==tabs) tabs.appendChild(tb);
   }catch(e){}
-  /* ⚙️ el bloque de ajustes se muda a la 5ª celda de la barra en modo baraja, y vuelve al cuerpo al salir */
-  try{ const tb=document.getElementById("topBtns"), tabs=document.getElementById("deckTabs");
-    if(on && tabs && tb && tb.parentNode!==tabs) tabs.appendChild(tb);
-    if(!on && tb && tb.parentNode!==document.body) document.body.appendChild(tb);
-  }catch(e){}
+
+  const hasF1 = !!(typeof S!=="undefined" && S && (S.lastTop3 || S.cat==="F1" || S.cat==="TP"));
+
+  [...tabs.children].filter(b => b.dataset && b.dataset.p).forEach(b => {
+    const pid = b.dataset.p;
+    const pEl = document.getElementById(pid);
+    const isAvail = pEl && (pid!=="f1state" || hasF1);
+    b.hidden = !isAvail;
+    const item = DECK_PANELES.find(x => x[0] === pid);
+    if(item){
+      const l = item[1];
+      let txt = (Array.isArray(l) && l[2] && typeof l[2]==="object" && l[2][LANG]) ? l[2][LANG] : LA(l);
+      b.innerHTML = txt;
+    }
+    b.classList.toggle("on", pid === _activePanel);
+  });
+
+  if(_activePanel==="f1state" && !hasF1){
+    _activePanel = "decisionBox";
+  }
+
+  // Ensure active panel is shown
+  ["decisionBox", "driverCard", "f1state", "tlPanel"].forEach(pid => {
+    const pEl = document.getElementById(pid);
+    if(!pEl) return;
+    if(pid === _activePanel){
+      pEl.classList.add("tab-panel-active");
+      pEl.classList.remove("tab-panel-hidden");
+    } else {
+      pEl.classList.remove("tab-panel-active");
+      pEl.classList.add("tab-panel-hidden");
+    }
+  });
+
   deckGoPinta();
-  const tabs=document.getElementById("deckTabs"); if(!tabs) return;
-  const _act=deckPanelActivo();   /* 🖍️ y el subrayado se repinta aquí también: no siempre hay un evento scroll que lo haga */
-  /* ⚠️ solo las PESTAÑAS: #topBtns vive dentro de esta barra desde el 19-sep, no tiene `data-p` y el
-     DECK_PANELES.find(...)[1] reventaba al llegar a él (error sin capturar en cada redimensionado) */
-  [...tabs.children].filter(b=>b.dataset.p).forEach(b=>{ const el=document.getElementById(b.dataset.p);
-    b.hidden = !el || getComputedStyle(el).display==="none"; b.textContent=LA(DECK_PANELES.find(x=>x[0]===b.dataset.p)[1]);
-    b.classList.toggle("on", b.dataset.p===_act); });
+  try{ updateCareerHud(); }catch(e){}
 }
+
 (function deckInit(){ try{
   const g=document.querySelector("#career .career-grid"); if(!g) return;
   const tl=document.querySelector("#career .timeline"); if(tl && !tl.id) tl.id="tlPanel";
-  // el recap de la temporada vive dentro de la decisión: así es parte del mismo panel
   const rc=document.getElementById("decRecap"), db=document.getElementById("decisionBox");
   if(rc && db) db.insertBefore(rc, db.firstChild);
-  const tabs=document.createElement("div"); tabs.id="deckTabs";
-  DECK_PANELES.forEach(([id])=>{ const b=document.createElement("button"); b.type="button"; b.dataset.p=id;
-    b.onclick=()=>deckIr(id); tabs.appendChild(b); });
-  g.parentNode.insertBefore(tabs, g);
-  g.addEventListener("scroll",()=>{ let mejor=null, d=1e9;
-    [...tabs.children].forEach(b=>{ const el=document.getElementById(b.dataset.p); if(!el||b.hidden) return;
-      const x=Math.abs(el.offsetLeft-g.offsetLeft-g.scrollLeft); if(x<d){ d=x; mejor=b; } });
-    [...tabs.children].forEach(b=>b.classList.toggle("on", b===mejor)); deckGoPinta(); },{passive:true});
+
+  let tabs=document.getElementById("deckTabs");
+  if(!tabs){
+    tabs=document.createElement("div"); tabs.id="deckTabs";
+    DECK_PANELES.forEach(([id])=>{
+      const b=document.createElement("button"); b.type="button"; b.className="tab-btn"; b.dataset.p=id;
+      b.onclick=()=>deckIr(id); tabs.appendChild(b);
+    });
+    g.parentNode.insertBefore(tabs, g);
+  } else {
+    [...tabs.children].filter(b => b.dataset && b.dataset.p).forEach(b => {
+      b.onclick = () => deckIr(b.dataset.p);
+    });
+  }
+
   window.addEventListener("resize", deckActualiza);
-  /* 👉 PASAR DE PANTALLA DESLIZANDO (Carlos, 19-sep: «me falta que me dejes hacer scroll a la derecha o a
-     la izquierda»). Con el dedo lo hace el navegador solo; esto cubre el ratón (arrastrar), la rueda
-     o el trackpad en horizontal y las flechas del teclado. */
-  const deckVisibles=()=>DECK_PANELES.map(([id])=>id).filter(id=>{ const b=tabs.querySelector(`[data-p="${id}"]`); return b && !b.hidden; });
-  const deckPaso=(dir)=>{ const v=deckVisibles(), k=v.indexOf(deckPanelActivo()); const n=v[Math.max(0,Math.min(v.length-1,k+dir))]; if(n) deckIr(n); };
-  let _x0=null, _y0=0;
-  g.addEventListener("pointerdown",e=>{ if(e.pointerType!=="mouse" || e.button!==0 || e.target.closest("button,a,input,select,.gar-chip")) return; _x0=e.clientX; _y0=e.clientY; });
-  window.addEventListener("pointerup",e=>{ if(_x0==null) return; const dx=e.clientX-_x0, dy=e.clientY-_y0; _x0=null;
-    if(document.body.classList.contains("deck-movil") && Math.abs(dx)>60 && Math.abs(dx)>Math.abs(dy)*1.3) deckPaso(dx<0?1:-1); });
-  let _rueda=0, _ruedaT=0;
-  g.addEventListener("wheel",e=>{ if(!document.body.classList.contains("deck-movil")) return;
-    if(Math.abs(e.deltaX)<=Math.abs(e.deltaY)) return;   // la rueda vertical sigue bajando por el panel
-    e.preventDefault(); const t=Date.now(); if(t-_ruedaT>450) _rueda=0; _ruedaT=t; _rueda+=e.deltaX;
-    if(Math.abs(_rueda)>70){ deckPaso(_rueda>0?1:-1); _rueda=0; _ruedaT=t+400; } },{passive:false});
-  document.addEventListener("keydown",e=>{ if(!document.body.classList.contains("deck-movil")) return;
-    if(/INPUT|TEXTAREA|SELECT/.test((e.target&&e.target.tagName)||"")) return;
-    if(e.key==="ArrowRight"){ deckPaso(1); e.preventDefault(); } else if(e.key==="ArrowLeft"){ deckPaso(-1); e.preventDefault(); } });
-  /* ▶️ EL BOTÓN DE SEGUIR, SIEMPRE ABAJO (Carlos, 13-sep): fuera de «Decidir» te lleva allí; dentro, si
-     solo hay un camino («Empezar la temporada», «Continuar») lo pulsa. Si hay que ELEGIR, se esconde:
-     no se decide nada por el jugador y no tapa las opciones. La lista de ofertas se vigila sola. */
+
   const go=document.createElement("button"); go.id="deckGo"; go.type="button"; go.hidden=true;
   go.onclick=()=>{ const enB=deckPanelActivo()==="decisionBox", bs=deckBotones();
     if(enB && bs.length===1){ bs[0].click(); return; }
     deckIr("decisionBox"); };
   document.body.appendChild(go);
+
   const mas=document.createElement("button"); mas.id="deckMas"; mas.type="button"; mas.hidden=true; mas.textContent="▾";
   mas.onclick=()=>{ const el=document.getElementById("decisionBox"); if(el) el.scrollBy({top:el.clientHeight*0.75, behavior:"smooth"}); };
   document.body.appendChild(mas);
+
   if(db) db.addEventListener("scroll", deckMasPinta, {passive:true});
   const ol=document.getElementById("offerList");
   if(ol && window.MutationObserver) new MutationObserver(()=>deckGoPinta()).observe(ol,{childList:true});
-  try{ vistaPinta(); }catch(e){}   /* 📱 el selector de vista arranca con el icono que toca */
-  /* ⚙️ el menú de ajustes se cierra al tocar cualquier otra cosa */
   document.addEventListener("pointerdown",e=>{ const tb=document.getElementById("topBtns");
     if(tb && tb.classList.contains("open") && !tb.contains(e.target)) tb.classList.remove("open"); });
-}catch(e){} })();
+}catch(e){}})();
 /* ================= DATOS ================= */
 /* [nombre ES, bandera, nombre EN]. ⚠️ El nombre ESPAÑOL es la CLAVE canónica: `sel.country` guarda
    siempre c[0], porque de ahí cuelgan NAT_AFFINITY, el cameo de Alonso y el país del ranking.
@@ -7786,18 +7860,9 @@ function setDecision(title,sub,pulsing,outcome){
 }
 // en móvil las ofertas viven abajo: al aparecer, las traemos a la vista (con algo de contexto arriba)
 function scrollToDecision(){
-  try{ deckActualiza(); }catch(e){}   /* 📱 el deck se decide aquí: «Elige tu escudería» llegaba sin pestañas porque nadie lo reevaluaba con el career ya visible (Carlos, 22-sep) */
-  if(document.body.classList.contains("deck-movil")){
-    /* 📱 recién simulada la temporada, el jugador va al RESUMEN a leer su año; el botón flotante
-       «Continuar ▸» le lleva a Decidir cuando quiera (Carlos, 19-sep). El resto de veces, a Decidir. */
-    if(S && S._deckResumen){ S._deckResumen=false; deckIr("tlPanel"); deckGoPinta(); return; }
-    deckIr("decisionBox"); return; }   // 📱 la mudanza
-  if(window.innerWidth>980) return;
-  const el=$("decisionBox"); if(!el) return;
-  requestAnimationFrame(()=>{
-    const y=el.getBoundingClientRect().top+window.scrollY-96;
-    window.scrollTo({top:y, behavior:"smooth"});
-  });
+  try{ deckActualiza(); }catch(e){}
+  if(S && S._deckResumen){ S._deckResumen=false; deckIr("tlPanel"); deckGoPinta(); return; }
+  deckIr("decisionBox");
 }
 
 function renderOffers(offers, withRetire){
@@ -15388,8 +15453,10 @@ function tpRefreshCard(){
     else if(_lg){ d.className="team-dot haslogo"; d.style.cssText=`background:#fff url(${_lg}) center/cover;border:none`; d.textContent=""; }
     else { d.className="team-dot"; d.style.cssText=badgeStyle(S.team); d.textContent=inicialEquipo(S.team); }
     $("driverCard").style.background=`linear-gradient(135deg, ${hex6(S.team.color)}1e 0%, var(--panel) 55%)`;
+    try{ pintaColorEquipo(S.team); deckActualiza(); }catch(e){}
   } else {
     $("teamName").textContent=L("Sin equipo","No team",{pt:"Sem equipe"}); $("teamRole").textContent="";
+    try{ pintaColorEquipo(null); deckActualiza(); }catch(e){}
   }
   const tc=$("trophyCase"); const shelf=[];
   for(let i=0;i<S.titles.constr;i++) shelf.push("🏎️");
@@ -16384,8 +16451,8 @@ function panelGaraje(mode){
    invertir pilotos me lleva a otra pantalla»). tpSwapSeats repinta la pantalla de decisión y su
    scrollToDecision te llevaba a Decidir: si estabas en el Panel del deck, se vuelve a él. */
 function garSwap(mode){
-  if((S._garMode||"")!==mode) return;   // chip viejo de otra pantalla: no hace nada (ver 🐞 del rumbo)
-  const vuelta=document.body.classList.contains("deck-movil") ? deckPanelActivo() : null;
+  if((S._garMode||"")!==mode) return;
+  const vuelta=deckPanelActivo();
   tpSwapSeats(mode==="r" ? "rumbo" : undefined);
   if(vuelta && vuelta!=="decisionBox") requestAnimationFrame(()=>deckIr(vuelta));
 }

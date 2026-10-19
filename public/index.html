@@ -231,9 +231,41 @@
 <!-- ========== CAREER ========== -->
 <section id="career">
   <div id="printHeader" class="print-only"></div>
+
+  <!-- F1 Cockpit HUD Bar -->
+  <div id="careerHud" class="career-hud" style="display:none">
+    <div class="hud-left">
+      <span class="hud-flag" id="hudFlag">🌍</span>
+      <span class="hud-driver" id="hudDriver">DRIVER</span>
+      <span class="hud-num" id="hudNum">#10</span>
+      <span class="hud-sep">/</span>
+      <span class="hud-dot" id="hudDot"></span>
+      <span class="hud-team" id="hudTeam">Sin asiento</span>
+      <span class="hud-role" id="hudRole"></span>
+    </div>
+    <div class="hud-right">
+      <span class="hud-age" id="hudAge">16 лет</span>
+      <div class="hud-ovr" id="hudOvr"><span class="n" id="hudOvrVal">50</span><span class="l">OVR</span></div>
+      <div class="hud-stats">
+        <span class="hud-pill w" title="Победы"><span class="k">🏆</span> <b id="hudW">0</b></span>
+        <span class="hud-pill p" title="Подиумы"><span class="k">🍾</span> <b id="hudP">0</b></span>
+        <span class="hud-pill pp" title="Поулы"><span class="k">⏱️</span> <b id="hudPP">0</b></span>
+        <span class="hud-pill gp" title="Гран-при"><span class="k">🏁</span> <b id="hudGP">0</b></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- F1 Cockpit Navigation Tabs -->
+  <div id="deckTabs">
+    <button type="button" data-p="decisionBox" class="tab-btn on">🏁 <span data-ru="Решения & Гонка" data-en="Decisions & Race" data-es="Decisiones" data-pt="Decisões">🏁 Decisiones</span></button>
+    <button type="button" data-p="driverCard" class="tab-btn">👤 <span data-ru="Пилот & Команда" data-en="Driver & Team" data-es="Piloto" data-pt="Piloto">👤 Piloto</span></button>
+    <button type="button" data-p="f1state" class="tab-btn">📊 <span data-ru="Таблицы F1" data-en="F1 Standings" data-es="Clasificación" data-pt="Classificação">📊 Clasificación</span></button>
+    <button type="button" data-p="tlPanel" class="tab-btn">📜 <span data-ru="История карьеры" data-en="Career History" data-es="Trayectoria" data-pt="Histórico">📜 Trayectoria</span></button>
+  </div>
+
   <div class="career-grid">
     <div>
-      <div class="card" id="driverCard">
+      <div class="card tab-panel-hidden" id="driverCard">
         <div class="pl-name" id="plName"></div>
       <div class="driver-head">
           <div class="ovr-badge" id="ovrBadge"><span class="n" id="ovrNum">50</span><span class="l">OVR</span></div>
@@ -261,7 +293,7 @@
 
       <div id="decRecap" style="display:none"></div>
 
-      <div class="decision" id="decisionBox">
+      <div class="decision tab-panel-active" id="decisionBox">
         <h3 id="decTitle">Ofertas</h3>
         <p id="decSub"></p>
         <div class="offers" id="offerList"></div>
@@ -269,13 +301,13 @@
     </div>
 
     <div>
-      <div class="card f1state" id="f1state" style="display:none">
+      <div class="card f1state tab-panel-hidden" id="f1state" style="display:none">
         <div class="cols">
           <div class="fs-season" id="fsSeason" style="grid-column:1/-1"></div><div><h5><span data-es="👑 Mundial de pilotos" data-ru="👑 Личный зачёт" data-pt="👑 Mundial de pilotos" data-pl="👑 Mistrzostwa kierowców" data-fr="👑 Championnat pilotes" data-pt="👑 Mundial de pilotos" data-en="👑 Drivers' Championship">👑 Mundial de pilotos</span> <span id="fsYear"></span><button class="fs-more" id="fsMoreD" onclick="fsToggle()" title="Ver las dos clasificaciones enteras">▾</button></h5><div id="fsDrivers"></div></div>
           <div><h5><span data-es="🏭 Constructores" data-ru="🏭 Кубок конструкторов" data-pt="🏭 Construtores" data-pl="🏭 Konstruktorzy" data-fr="🏭 Constructeurs" data-pt="🏭 Construtores" data-en="🏭 Constructors">🏭 Constructores</span><button class="fs-more" id="fsMoreC" onclick="fsToggle()" title="Ver las dos clasificaciones enteras">▾</button></h5><div id="fsTeams"></div></div>
         </div>
       </div>
-      <div class="timeline">
+      <div class="timeline tab-panel-hidden" id="tlPanel">
         <div class="tl-head"><span data-es="Edad" data-ru="Возраст" data-pt="Idade" data-pl="Wiek" data-fr="Âge" data-pt="Idade" data-en="Age">Edad</span><span data-es="Equipo" data-ru="Команда" data-pt="Equipe" data-pl="Zespół" data-fr="Écurie" data-pt="Equipa" data-en="Team">Equipo</span><span>OVR</span><span data-es="V" data-ru="П" data-pt="V" data-pl="Z" data-fr="V" data-pt="V" data-en="W">V</span><span data-es="Pod" data-ru="Под" data-pt="Pód" data-pl="Pod" data-fr="Pod" data-pt="Pód" data-en="Pod">Pod</span><span data-es="Camp." data-ru="Чемп." data-pt="Camp." data-pl="Mistrz." data-fr="Champ." data-pt="Camp." data-en="Champ.">Camp.</span></div>
         <div class="tl-body" id="tlBody"><div class="tl-empty" data-es="Tu historia empieza aquí…" data-ru="Твоя история начинается здесь…" data-pt="A sua história começa aqui…" data-pl="Twoja historia zaczyna się tutaj…" data-fr="Ton histoire commence ici…" data-pt="A tua história começa aqui…" data-en="Your story starts here…">Tu historia empieza aquí…</div></div>
       </div>
