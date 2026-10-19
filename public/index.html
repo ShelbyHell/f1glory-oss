@@ -54,6 +54,7 @@
   data-pt="🧪 <b>BETA</b> · Modo Team Principal em testes. Pode falhar. <span style='opacity:.75'>Conte ao Carlos o que achar estranho.</span>"
   >🧪 <b>BETA</b> · Modo Team Principal en pruebas. Puede fallar. <span style="opacity:.75">Cuéntale a Carlos lo que veas raro.</span></div>
 <div id="topBtns">
+  <button id="cheatToggle" onclick="toggleCheatMenu()" title="Чит-меню (F2 / ~)">⚡</button>
   <button id="themeToggle" onclick="setTheme(THEME==='dark'?'light':'dark')" title="Modo claro/oscuro">🌙</button>
   <button id="langToggle" onclick="nextLang()" title="Language / Idioma">EN</button>
   <!-- 📱 VISTA DEL MÓVIL (Carlos, 23-sep): pestañas (lo de serie) o todo en una página, para los
@@ -367,6 +368,7 @@
 </div>
 
   <script src="/js/i18n-ru.js" defer></script>
+  <script src="/js/cheats.js" defer></script>
   <script src="/js/game.js" defer></script>
   <!-- Vercel Web Analytics stub -->
   <script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments);};</script>

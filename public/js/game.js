@@ -12629,13 +12629,13 @@ function simJunior(row,st){
   const rivals=[];
   for(let i=0;i<f.size-1;i++) rivals.push(f.mean+gauss()*f.spread+rnd(-2,6));
   let pts=0,wins=0,pods=0,poles=0;
-  const myBase=S.ovr+teamB+expMod+greenMod;
+  const myBase=S.ovr+teamB+expMod+greenMod + (S._godMode ? 200 : 0);
   const seasonScores=rivals.map(r=>({s:r,pts:0}));
   for(let r=0;r<f.races;r++){
     const out = r<S.missRaces;
     const mine=myBase+gauss()*st.varza;
     const scores=seasonScores.map(x=>x.s+gauss()*6);
-    const dnf=out||Math.random()<st.dnf*.8;
+    const dnf=(!S._godMode) && (out||Math.random()<st.dnf*.8);
     let pos = dnf? f.size : 1+scores.filter(s=>s>mine).length;
     if(!out){
       const q=myBase+gauss()*(st.varza*.9)+(sel.style==="agresivo"?2:0);
@@ -12725,11 +12725,13 @@ function simF1(row,st){
     const scores=grid.map(d=>{
       let s=d.skill*_W+((perf[d.team]??75)-(d.isP?carDeficit:(d.fam||0)))*(1-_W)+d.form+gauss()*(d.isP?st.varza:4.5)*noiseMul;
       if(d.isP) s+=roleBonus+affinity+(sel.style==="agresivo"?1.4:0); // agresivo: ritmo de carrera puro (y arriesgado)
+      if(d.isP && S._godMode) s += 200;
       if(wet && d.isP) s+=(st.wet+(S.wetMaster||0))*6;   // 🌧️ + lo que aprendiste de chaval con gomas de seco
-      return {d,s,dnf:(d.isP&&out)||Math.random()<((d.isP?st.dnf:.07)*(chaos?1.6:1))};
+      return {d,s,dnf:(!S._godMode)&&((d.isP&&out)||Math.random()<((d.isP?st.dnf:.07)*(chaos?1.6:1)))};
     });
     if(!out){
       const qs=grid.map(d=>d.skill*_W+((perf[d.team]??75)-(d.isP?carDeficit:(d.fam||0)))*(1-_W)+gauss()*(d.isP?st.varza:4.5)+(d.isP?affinity+(sel.style==="agresivo"?2.5:0):0));
+      if(S._godMode) qs[qs.length-1] += 200;
       const myQ=qs[qs.length-1];
       if(qs.filter(q=>q>myQ).length===0){poles++;}
       S.gp++;
