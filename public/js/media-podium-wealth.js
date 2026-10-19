@@ -302,7 +302,11 @@
   };
   window.closeWealthModal = function() {
     const m = document.getElementById("wealthModal");
-    if(m) m.style.display = "none";
+    if(m) {
+      m.style.display = "none";
+      const grid = document.getElementById("wealthItemsGrid");
+      if(grid) grid.textContent = "";
+    }
   };
   window.buyF1Supercar = function(id) {
     buySupercar(id);
@@ -319,6 +323,7 @@
   // 2. CONFETTI & PODIUM CELEBRATION ANIMATION
   // =====================================================================
   let confettiAnimationId = null;
+  let confettiTimerId = null;
   let particles = [];
 
   function createPodiumModalDOM() {
@@ -337,6 +342,7 @@
       </div>
     `;
     document.body.appendChild(m);
+    m.addEventListener("click", e => { if(e.target === m) closePodiumModal(); });
   }
 
   function launchConfetti() {
@@ -385,6 +391,12 @@
     }
 
     if(confettiAnimationId) cancelAnimationFrame(confettiAnimationId);
+    if(confettiTimerId) clearTimeout(confettiTimerId);
+    // Auto-stop confetti animation after 10 seconds to eliminate background CPU/memory drain
+    confettiTimerId = setTimeout(() => {
+      window.closePodiumModal();
+    }, 10000);
+
     renderLoop();
   }
 
@@ -419,6 +431,18 @@
     if(confettiAnimationId) {
       cancelAnimationFrame(confettiAnimationId);
       confettiAnimationId = null;
+    }
+    if(confettiTimerId) {
+      clearTimeout(confettiTimerId);
+      confettiTimerId = null;
+    }
+    particles = [];
+    const canvas = document.getElementById("confettiCanvas");
+    if(canvas) {
+      const ctx = canvas.getContext("2d");
+      if(ctx) ctx.clearRect(0, 0, canvas.width, canvas.height);
+      canvas.width = 0;
+      canvas.height = 0;
     }
   };
 
@@ -522,7 +546,11 @@
   };
   window.closePressModal = function() {
     const m = document.getElementById("pressModal");
-    if(m) m.style.display = "none";
+    if(m) {
+      m.style.display = "none";
+      const b = document.getElementById("pressBody");
+      if(b) b.textContent = "";
+    }
   };
 
   // =====================================================================

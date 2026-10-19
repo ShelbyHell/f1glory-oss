@@ -146,6 +146,9 @@
 
   function saveCeoState() {
     try {
+      if(CEO_STATE && CEO_STATE.history && CEO_STATE.history.length > 25) {
+        CEO_STATE.history.length = 25;
+      }
       localStorage.setItem("f1g_ceo_state", JSON.stringify(CEO_STATE));
     } catch(e) {}
   }
@@ -184,12 +187,21 @@
     openStaffMarketModal("team_principal", oldName);
   }
 
+  window.closeCeoStaffMarketModal = function() {
+    const m = document.getElementById("ceoStaffMarketModal");
+    if(m) {
+      m.style.display = "none";
+      m.innerHTML = "";
+    }
+  };
+
   function openStaffMarketModal(type, firedName) {
     let m = document.getElementById("ceoStaffMarketModal");
     if(!m) {
       m = document.createElement("div");
       m.id = "ceoStaffMarketModal";
       m.className = "f1-modal-overlay";
+      m.addEventListener("click", e => { if(e.target === m) window.closeCeoStaffMarketModal(); });
       document.body.appendChild(m);
     }
 
@@ -204,7 +216,7 @@
             <span class="f1-mono-sub">BOARD OF DIRECTORS EXECUTIVE DECISION</span>
             <h2>${title}</h2>
           </div>
-          <button class="rank-x" onclick="document.getElementById('ceoStaffMarketModal').style.display='none'">✕</button>
+          <button class="rank-x" onclick="window.closeCeoStaffMarketModal()">✕</button>
         </div>
 
         <div class="ceo-market-banner">
@@ -267,9 +279,16 @@
     }
 
     saveCeoState();
-    const m = document.getElementById("ceoStaffMarketModal");
-    if(m) m.style.display = "none";
+    window.closeCeoStaffMarketModal();
     renderCeoModal();
+  };
+
+  window.closeCeoDriverMarketModal = function() {
+    const m = document.getElementById("ceoDriverMarketModal");
+    if(m) {
+      m.style.display = "none";
+      m.innerHTML = "";
+    }
   };
 
   function openDriverMarketModal(seatIndex) {
@@ -278,6 +297,7 @@
       m = document.createElement("div");
       m.id = "ceoDriverMarketModal";
       m.className = "f1-modal-overlay";
+      m.addEventListener("click", e => { if(e.target === m) window.closeCeoDriverMarketModal(); });
       document.body.appendChild(m);
     }
 
@@ -289,7 +309,7 @@
             <span class="f1-mono-sub">DRIVER LINEUP MANAGEMENT</span>
             <h2>🏎️ СМЕНА ПИЛОТА КОКПИТА #${seatIndex}</h2>
           </div>
-          <button class="rank-x" onclick="document.getElementById('ceoDriverMarketModal').style.display='none'">✕</button>
+          <button class="rank-x" onclick="window.closeCeoDriverMarketModal()">✕</button>
         </div>
 
         <div class="ceo-market-banner">
@@ -344,8 +364,7 @@
     else CEO_STATE.driver2 = Object.assign({}, cand);
 
     saveCeoState();
-    const m = document.getElementById("ceoDriverMarketModal");
-    if(m) m.style.display = "none";
+    window.closeCeoDriverMarketModal();
     if(window.showF1Toast) window.showF1Toast(`🏁 ${cand.name} подписан в кокпит #${seatIndex}!`, "success");
     renderCeoModal();
   };
@@ -499,6 +518,9 @@
     };
 
     CEO_STATE.history.unshift(summary);
+    if(CEO_STATE.history.length > 25) {
+      CEO_STATE.history.length = 25; // Limit history to prevent memory leak and storage bloat
+    }
     CEO_STATE.lastSeasonSummary = summary;
     CEO_STATE.seasonNum += 1;
     CEO_STATE.year += 1;
@@ -508,12 +530,21 @@
     openSeasonDebriefModal(summary);
   }
 
+  window.closeCeoDebriefModal = function() {
+    const m = document.getElementById("ceoDebriefModal");
+    if(m) {
+      m.style.display = "none";
+      m.innerHTML = "";
+    }
+  };
+
   function openSeasonDebriefModal(summary) {
     let m = document.getElementById("ceoDebriefModal");
     if(!m) {
       m = document.createElement("div");
       m.id = "ceoDebriefModal";
       m.className = "f1-modal-overlay";
+      m.addEventListener("click", e => { if(e.target === m) window.closeCeoDebriefModal(); });
       document.body.appendChild(m);
     }
 
@@ -527,7 +558,7 @@
             <span class="f1-mono-sub">ANNUAL FIA CONSTRUCTORS CHAMPIONSHIP REVIEW</span>
             <h2>🏁 ИТОГИ СЕЗОНА ${summary.year - 1} · СОВЕТ ДИРЕКТОРОВ</h2>
           </div>
-          <button class="rank-x" onclick="document.getElementById('ceoDebriefModal').style.display='none'">✕</button>
+          <button class="rank-x" onclick="window.closeCeoDebriefModal()">✕</button>
         </div>
 
         <div class="ceo-debrief-hero ${isSuccess ? 'hero-gold' : isCrisis ? 'hero-crisis' : ''}">
@@ -565,11 +596,11 @@
 
         <div class="ceo-debrief-actions">
           ${summary.recommendedFiring ? `
-            <button class="btn s-btn ceo-fire-btn" onclick="document.getElementById('ceoDebriefModal').style.display='none'; window.fireCeoTechDirector();">
+            <button class="btn s-btn ceo-fire-btn" onclick="window.closeCeoDebriefModal(); window.fireCeoTechDirector();">
               ⚠️ УВОЛИТЬ ГЛАВНОГО ИНЖЕНЕРА (СОВЕТ НАСТАИВАЕТ)
             </button>
           ` : ''}
-          <button class="btn s-btn sc-buy" onclick="document.getElementById('ceoDebriefModal').style.display='none'">
+          <button class="btn s-btn sc-buy" onclick="window.closeCeoDebriefModal()">
             ПРОДОЛЖИТЬ В КАБИНЕТ CEO
           </button>
         </div>
@@ -589,6 +620,14 @@
     storyId: "buyout"
   };
 
+  window.closeTeamCreationModal = function() {
+    const m = document.getElementById("teamCreationModal");
+    if(m) {
+      m.style.display = "none";
+      m.innerHTML = "";
+    }
+  };
+
   function openTeamCreationModal(isEditing) {
     if(!CEO_STATE) loadCeoState();
 
@@ -604,6 +643,7 @@
       m = document.createElement("div");
       m.id = "teamCreationModal";
       m.className = "f1-modal-overlay";
+      m.addEventListener("click", e => { if(e.target === m) window.closeTeamCreationModal(); });
       document.body.appendChild(m);
     }
 
@@ -627,7 +667,7 @@
             <span class="f1-mono-sub">FIA CONSTRUCTOR ENTRY & BRAND IDENTITY</span>
             <h2>${isEditing ? '✏️ РЕБРЕНДИНГ И НАСТРОЙКА КОМАНДЫ' : '🏛️ УЧРЕЖДЕНИЕ И БРЕНДИНГ КОМАНДЫ ФОРМУЛЫ-1'}</h2>
           </div>
-          <button class="rank-x" onclick="document.getElementById('teamCreationModal').style.display='none'">✕</button>
+          <button class="rank-x" onclick="window.closeTeamCreationModal()">✕</button>
         </div>
 
         <div class="tc-modal-body">
@@ -810,6 +850,9 @@
 
     const body = document.getElementById("ceoTabContent");
     if(!body) return;
+
+    // Free previous tab DOM nodes before rendering new tab
+    body.textContent = "";
 
     if(activeCeoTab === "overview") {
       renderOverviewTab(body);
@@ -1177,7 +1220,11 @@
 
   window.closeCeoModal = function() {
     const m = document.getElementById("ceoModal");
-    if(m) m.style.display = "none";
+    if(m) {
+      m.style.display = "none";
+      const body = document.getElementById("ceoTabContent");
+      if(body) body.textContent = ""; // Release active tab DOM nodes to garbage collector
+    }
   };
 
   window.fireCeoTechDirector = function() {
@@ -1247,8 +1294,7 @@
     CEO_STATE.teamStory = story.title;
 
     saveCeoState();
-    const m = document.getElementById("teamCreationModal");
-    if(m) m.style.display = "none";
+    window.closeTeamCreationModal();
     openCeoModal();
     if(window.showF1Toast) {
       window.showF1Toast(`🏛️ Конюшня «${CEO_STATE.teamName}» официально зарегистрирована в FIA!`, "success");
@@ -1265,6 +1311,35 @@
     if(endM) endM.style.display = "none";
     initCeoState();
     openTeamCreationModal(false);
+  };
+
+  // Global keydown listener for Escape key to close open CEO modals cleanly and free memory
+  window.addEventListener("keydown", function(e) {
+    if(e.key === "Escape") {
+      const staffM = document.getElementById("ceoStaffMarketModal");
+      if(staffM && staffM.style.display === "flex") { window.closeCeoStaffMarketModal(); return; }
+      const drvM = document.getElementById("ceoDriverMarketModal");
+      if(drvM && drvM.style.display === "flex") { window.closeCeoDriverMarketModal(); return; }
+      const debM = document.getElementById("ceoDebriefModal");
+      if(debM && debM.style.display === "flex") { window.closeCeoDebriefModal(); return; }
+      const tcM = document.getElementById("teamCreationModal");
+      if(tcM && tcM.style.display === "flex") { window.closeTeamCreationModal(); return; }
+      const ceoM = document.getElementById("ceoModal");
+      if(ceoM && ceoM.style.display === "flex") { window.closeCeoModal(); return; }
+    }
+  });
+
+  // Global reset for career start / state clear
+  window.resetCeoMode = function() {
+    window.closeCeoStaffMarketModal();
+    window.closeCeoDriverMarketModal();
+    window.closeCeoDebriefModal();
+    window.closeTeamCreationModal();
+    window.closeCeoModal();
+    CEO_STATE = null;
+    try {
+      localStorage.removeItem("f1g_ceo_state");
+    } catch(e) {}
   };
 
   // Expose global init

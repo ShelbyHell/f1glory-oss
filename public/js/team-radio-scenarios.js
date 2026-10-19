@@ -96,7 +96,14 @@
   window.triggerTeamRadio = showTeamRadioFlash;
   window.closeTeamRadio = function() {
     const box = document.getElementById("teamRadioBox");
-    if(box) box.className = "team-radio-box";
+    if(box) {
+      if(box._timer) {
+        clearTimeout(box._timer);
+        box._timer = null;
+      }
+      box.className = "team-radio-box";
+      box.innerHTML = "";
+    }
   };
 
   // =====================================================================
