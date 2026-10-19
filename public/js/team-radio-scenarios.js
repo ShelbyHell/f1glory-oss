@@ -125,14 +125,14 @@
       },
       drop: ["M. Verstappen"],
       t: [
-        "Феномен Ферстаппена: Прыжок из F3 в F1",
-        "The Verstappen Phenomenon: F3 to F1 Jump",
-        "O Fenômeno Verstappen: F3 direto para F1"
+        "Ферстаппен",
+        "Verstappen",
+        "Verstappen"
       ],
       sub: [
-        "17 лет · Минуя GP2/Формулу-2 · Скандал в паддоке и вызов Ред Булл",
-        "Age 17 · Skipping GP2/F2 · Paddock uproar & Red Bull call",
-        "17 anos · Pulando a GP2/F2 · Escândalo no paddock e chamado da Red Bull"
+        "Феномен F3 ➔ F1 · 17 лет · Toro Rosso 2015",
+        "F3 to F1 Phenomenon · Age 17 · Toro Rosso 2015",
+        "Fenômeno F3 para F1 · 17 anos · Toro Rosso 2015"
       ],
       d: [
         "Октябрь 2014 года. Тебе всего 17 лет. После сенсационной серии из 6 побед подряд в европейской Формуле-3 доктор Хельмут Марко делает беспрецедентное предложение: подписать контракт с Red Bull и СРАЗУ, минуя Формулу-2, сесть за руль боевого болида Toro Rosso в Формуле-1 на сезон 2015 года! Паддок бурлит: критики называют это безрассудством, а FIA уже готовит запрет на суперлицензии до 18 лет («правило Ферстаппена»). Твой напарник — голодный Карлос Сайнс, а впереди маячит место в Red Bull Racing. Докажи, что ты быстрейший вундеркинд в истории гонок!",
@@ -181,22 +181,34 @@
   function initHooks() {
     setupVerstappenChallenge();
 
-    // 1. Add Verstappen scenario button in intro
-    const challengeGrid = document.getElementById("challengeGrid");
-    if(challengeGrid && !document.getElementById("btnVerstappenScenario")) {
-      const b = document.createElement("div");
-      b.id = "btnVerstappenScenario";
-      b.className = "dec car verstappen-challenge-card";
-      b.innerHTML = `
-        <div class="v-card-tag">🔥 ИСТОРИЧЕСКИЙ ВЫЗОВ // F3 ➔ F1</div>
-        <div class="v-card-title">🇳🇱 Макс Ферстаппен · Дебют в 17 лет</div>
-        <div class="v-card-desc">Прыжок из европейской Ф3 прямо в Формулу-1 за Toro Rosso, минуя Ф2. Стань самым молодым победителем в истории!</div>
-        <div class="v-card-btn-wrap">
-          <button class="btn v-play-btn" onclick="startVerstappenScenario()">▶ Играть за Ферстаппена</button>
-        </div>
-      `;
-      challengeGrid.style.display = "block";
-      challengeGrid.insertBefore(b, challengeGrid.firstChild);
+    // Enable native challengeCard in intro smoothly
+    const card = document.getElementById("challengeCard");
+    const grid = document.getElementById("challengeGrid");
+    if(card && grid) {
+      card.classList.remove("soon");
+      card.classList.add("retro-on");
+      const badge = document.getElementById("badgeReto");
+      if(badge) {
+        badge.className = "new-badge";
+        badge.textContent = (typeof LANG !== "undefined" && LANG === "ru") ? "Новинка!" : "¡Nuevo!";
+        badge.style.display = "inline-block";
+      }
+      const sub = document.getElementById("retoSub");
+      if(sub) {
+        sub.textContent = (typeof LANG !== "undefined" && LANG === "ru") ?
+          "Макс Ферстаппен: Прыжок из F3 в F1" : "Max Verstappen: F3 to F1 Jump";
+      }
+      // Click handler toggles native challenge grid
+      card.onclick = function() {
+        const isOpen = grid.style.display !== "none";
+        grid.style.display = isOpen ? "none" : "block";
+        card.classList.toggle("open", !isOpen);
+      };
+    }
+
+    // Ensure challengeGrid is cleanly populated with native tiles
+    if(typeof initSecretChallenges === "function") {
+      try { initSecretChallenges(); } catch(e){}
     }
 
     // 2. Add Radio button in HUD

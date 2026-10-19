@@ -3335,57 +3335,6 @@ h1,h2,h3,.decision h3,#intro h1{font-family:var(--f-disp);font-weight:800;letter
   100% { transform: scaleY(1); opacity: 1; }
 }
 
-/* =====================================================================
-   🇳🇱 VERSTAPPEN HISTORIC CHALLENGE CARD
-   ===================================================================== */
-.verstappen-challenge-card {
-  background: linear-gradient(135deg, rgba(234, 88, 12, 0.15) 0%, rgba(15, 23, 42, 0.85) 60%), #151924 !important;
-  border: 1px solid rgba(234, 88, 12, 0.45) !important;
-  border-left: 6px solid #ea580c !important;
-  border-radius: 16px !important;
-  padding: 16px 20px !important;
-  margin-bottom: 14px !important;
-  text-align: left !important;
-  box-shadow: 0 8px 24px rgba(234, 88, 12, 0.15) !important;
-  transition: all 0.25s ease !important;
-}
-.verstappen-challenge-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 32px rgba(234, 88, 12, 0.25) !important;
-  border-color: #ea580c !important;
-}
-.v-card-tag {
-  font-family: var(--f-mono);
-  font-size: 10px;
-  font-weight: 800;
-  color: #ea580c;
-  letter-spacing: 0.08em;
-  margin-bottom: 4px;
-}
-.v-card-title {
-  font-family: var(--f-disp);
-  font-size: 18px;
-  font-weight: 900;
-  color: #fff;
-  margin-bottom: 6px;
-}
-.v-card-desc {
-  font-size: 12.5px;
-  color: var(--muted);
-  line-height: 1.45;
-  margin-bottom: 14px;
-}
-.v-card-btn-wrap {
-  display: flex;
-}
-.v-play-btn {
-  background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%) !important;
-  color: #fff !important;
-  font-weight: 800;
-  font-size: 12.5px;
-  padding: 8px 18px;
-  box-shadow: 0 4px 16px rgba(234, 88, 12, 0.35);
-}
 
 
 
