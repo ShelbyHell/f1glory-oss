@@ -1,700 +1,711 @@
 {
   "g": [
     {
-      "rank": 1,
+      "id": "pz3ru32jvmvf56ved",
+      "name": "SHELBY",
+      "flag": "🇩🇪",
+      "country": "Alemania",
+      "gloria": 8747,
+      "era": "2000",
+      "ch": null,
+      "updatedAt": 1792411483599,
+      "rank": 1
+    },
+    {
+      "rank": 2,
       "gloria": 4072,
       "name": "ARTIC",
       "flag": "🇭🇷",
       "country": "Croacia"
     },
     {
-      "rank": 2,
+      "rank": 3,
       "gloria": 3992,
       "name": "VEDELLE",
       "flag": "🇪🇸",
       "country": "España"
     },
     {
-      "rank": 3,
+      "rank": 4,
       "gloria": 3958,
       "name": "SENNA",
       "flag": "🇧🇷",
       "country": "Brasil"
     },
     {
-      "rank": 4,
+      "rank": 5,
       "gloria": 3951,
       "name": "PAULINO",
       "flag": "🇧🇷",
       "country": "Brasil"
     },
     {
-      "rank": 5,
+      "rank": 6,
       "gloria": 3942,
       "name": "COTELO",
       "flag": "🇺🇾",
       "country": "Uruguay"
     },
     {
-      "rank": 6,
+      "rank": 7,
       "gloria": 3933,
       "name": "JONES",
       "flag": "🇦🇺",
       "country": "Australia"
     },
     {
-      "rank": 7,
+      "rank": 8,
       "gloria": 3879,
       "name": "BOTTESI",
       "flag": "🇧🇷",
       "country": "Brasil"
     },
     {
-      "rank": 8,
+      "rank": 9,
       "gloria": 3872,
       "name": "ZANON",
       "flag": "🇧🇷",
       "country": "Brasil"
     },
     {
-      "rank": 9,
+      "rank": 10,
       "gloria": 3827,
       "name": "ANTEK",
       "flag": "🇪🇸",
       "country": "España"
     },
     {
-      "rank": 10,
+      "rank": 11,
       "gloria": 3822,
       "name": "RUBIO",
       "flag": "🇪🇸",
       "country": "España"
     },
     {
-      "rank": 11,
+      "rank": 12,
       "gloria": 3809,
       "name": "ZUU",
       "flag": "🇦🇱",
       "country": "Albania"
     },
     {
-      "rank": 12,
+      "rank": 13,
       "gloria": 3767,
       "name": "CHEJFEC",
       "flag": "🇦🇷",
       "country": "Argentina"
     },
     {
-      "rank": 13,
+      "rank": 14,
       "gloria": 3758,
       "name": "ESTIBIARRIA",
       "flag": "🇦🇷",
       "country": "Argentina"
     },
     {
-      "rank": 14,
+      "rank": 15,
       "gloria": 3751,
       "name": "GASCÓN",
       "flag": "🇮🇹",
       "country": "Italia"
     },
     {
-      "rank": 15,
+      "rank": 16,
       "gloria": 3742,
       "name": "JACKIE",
       "flag": "🇺🇸",
       "country": "Estados Unidos"
     },
     {
-      "rank": 16,
+      "rank": 17,
       "gloria": 3736,
       "name": "ALF",
       "flag": "🇦🇷",
       "country": "Argentina"
     },
     {
-      "rank": 17,
+      "rank": 18,
       "gloria": 3736,
       "name": "YEBRA",
       "flag": "🇦🇫",
       "country": "Afganistán"
     },
     {
-      "rank": 18,
+      "rank": 19,
       "gloria": 3727,
       "name": "PÉREZ",
       "flag": "🇪🇸",
       "country": "España"
     },
     {
-      "rank": 19,
+      "rank": 20,
       "gloria": 3722,
       "name": "MARQUES",
       "flag": "🇧🇷",
       "country": "Brasil"
     },
     {
-      "rank": 20,
+      "rank": 21,
       "gloria": 3720,
       "name": "TYPER",
       "flag": "🇧🇷",
       "country": "Brasil"
     },
     {
-      "rank": 21,
+      "rank": 22,
       "gloria": 3717,
       "name": "COSTA",
       "flag": "🇵🇹",
       "country": "Portugal"
     },
     {
-      "rank": 22,
+      "rank": 23,
       "gloria": 3715,
       "name": "FERNANDES",
       "flag": "🇧🇷",
       "country": "Brasil"
     },
     {
-      "rank": 23,
+      "rank": 24,
       "gloria": 3712,
       "name": "RICHARDSON",
       "flag": "🇬🇧",
       "country": "Reino Unido"
     },
     {
-      "rank": 24,
+      "rank": 25,
       "gloria": 3704,
       "name": "UJARASCK",
       "flag": "🇷🇴",
       "country": "Rumanía"
     },
     {
-      "rank": 25,
+      "rank": 26,
       "gloria": 3688,
       "name": "BABAYAGA",
       "flag": "🇧🇸",
       "country": "Bahamas"
     },
     {
-      "rank": 26,
+      "rank": 27,
       "gloria": 3687,
       "name": "NOE",
       "flag": "🇧🇩",
       "country": "Bangladés"
     },
     {
-      "rank": 27,
+      "rank": 28,
       "gloria": 3683,
       "name": "ALFONSO",
       "flag": "🇧🇷",
       "country": "Brasil"
     },
     {
-      "rank": 28,
+      "rank": 29,
       "gloria": 3673,
       "name": "BUNBURY",
       "flag": "🇪🇸",
       "country": "España"
     },
     {
-      "rank": 29,
+      "rank": 30,
       "gloria": 3672,
       "name": "BIESIADNY",
       "flag": "🇵🇱",
       "country": "Polonia"
     },
     {
-      "rank": 30,
+      "rank": 31,
       "gloria": 3671,
       "name": "URBANO",
       "flag": "🇪🇸",
       "country": "España"
     },
     {
-      "rank": 31,
+      "rank": 32,
       "gloria": 3668,
       "name": "NAHUE",
       "flag": "🇦🇷",
       "country": "Argentina"
     },
     {
-      "rank": 32,
+      "rank": 33,
       "gloria": 3668,
       "name": "PANGUISO",
       "flag": "🇪🇸",
       "country": "España"
     },
     {
-      "rank": 33,
+      "rank": 34,
       "gloria": 3658,
       "name": "PEREZ",
       "flag": "🇩🇿",
       "country": "Argelia"
     },
     {
-      "rank": 34,
+      "rank": 35,
       "gloria": 3653,
       "name": "BENYAHIA",
       "flag": "🇩🇿",
       "country": "Argelia"
     },
     {
-      "rank": 35,
+      "rank": 36,
       "gloria": 3652,
       "name": "EPSTEIN",
       "flag": "🇮🇱",
       "country": "Israel"
     },
     {
-      "rank": 36,
+      "rank": 37,
       "gloria": 3649,
       "name": "RICHARDSON",
       "flag": "🇬🇧",
       "country": "Reino Unido"
     },
     {
-      "rank": 37,
+      "rank": 38,
       "gloria": 3633,
       "name": "DANTAS",
       "flag": "🇧🇷",
       "country": "Brasil"
     },
     {
-      "rank": 38,
+      "rank": 39,
       "gloria": 3631,
       "name": "ABUIN",
       "flag": "🇦🇷",
       "country": "Argentina"
     },
     {
-      "rank": 39,
+      "rank": 40,
       "gloria": 3628,
       "name": "ANTIA",
       "flag": "🇮🇹",
       "country": "Italia"
     },
     {
-      "rank": 40,
+      "rank": 41,
       "gloria": 3619,
       "name": "HDZ",
       "flag": "🇲🇽",
       "country": "México"
     },
     {
-      "rank": 41,
+      "rank": 42,
       "gloria": 3609,
       "name": "CHICO",
       "flag": "🇵🇹",
       "country": "Portugal"
     },
     {
-      "rank": 42,
+      "rank": 43,
       "gloria": 3607,
       "name": "KHATRI",
       "flag": "🇺🇸",
       "country": "Estados Unidos"
     },
     {
-      "rank": 43,
+      "rank": 44,
       "gloria": 3606,
       "name": "TUNG TUNG",
       "flag": "🇩🇪",
       "country": "Alemania"
     },
     {
-      "rank": 44,
+      "rank": 45,
       "gloria": 3604,
       "name": "L. FRANCO",
       "flag": "🇧🇷",
       "country": "Brasil"
     },
     {
-      "rank": 45,
+      "rank": 46,
       "gloria": 3601,
       "name": "BRAGA",
       "flag": "🇧🇷",
       "country": "Brasil"
     },
     {
-      "rank": 46,
+      "rank": 47,
       "gloria": 3600,
       "name": "DELO",
       "flag": "🇦🇷",
       "country": "Argentina"
     },
     {
-      "rank": 47,
+      "rank": 48,
       "gloria": 3594,
       "name": "JOÃO NASCENTE",
       "flag": "🇧🇷",
       "country": "Brasil"
     },
     {
-      "rank": 48,
+      "rank": 49,
       "gloria": 3592,
       "name": "LÓPEZ",
       "flag": "🇪🇸",
       "country": "España"
     },
     {
-      "rank": 49,
+      "rank": 50,
       "gloria": 3590,
       "name": "DOCHE",
       "flag": "🇰🇮",
       "country": "Kiribati"
     },
     {
-      "rank": 50,
+      "rank": 51,
       "gloria": 3582,
       "name": "WTEVENS",
       "flag": "🇬🇧",
       "country": "Reino Unido"
     },
     {
-      "rank": 51,
+      "rank": 52,
       "gloria": 3578,
       "name": "DROZ",
       "flag": "🇪🇸",
       "country": "España"
     },
     {
-      "rank": 52,
+      "rank": 53,
       "gloria": 3577,
       "name": "VIC",
       "flag": "🇦🇹",
       "country": "Austria"
     },
     {
-      "rank": 53,
+      "rank": 54,
       "gloria": 3564,
       "name": "YYY",
       "flag": "🇦🇱",
       "country": "Albania"
     },
     {
-      "rank": 54,
+      "rank": 55,
       "gloria": 3562,
       "name": "NAVARRO",
       "flag": "🇦🇷",
       "country": "Argentina"
     },
     {
-      "rank": 55,
+      "rank": 56,
       "gloria": 3560,
       "name": "JAVIER MILEI",
       "flag": "🇦🇷",
       "country": "Argentina"
     },
     {
-      "rank": 56,
+      "rank": 57,
       "gloria": 3559,
       "name": "F. MAGALHÃES",
       "flag": "🇧🇷",
       "country": "Brasil"
     },
     {
-      "rank": 57,
+      "rank": 58,
       "gloria": 3556,
       "name": "VALEN",
       "flag": "🇮🇹",
       "country": "Italia"
     },
     {
-      "rank": 58,
+      "rank": 59,
       "gloria": 3556,
       "name": "ALFONSO",
       "flag": "🇦🇷",
       "country": "Argentina"
     },
     {
-      "rank": 59,
+      "rank": 60,
       "gloria": 3554,
       "name": "LYNCH",
       "flag": "🇦🇷",
       "country": "Argentina"
     },
     {
-      "rank": 60,
+      "rank": 61,
       "gloria": 3554,
       "name": "O BRABO",
       "flag": "🇻🇮",
       "country": "Islas Vírgenes EE. UU."
     },
     {
-      "rank": 61,
+      "rank": 62,
       "gloria": 3553,
       "name": "DANIEL PEDROSA",
       "flag": "🇪🇸",
       "country": "España"
     },
     {
-      "rank": 62,
+      "rank": 63,
       "gloria": 3550,
       "name": "GISBERT",
       "flag": "🇪🇸",
       "country": "España"
     },
     {
-      "rank": 63,
+      "rank": 64,
       "gloria": 3541,
       "name": "MORTE",
       "flag": "🇪🇸",
       "country": "España"
     },
     {
-      "rank": 64,
+      "rank": 65,
       "gloria": 3541,
       "name": "POMER",
       "flag": "🇩🇪",
       "country": "Alemania"
     },
     {
-      "rank": 65,
+      "rank": 66,
       "gloria": 3538,
       "name": "LAZZARI",
       "flag": "🇦🇷",
       "country": "Argentina"
     },
     {
-      "rank": 66,
+      "rank": 67,
       "gloria": 3538,
       "name": "BERNABE",
       "flag": "🇧🇷",
       "country": "Brasil"
     },
     {
-      "rank": 67,
+      "rank": 68,
       "gloria": 3537,
       "name": "L. FRANCO",
       "flag": "🇧🇷",
       "country": "Brasil"
     },
     {
-      "rank": 68,
+      "rank": 69,
       "gloria": 3532,
       "name": "PASTRY",
       "flag": "🇦🇺",
       "country": "Australia"
     },
     {
-      "rank": 69,
+      "rank": 70,
       "gloria": 3519,
       "name": "J. ORÚS",
       "flag": "🇪🇸",
       "country": "España"
     },
     {
-      "rank": 70,
+      "rank": 71,
       "gloria": 3516,
       "name": "MARTINSSON",
       "flag": "🇸🇪",
       "country": "Suecia"
     },
     {
-      "rank": 71,
+      "rank": 72,
       "gloria": 3516,
       "name": "BOTTESI",
       "flag": "🇧🇷",
       "country": "Brasil"
     },
     {
-      "rank": 72,
+      "rank": 73,
       "gloria": 3515,
       "name": "VECIUNCA",
       "flag": "🇮🇹",
       "country": "Italia"
     },
     {
-      "rank": 73,
+      "rank": 74,
       "gloria": 3507,
       "name": "AVALOS",
       "flag": "🇦🇷",
       "country": "Argentina"
     },
     {
-      "rank": 74,
+      "rank": 75,
       "gloria": 3502,
       "name": "BRENO",
       "flag": "🇬🇧",
       "country": "Reino Unido"
     },
     {
-      "rank": 75,
+      "rank": 76,
       "gloria": 3497,
       "name": "FERNÁNDEZ",
       "flag": "🇦🇩",
       "country": "Andorra"
     },
     {
-      "rank": 76,
+      "rank": 77,
       "gloria": 3497,
       "name": "VETTEL",
       "flag": "🇩🇪",
       "country": "Alemania"
     },
     {
-      "rank": 77,
+      "rank": 78,
       "gloria": 3494,
       "name": "CURI",
       "flag": "🇧🇷",
       "country": "Brasil"
     },
     {
-      "rank": 78,
+      "rank": 79,
       "gloria": 3492,
       "name": "MAHER",
       "flag": "🇺🇸",
       "country": "Estados Unidos"
     },
     {
-      "rank": 79,
+      "rank": 80,
       "gloria": 3492,
       "name": "ADRIAN",
       "flag": "🇧🇷",
       "country": "Brasil"
     },
     {
-      "rank": 80,
+      "rank": 81,
       "gloria": 3488,
       "name": "COELHO",
       "flag": "🇵🇹",
       "country": "Portugal"
     },
     {
-      "rank": 81,
+      "rank": 82,
       "gloria": 3485,
       "name": "GONÇALVES",
       "flag": "🇧🇷",
       "country": "Brasil"
     },
     {
-      "rank": 82,
+      "rank": 83,
       "gloria": 3484,
       "name": "MOSCATELLI",
       "flag": "🇦🇷",
       "country": "Argentina"
     },
     {
-      "rank": 83,
+      "rank": 84,
       "gloria": 3480,
       "name": "PIRES",
       "flag": "🇩🇪",
       "country": "Alemania"
     },
     {
-      "rank": 84,
+      "rank": 85,
       "gloria": 3479,
       "name": "PARODI",
       "flag": "🇦🇷",
       "country": "Argentina"
     },
     {
-      "rank": 85,
+      "rank": 86,
       "gloria": 3478,
       "name": "FALTAENVINO",
       "flag": "🇦🇷",
       "country": "Argentina"
     },
     {
-      "rank": 86,
+      "rank": 87,
       "gloria": 3474,
       "name": "CAMPOS",
       "flag": "🇧🇷",
       "country": "Brasil"
     },
     {
-      "rank": 87,
+      "rank": 88,
       "gloria": 3473,
       "name": "OCAMPO",
       "flag": "🇦🇷",
       "country": "Argentina"
     },
     {
-      "rank": 88,
+      "rank": 89,
       "gloria": 3472,
       "name": "MARUFU",
       "flag": "🇵🇱",
       "country": "Polonia"
     },
     {
-      "rank": 89,
+      "rank": 90,
       "gloria": 3470,
       "name": "THOMPSON",
       "flag": "🇬🇧",
       "country": "Reino Unido"
     },
     {
-      "rank": 90,
+      "rank": 91,
       "gloria": 3468,
       "name": "VIVA",
       "flag": "🇦🇷",
       "country": "Argentina"
     },
     {
-      "rank": 91,
+      "rank": 92,
       "gloria": 3464,
       "name": "D. GOMES",
       "flag": "🇧🇷",
       "country": "Brasil"
     },
     {
-      "rank": 92,
+      "rank": 93,
       "gloria": 3463,
       "name": "EUGENIO",
       "flag": "🇧🇷",
       "country": "Brasil"
     },
     {
-      "rank": 93,
+      "rank": 94,
       "gloria": 3459,
       "name": "EGEA",
       "flag": "🇪🇸",
       "country": "España"
     },
     {
-      "rank": 94,
+      "rank": 95,
       "gloria": 3455,
       "name": "LUCIO",
       "flag": "🇧🇷",
       "country": "Brasil"
     },
     {
-      "rank": 95,
+      "rank": 96,
       "gloria": 3454,
       "name": "YEBRA",
       "flag": "🇦🇫",
       "country": "Afganistán"
     },
     {
-      "rank": 96,
+      "rank": 97,
       "gloria": 3454,
       "name": "TOLEDO",
       "flag": "🇧🇷",
       "country": "Brasil"
     },
     {
-      "rank": 97,
+      "rank": 98,
       "gloria": 3452,
       "name": "SANCHEZ",
       "flag": "🇩🇴",
       "country": "Rep. Dominicana"
     },
     {
-      "rank": 98,
+      "rank": 99,
       "gloria": 3446,
       "name": "PEREZ",
       "flag": "🇪🇸",
       "country": "España"
     },
     {
-      "rank": 99,
+      "rank": 100,
       "gloria": 3446,
       "name": "PILOTO",
       "flag": "🇰🇵",
       "country": "Corea del Norte"
     },
     {
-      "rank": 100,
+      "rank": 101,
       "gloria": 3446,
       "name": "CASTELLUCCIO",
       "flag": "🇦🇷",
@@ -708,7 +719,7 @@
       "gloria": 1040,
       "era": "2026",
       "updatedAt": 1792407650496,
-      "rank": 101
+      "rank": 102
     },
     {
       "id": "player_test_42",
@@ -719,18 +730,7 @@
       "era": "2026",
       "ch": null,
       "updatedAt": 1792407245621,
-      "rank": 102
-    },
-    {
-      "id": "pz3ru32jvmvf56ved",
-      "name": "SHELBY",
-      "flag": "🇩🇪",
-      "country": "Alemania",
-      "gloria": 434,
-      "era": "2026",
-      "ch": null,
-      "updatedAt": 1792408060410,
-      "rank": 3
+      "rank": 103
     }
   ],
   "e:tp": [
@@ -2852,700 +2852,711 @@
   ],
   "e:2000": [
     {
-      "rank": 1,
+      "id": "pz3ru32jvmvf56ved",
+      "name": "SHELBY",
+      "flag": "🇩🇪",
+      "country": "Alemania",
+      "gloria": 8747,
+      "era": "2000",
+      "ch": null,
+      "updatedAt": 1792411483599,
+      "rank": 1
+    },
+    {
+      "rank": 2,
       "gloria": 4072,
       "name": "ARTIC",
       "flag": "🇭🇷",
       "country": "Croacia"
     },
     {
-      "rank": 2,
+      "rank": 3,
       "gloria": 3951,
       "name": "PAULINO",
       "flag": "🇧🇷",
       "country": "Brasil"
     },
     {
-      "rank": 3,
+      "rank": 4,
       "gloria": 3942,
       "name": "COTELO",
       "flag": "🇺🇾",
       "country": "Uruguay"
     },
     {
-      "rank": 4,
+      "rank": 5,
       "gloria": 3933,
       "name": "JONES",
       "flag": "🇦🇺",
       "country": "Australia"
     },
     {
-      "rank": 5,
+      "rank": 6,
       "gloria": 3879,
       "name": "BOTTESI",
       "flag": "🇧🇷",
       "country": "Brasil"
     },
     {
-      "rank": 6,
+      "rank": 7,
       "gloria": 3872,
       "name": "ZANON",
       "flag": "🇧🇷",
       "country": "Brasil"
     },
     {
-      "rank": 7,
+      "rank": 8,
       "gloria": 3854,
       "name": "SENNA",
       "flag": "🇧🇷",
       "country": "Brasil"
     },
     {
-      "rank": 8,
+      "rank": 9,
       "gloria": 3809,
       "name": "ZUU",
       "flag": "🇦🇱",
       "country": "Albania"
     },
     {
-      "rank": 9,
+      "rank": 10,
       "gloria": 3758,
       "name": "ESTIBIARRIA",
       "flag": "🇦🇷",
       "country": "Argentina"
     },
     {
-      "rank": 10,
+      "rank": 11,
       "gloria": 3742,
       "name": "JACKIE",
       "flag": "🇺🇸",
       "country": "Estados Unidos"
     },
     {
-      "rank": 11,
+      "rank": 12,
       "gloria": 3732,
       "name": "ANTEK",
       "flag": "🇪🇸",
       "country": "España"
     },
     {
-      "rank": 12,
+      "rank": 13,
       "gloria": 3722,
       "name": "MARQUES",
       "flag": "🇧🇷",
       "country": "Brasil"
     },
     {
-      "rank": 13,
+      "rank": 14,
       "gloria": 3717,
       "name": "COSTA",
       "flag": "🇵🇹",
       "country": "Portugal"
     },
     {
-      "rank": 14,
+      "rank": 15,
       "gloria": 3653,
       "name": "BENYAHIA",
       "flag": "🇩🇿",
       "country": "Argelia"
     },
     {
-      "rank": 15,
+      "rank": 16,
       "gloria": 3649,
       "name": "RICHARDSON",
       "flag": "🇬🇧",
       "country": "Reino Unido"
     },
     {
-      "rank": 16,
+      "rank": 17,
       "gloria": 3633,
       "name": "DANTAS",
       "flag": "🇧🇷",
       "country": "Brasil"
     },
     {
-      "rank": 17,
+      "rank": 18,
       "gloria": 3621,
       "name": "VEDELLE",
       "flag": "🇪🇸",
       "country": "España"
     },
     {
-      "rank": 18,
+      "rank": 19,
       "gloria": 3600,
       "name": "DELO",
       "flag": "🇦🇷",
       "country": "Argentina"
     },
     {
-      "rank": 19,
+      "rank": 20,
       "gloria": 3582,
       "name": "WTEVENS",
       "flag": "🇬🇧",
       "country": "Reino Unido"
     },
     {
-      "rank": 20,
+      "rank": 21,
       "gloria": 3564,
       "name": "YYY",
       "flag": "🇦🇱",
       "country": "Albania"
     },
     {
-      "rank": 21,
+      "rank": 22,
       "gloria": 3556,
       "name": "VALEN",
       "flag": "🇮🇹",
       "country": "Italia"
     },
     {
-      "rank": 22,
+      "rank": 23,
       "gloria": 3554,
       "name": "LYNCH",
       "flag": "🇦🇷",
       "country": "Argentina"
     },
     {
-      "rank": 23,
+      "rank": 24,
       "gloria": 3554,
       "name": "O BRABO",
       "flag": "🇻🇮",
       "country": "Islas Vírgenes EE. UU."
     },
     {
-      "rank": 24,
+      "rank": 25,
       "gloria": 3553,
       "name": "DANIEL PEDROSA",
       "flag": "🇪🇸",
       "country": "España"
     },
     {
-      "rank": 25,
+      "rank": 26,
       "gloria": 3537,
       "name": "L. FRANCO",
       "flag": "🇧🇷",
       "country": "Brasil"
     },
     {
-      "rank": 26,
+      "rank": 27,
       "gloria": 3516,
       "name": "BOTTESI",
       "flag": "🇧🇷",
       "country": "Brasil"
     },
     {
-      "rank": 27,
+      "rank": 28,
       "gloria": 3492,
       "name": "MAHER",
       "flag": "🇺🇸",
       "country": "Estados Unidos"
     },
     {
-      "rank": 28,
+      "rank": 29,
       "gloria": 3474,
       "name": "CAMPOS",
       "flag": "🇧🇷",
       "country": "Brasil"
     },
     {
-      "rank": 29,
+      "rank": 30,
       "gloria": 3473,
       "name": "OCAMPO",
       "flag": "🇦🇷",
       "country": "Argentina"
     },
     {
-      "rank": 30,
+      "rank": 31,
       "gloria": 3440,
       "name": "COMO 33",
       "flag": "🇪🇸",
       "country": "España"
     },
     {
-      "rank": 31,
+      "rank": 32,
       "gloria": 3424,
       "name": "ÁLVAREZ",
       "flag": "🇦🇷",
       "country": "Argentina"
     },
     {
-      "rank": 32,
+      "rank": 33,
       "gloria": 3422,
       "name": "FERLEX",
       "flag": "🇪🇸",
       "country": "España"
     },
     {
-      "rank": 33,
+      "rank": 34,
       "gloria": 3414,
       "name": "BERNARDO",
       "flag": "🇧🇷",
       "country": "Brasil"
     },
     {
-      "rank": 34,
+      "rank": 35,
       "gloria": 3412,
       "name": "CUBILLA",
       "flag": "🇪🇸",
       "country": "España"
     },
     {
-      "rank": 35,
+      "rank": 36,
       "gloria": 3411,
       "name": "ROJAS",
       "flag": "🇪🇸",
       "country": "España"
     },
     {
-      "rank": 36,
+      "rank": 37,
       "gloria": 3396,
       "name": "SURSTOMING",
       "flag": "🇸🇪",
       "country": "Suecia"
     },
     {
-      "rank": 37,
+      "rank": 38,
       "gloria": 3378,
       "name": "SÁENZ",
       "flag": "🇪🇸",
       "country": "España"
     },
     {
-      "rank": 38,
+      "rank": 39,
       "gloria": 3369,
       "name": "CARLOS",
       "flag": "🇧🇷",
       "country": "Brasil"
     },
     {
-      "rank": 39,
+      "rank": 40,
       "gloria": 3369,
       "name": "VALENTINO",
       "flag": "🇮🇹",
       "country": "Italia"
     },
     {
-      "rank": 40,
+      "rank": 41,
       "gloria": 3366,
       "name": "LEWER",
       "flag": "🇬🇧",
       "country": "Reino Unido"
     },
     {
-      "rank": 41,
+      "rank": 42,
       "gloria": 3366,
       "name": "COELHO",
       "flag": "🇵🇹",
       "country": "Portugal"
     },
     {
-      "rank": 42,
+      "rank": 43,
       "gloria": 3365,
       "name": "WILLIAMS",
       "flag": "🇬🇧",
       "country": "Reino Unido"
     },
     {
-      "rank": 43,
+      "rank": 44,
       "gloria": 3360,
       "name": "VERGNANO",
       "flag": "🇦🇷",
       "country": "Argentina"
     },
     {
-      "rank": 44,
+      "rank": 45,
       "gloria": 3348,
       "name": "JOÃO NASCENTE",
       "flag": "🇧🇷",
       "country": "Brasil"
     },
     {
-      "rank": 45,
+      "rank": 46,
       "gloria": 3343,
       "name": "MARTI",
       "flag": "🇩🇪",
       "country": "Alemania"
     },
     {
-      "rank": 46,
+      "rank": 47,
       "gloria": 3329,
       "name": "CHICO",
       "flag": "🇵🇹",
       "country": "Portugal"
     },
     {
-      "rank": 47,
+      "rank": 48,
       "gloria": 3322,
       "name": "AYU",
       "flag": "🇯🇵",
       "country": "Japón"
     },
     {
-      "rank": 48,
+      "rank": 49,
       "gloria": 3298,
       "name": "RODRÍGUEZ",
       "flag": "🇩🇪",
       "country": "Alemania"
     },
     {
-      "rank": 49,
+      "rank": 50,
       "gloria": 3289,
       "name": "MUSCARDIN",
       "flag": "🇦🇷",
       "country": "Argentina"
     },
     {
-      "rank": 50,
+      "rank": 51,
       "gloria": 3288,
       "name": "PEDRO RENNO",
       "flag": "🇩🇪",
       "country": "Alemania"
     },
     {
-      "rank": 51,
+      "rank": 52,
       "gloria": 3283,
       "name": "VABA",
       "flag": "🇪🇪",
       "country": "Estonia"
     },
     {
-      "rank": 52,
+      "rank": 53,
       "gloria": 3282,
       "name": "TICO TICO",
       "flag": "🇧🇷",
       "country": "Brasil"
     },
     {
-      "rank": 53,
+      "rank": 54,
       "gloria": 3274,
       "name": "TAMAYO",
       "flag": "🇨🇴",
       "country": "Colombia"
     },
     {
-      "rank": 54,
+      "rank": 55,
       "gloria": 3257,
       "name": "ALONSO",
       "flag": "🇪🇸",
       "country": "España"
     },
     {
-      "rank": 55,
+      "rank": 56,
       "gloria": 3251,
       "name": "MENDES",
       "flag": "🇮🇹",
       "country": "Italia"
     },
     {
-      "rank": 56,
+      "rank": 57,
       "gloria": 3240,
       "name": "UJARASCK",
       "flag": "🇷🇴",
       "country": "Rumanía"
     },
     {
-      "rank": 57,
+      "rank": 58,
       "gloria": 3238,
       "name": "ESPARZA",
       "flag": "🇪🇸",
       "country": "España"
     },
     {
-      "rank": 58,
+      "rank": 59,
       "gloria": 3235,
       "name": "ROCCARO",
       "flag": "🇵🇱",
       "country": "Polonia"
     },
     {
-      "rank": 59,
+      "rank": 60,
       "gloria": 3230,
       "name": "LOEVO",
       "flag": "🇫🇷",
       "country": "Francia"
     },
     {
-      "rank": 60,
+      "rank": 61,
       "gloria": 3220,
       "name": "BIANCHI",
       "flag": "🇫🇷",
       "country": "Francia"
     },
     {
-      "rank": 61,
+      "rank": 62,
       "gloria": 3210,
       "name": "BALLESTER",
       "flag": "🇧🇷",
       "country": "Brasil"
     },
     {
-      "rank": 62,
+      "rank": 63,
       "gloria": 3207,
       "name": "MCCHAVEL",
       "flag": "🇺🇸",
       "country": "Estados Unidos"
     },
     {
-      "rank": 63,
+      "rank": 64,
       "gloria": 3205,
       "name": "VLADYSK",
       "flag": "🇧🇾",
       "country": "Bielorrusia"
     },
     {
-      "rank": 64,
+      "rank": 65,
       "gloria": 3203,
       "name": "GONZÁLEZ",
       "flag": "🇵🇱",
       "country": "Polonia"
     },
     {
-      "rank": 65,
+      "rank": 66,
       "gloria": 3200,
       "name": "WAWOCZNY",
       "flag": "🇩🇪",
       "country": "Alemania"
     },
     {
-      "rank": 66,
+      "rank": 67,
       "gloria": 3200,
       "name": "ÁTILA",
       "flag": "🇧🇷",
       "country": "Brasil"
     },
     {
-      "rank": 67,
+      "rank": 68,
       "gloria": 3200,
       "name": "NICOLÁS",
       "flag": "🇪🇸",
       "country": "España"
     },
     {
-      "rank": 68,
+      "rank": 69,
       "gloria": 3193,
       "name": "ANTHONY",
       "flag": "🇦🇷",
       "country": "Argentina"
     },
     {
-      "rank": 69,
+      "rank": 70,
       "gloria": 3189,
       "name": "CHOUSA",
       "flag": "🇪🇸",
       "country": "España"
     },
     {
-      "rank": 70,
+      "rank": 71,
       "gloria": 3186,
       "name": "VISENTINI",
       "flag": "🇮🇹",
       "country": "Italia"
     },
     {
-      "rank": 71,
+      "rank": 72,
       "gloria": 3186,
       "name": "MONO",
       "flag": "🇧🇩",
       "country": "Bangladés"
     },
     {
-      "rank": 72,
+      "rank": 73,
       "gloria": 3175,
       "name": "WEBER",
       "flag": "🇧🇷",
       "country": "Brasil"
     },
     {
-      "rank": 73,
+      "rank": 74,
       "gloria": 3172,
       "name": "MOVIO",
       "flag": "🇦🇷",
       "country": "Argentina"
     },
     {
-      "rank": 74,
+      "rank": 75,
       "gloria": 3164,
       "name": "INTIS",
       "flag": "🇵🇱",
       "country": "Polonia"
     },
     {
-      "rank": 75,
+      "rank": 76,
       "gloria": 3163,
       "name": "DVOŘÁK",
       "flag": "🇨🇿",
       "country": "Chequia"
     },
     {
-      "rank": 76,
+      "rank": 77,
       "gloria": 3154,
       "name": "CUESTA",
       "flag": "🇪🇸",
       "country": "España"
     },
     {
-      "rank": 77,
+      "rank": 78,
       "gloria": 3151,
       "name": "DOMINO",
       "flag": "🇺🇸",
       "country": "Estados Unidos"
     },
     {
-      "rank": 78,
+      "rank": 79,
       "gloria": 3145,
       "name": "YO",
       "flag": "🇦🇷",
       "country": "Argentina"
     },
     {
-      "rank": 79,
+      "rank": 80,
       "gloria": 3138,
       "name": "PASTRY",
       "flag": "🇦🇺",
       "country": "Australia"
     },
     {
-      "rank": 80,
+      "rank": 81,
       "gloria": 3137,
       "name": "E.FOGNINI",
       "flag": "🇦🇷",
       "country": "Argentina"
     },
     {
-      "rank": 81,
+      "rank": 82,
       "gloria": 3126,
       "name": "HERICSON",
       "flag": "🇧🇷",
       "country": "Brasil"
     },
     {
-      "rank": 82,
+      "rank": 83,
       "gloria": 3122,
       "name": "TAVACCA",
       "flag": "🇦🇷",
       "country": "Argentina"
     },
     {
-      "rank": 83,
+      "rank": 84,
       "gloria": 3117,
       "name": "GASCÓN",
       "flag": "🇮🇹",
       "country": "Italia"
     },
     {
-      "rank": 84,
+      "rank": 85,
       "gloria": 3107,
       "name": "FALONSO",
       "flag": "🇦🇷",
       "country": "Argentina"
     },
     {
-      "rank": 85,
+      "rank": 86,
       "gloria": 3103,
       "name": "FERNANDEZ",
       "flag": "🇪🇸",
       "country": "España"
     },
     {
-      "rank": 86,
+      "rank": 87,
       "gloria": 3099,
       "name": "SANTANA",
       "flag": "🇧🇷",
       "country": "Brasil"
     },
     {
-      "rank": 87,
+      "rank": 88,
       "gloria": 3099,
       "name": "BERNARDES",
       "flag": "🇧🇷",
       "country": "Brasil"
     },
     {
-      "rank": 88,
+      "rank": 89,
       "gloria": 3097,
       "name": "RFAGASTI",
       "flag": "🇦🇫",
       "country": "Afganistán"
     },
     {
-      "rank": 89,
+      "rank": 90,
       "gloria": 3097,
       "name": "POVSE",
       "flag": "🇪🇸",
       "country": "España"
     },
     {
-      "rank": 90,
+      "rank": 91,
       "gloria": 3095,
       "name": "ROMÁN",
       "flag": "🇪🇸",
       "country": "España"
     },
     {
-      "rank": 91,
+      "rank": 92,
       "gloria": 3094,
       "name": "PEDRON",
       "flag": "🇧🇷",
       "country": "Brasil"
     },
     {
-      "rank": 92,
+      "rank": 93,
       "gloria": 3091,
       "name": "BINGGI",
       "flag": "🇮🇹",
       "country": "Italia"
     },
     {
-      "rank": 93,
+      "rank": 94,
       "gloria": 3088,
       "name": "VALENTINOO",
       "flag": "🇮🇹",
       "country": "Italia"
     },
     {
-      "rank": 94,
+      "rank": 95,
       "gloria": 3077,
       "name": "HUBERTO",
       "flag": "🇩🇪",
       "country": "Alemania"
     },
     {
-      "rank": 95,
+      "rank": 96,
       "gloria": 3075,
       "name": "TOTÒ",
       "flag": "🇩🇪",
       "country": "Alemania"
     },
     {
-      "rank": 96,
+      "rank": 97,
       "gloria": 3075,
       "name": "TORRES",
       "flag": "🇫🇷",
       "country": "Francia"
     },
     {
-      "rank": 97,
+      "rank": 98,
       "gloria": 3074,
       "name": "DIEGO",
       "flag": "🇧🇷",
       "country": "Brasil"
     },
     {
-      "rank": 98,
+      "rank": 99,
       "gloria": 3072,
       "name": "LUCERO",
       "flag": "🇦🇷",
       "country": "Argentina"
     },
     {
-      "rank": 99,
+      "rank": 100,
       "gloria": 3072,
       "name": "ULISSES",
       "flag": "🇧🇷",
       "country": "Brasil"
     },
     {
-      "rank": 100,
+      "rank": 101,
       "gloria": 3069,
       "name": "LUGUAL",
       "flag": "🇪🇸",
@@ -4954,9 +4965,31 @@
       "name": "L. FRANCO",
       "flag": "🇧🇷",
       "country": "Brasil"
+    },
+    {
+      "id": "pz3ru32jvmvf56ved",
+      "name": "SHELBY",
+      "flag": "🇨🇭",
+      "country": "Suiza",
+      "gloria": 420,
+      "era": "1980",
+      "ch": null,
+      "updatedAt": 1792408439241,
+      "rank": 101
     }
   ],
   "e:2026": [
+    {
+      "id": "pz3ru32jvmvf56ved",
+      "name": "SHELBY",
+      "flag": "🇩🇪",
+      "country": "Alemania",
+      "gloria": 7626,
+      "era": "2026",
+      "ch": null,
+      "updatedAt": 1792411007778,
+      "rank": 1
+    },
     {
       "id": "driver_modular_99",
       "name": "MODULAR PRO",
@@ -4965,7 +4998,7 @@
       "gloria": 1040,
       "era": "2026",
       "updatedAt": 1792407650496,
-      "rank": 1
+      "rank": 2
     },
     {
       "id": "player_test_42",
@@ -4976,17 +5009,6 @@
       "era": "2026",
       "ch": null,
       "updatedAt": 1792407245621,
-      "rank": 2
-    },
-    {
-      "id": "pz3ru32jvmvf56ved",
-      "name": "SHELBY",
-      "flag": "🇩🇪",
-      "country": "Alemania",
-      "gloria": 434,
-      "era": "2026",
-      "ch": null,
-      "updatedAt": 1792408060410,
       "rank": 3
     }
   ]

@@ -358,6 +358,8 @@ window.RU_DICT = {
   "Retirarse": "Завершить карьеру",
   "Hang up your helmet": "Повесить шлем на гвоздь",
   "Colgar el casco": "Повесить шлем на гвоздь",
+  "Time to hang up the helmet": "Время повесить шлем на гвоздь",
+  "Hora de colgar el casco": "Время повесить шлем на гвоздь",
   "Give up and retire": "Сдаться и завершить карьеру",
   "Leave the pit wall": "Покинуть мостик",
   "Dejar el muro": "Покинуть мостик",
@@ -4631,6 +4633,26 @@ window.ruTranslate = function(str) {
   if ((m = str.match(/^🤝 You turn (.*?) down: you stay to finish the job\. The paddock takes note of your word\.$/i)) ||
       (m = str.match(/^🤝 Rechazas a (.*?): te quedas a terminar el trabajo\. El paddock toma nota de tu palabra\.$/i))) {
     return "🤝 Вы отказываете " + m[1] + ": вы остаётесь довести начатое дело до конца. Паддок запомнит верность вашему слову.";
+  }
+
+  // Forced age retirement (Driver mode: 65 years)
+  if ((m = str.match(/^At (\d+) years old, the longest career in history comes to an end\. It's time to enjoy your legacy\.$/i)) ||
+      (m = str.match(/^A los (\d+) años, la carrera más longeva de la historia llega a su fin\. Es hora de disfrutar de tu legado\.$/i))) {
+    return "В возрасте " + m[1] + " лет самая долгая карьера в истории автоспорта подходит к концу. Пришло время насладиться плодами своего величия.";
+  }
+  if ((m = str.match(/^Retire at (\d+) and secure your legacy$/i)) ||
+      (m = str.match(/^Retirarse a los (\d+) años y asegurar tu legado$/i))) {
+    return "Завершить карьеру в " + m[1] + " лет и закрепить своё наследие";
+  }
+
+  // Forced age retirement (TP mode: 65 seasons sacked / out of contract)
+  if ((m = str.match(/^(.*?) lets you go, and this time you don't wait for the phone: (.*?) seasons on the pit wall are a whole life\. Your Team Principal era ends here\.$/i)) ||
+      (m = str.match(/^(.*?) prescinde de ti y esta vez no esperas a que suene el teléfono: (.*?) temporadas en el muro son una vida entera\. Tu etapa de Team Principal acaba aquí\.$/i))) {
+    return m[1] + " расстаётся с вами, и на этот раз звонка ждать не приходится: " + m[2] + " сезонов на капитанском мостике — это целая жизнь. Ваша эпоха руководителя команды подошла к концу.";
+  }
+  if ((m = str.match(/^The team is yours and you've been in charge for (\d+) years\. At the pre-season press conference, a journalist you've known for a decade asks it without malice, almost fondly: how much longer do you plan to go on\? It isn't a question about today\. What you say here will be read by your engineers, your drivers, and everyone thinking of joining\.$/i)) ||
+      (m = str.match(/^El equipo es tuyo y llevas (\d+) años al frente\. En la rueda de prensa de pretemporada, un periodista al que conoces desde hace una década te lo pregunta sin maldad, casi con cariño: ¿hasta cuándo piensas seguir\? No es una pregunta de hoy\. Lo que digas aquí lo van a leer tus ingenieros, tus pilotos y los que se plantean venir\.$/i))) {
+    return "Команда принадлежит вам, и вы стоите у её руля уже " + m[1] + " лет. На предсезонной пресс-конференции журналист, которого вы знаете уже десять лет, спрашивает без всякого подвоха, почти с теплотой: сколько ещё вы планируете продолжать? Это вопрос не о сегодняшнем дне. Всё, что вы скажете здесь, прочтут ваши инженеры, пилоты и те, кто только думает к вам присоединиться.";
   }
 
   

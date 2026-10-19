@@ -13423,7 +13423,26 @@ function nextOffers(){
      0,3% pasa de 44. A los 44 ya casi nadie llega sin ser elite -la mediana de OVR de quien llega
      ahi es 90-, asi que el escalon no abre la puerta a nadie mediocre: deja de castigar al que se
      gano estar ahi. */
-  // Sin auto-retirada por edad: la retirada es siempre a elección del jugador
+  // Límite de carrera eterna: 65 лет
+  const MAX_CAREER_AGE = 65;
+  if(S.age >= MAX_CAREER_AGE){
+    setDecision(
+      L("Hora de colgar el casco", "Time to hang up the helmet", {pt:"Hora de pendurar o capacete"}),
+      L(`A los ${S.age} años, la carrera más longeva de la historia llega a su fin. Es hora de disfrutar de tu legado.`,
+        `At ${S.age} years old, the longest career in history comes to an end. It's time to enjoy your legacy.`,
+        {pt:`Aos ${S.age} anos, a carreira mais longa da história chega ao fim. É hora de desfrutar do seu legado.`})
+    );
+    $("decRecap").style.display = "none";
+    const box = $("offerList"); box.innerHTML = "";
+    const b = document.createElement("button"); b.className = "offer retire";
+    b.innerHTML = `<span class="team-dot dot" style="background:#71717c">🏁</span>
+      <span class="info"><span class="name">${L("Colgar el casco", "Hang up your helmet", {pt:"Pendurar o capacete"})}</span>
+      <span class="sub" style="display:block">${L(`Retirarse a los ${S.age} años y asegurar tu legado`, `Retire at ${S.age} and secure your legacy`, {pt:`Aposentar-se aos ${S.age} anos e garantir seu legado`})}</span></span>`;
+    b.onclick = endCareer;
+    box.appendChild(b);
+    scrollToDecision();
+    return;
+  }
 
   // 🤝 el compromiso solo tiene sentido con un asiento titular de F1: si estás de reserva, de aventura
   // fuera, o ya no corres para ellos, el contrato decae (si no, quedaría colgado el resto de la partida)
@@ -18523,7 +18542,7 @@ function monedaSimbolica(tn){
    final de dilemas —14 nuevos entre veteranos y evergreen—, luego abrir). Todo lo que cuelga del
    tope es paramétrico y se mueve solo: contratos, último contrato, texto de despedida, ventana de
    la sede. El ranking NO se normaliza — decisión de Carlos: «la gente puede sumar más puntos». */
-const TP_TOPE=100;                     // temporadas máximas en el muro (ampliado para permitir retiro a elección)
+const TP_TOPE=65;                      // temporadas máximas en el muro (tope de 65 años)
 const TP_DESPEDIDA=TP_TOPE-3;          // …y la temporada en la que al DUEÑO se le pregunta hasta cuándo (atada al tope, antes 17 a mano)
 function tpDuracionContrato(tn){
   // los grandes atan corto (te exigen ya); los pequeños dan margen porque necesitan paciencia
@@ -18628,13 +18647,15 @@ function tpWinter(){
   else if(S.tpContract!=null) S.tpContract--;
   // 🧑‍✈️ el dueño no tiene contrato que renovar ni muro ajeno que le tiente
   if(!(S.tpOwner && S.tpOwner.k==="self")){
-    if(S.tpContract<=0){ tpContratoScreen(); return; }      // se acabó: hay mercado
+    if(S.age>=TP_TOPE || S.tpContract<=0){ tpContratoScreen(); return; }      // se acabó: hay mercado o fin de carrera
   } else {
     /* 🏁 …Y POR ESO NO SE JUBILABA NUNCA. Al dueño no le firma nadie, así que no pasaba por
        tpContratoScreen y TP_TOPE no le tocaba: medido el 25-ago, media de 25 temporadas y una
        partida de 43 contra un tope de 20. La decisión de Carlos («que no te echen» no es «que no te
        jubiles») se resuelve preguntándoselo A ÉL en rueda de prensa: se anuncia una fecha y esa
        fecha se cumple. El aviso deja de ser una pastilla y pasa a ser una promesa suya. */
+    if(S.age>=TP_TOPE || (S._despedida!=null && (yearNow()>S._despedida || S.age>S._despedida))){ tpFinDeCarrera(); return; }
+    if(cuantoQuedaCond()){ tpCuantoQueda(); return; }
   }
   if(tpTemptCheck()) return;
   tpYearStart();
@@ -18643,7 +18664,8 @@ function tpWinter(){
    La calidad de lo que te llega sale de tu prestigio y de cómo ha ido la última etapa. */
 function tpContratoScreen(){
   if(S.retired) return;
-  const tn=S.tpTeam;
+  const tn=S.tpTeam, ultimaEtapa=S.tpUltimo;
+  if(S.age>=TP_TOPE || ultimaEtapa){ tpFinDeCarrera(); return; }            // el contrato final se cumplió: se acabó
   /* 🧠 el consejo mira el MANDATO, no solo el último año (ver tpConfianza). El último año sigue
      pesando más que ninguno; lo que cambia es que dejó de ser lo único que existe. */
   const _conf=tpConfianza(null);
@@ -18678,7 +18700,7 @@ function tpContratoScreen(){
   const oferta=(t, renov)=>{
     const b=document.createElement("button"); b.className="offer";
     const años=tpDuracionContrato(t.name);
-    const ultimo=false;
+    const ultimo=(S.age+años)>=TP_TOPE;
     /* 🛡️ el MISMO escudo que el resto de pantallas (badge mira primero el que elegiste al fundar).
        Antes se buscaba el logo por el NOMBRE: un equipo propio llamado «Minardi» enseñaba el logo
        real de Minardi justo aquí, al renovar (aviso de un amigo de Carlos, 1-oct). */
@@ -18820,12 +18842,27 @@ function tpFiredScreen(){
      TP_TOPE temporadas se aplicaba solo al FIRMAR contrato; si te echaban con el tope ya cumplido,
      aquí te llegaba otra oferta y cada despido sumaba una temporada más (medido: partidas de 31 a 46
      temporadas en el muro). Con el tope cumplido, el despido cierra la etapa. */
-  const _topeCumplido = false;
+  const _topeCumplido = S.age>=TP_TOPE;
   if(!_topeCumplido){
     if(S.tpPrest>=58) offers=pickN(cands.filter(t=>(S.f1perf[t.name]||70)<=myPerf+4),2);
     else if(S.tpPrest>=42) offers=pickN(cands.slice(-4),1);
   }
   if(!offers.length){
+    if(_topeCumplido){
+      setDecision(L("🚪 Despedido","🚪 Sacked",{pt:"🚪 Demitido"}),
+        L(`${from} prescinde de ti y esta vez no esperas a que suene el teléfono: ${S.age} temporadas en el muro son una vida entera. Tu etapa de Team Principal acaba aquí.`,
+          `${from} lets you go, and this time you don't wait for the phone: ${S.age} seasons on the pit wall are a whole life. Your Team Principal era ends here.`,
+          {pt:`A ${from} dispensa você e desta vez você não espera o telefone tocar: ${S.age} temporadas no muro são uma vida inteira. A sua era de Team Principal acaba aqui.`}));
+      $("decRecap").style.display="none";
+      const box=$("offerList"); box.innerHTML="";
+      const b=document.createElement("button"); b.className="offer retire";
+      b.innerHTML=`<span class="team-dot dot" style="background:#71717c">🏁</span>
+        <span class="info"><span class="name">${L("Cerrar tu etapa","Close your era",{pt:"Fechar a sua era"})}</span></span>`;
+      b.onclick=endCareer;
+      box.appendChild(b);
+      scrollToDecision();
+      return;
+    }
     const rescate = cands.slice(-1)[0] || F1_TEAMS[F1_TEAMS.length - 1];
     setDecision(L("🚪 Despedido","🚪 Sacked",{pt:"🚪 Demitido"}),
       L("El paddock de la F1 es implacable, pero la decisión de cerrar tu ciclo es solo tuya. ¿Deseas aceptar un proyecto humilde o cerrar tu etapa?",

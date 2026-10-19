@@ -345,6 +345,7 @@
             <button class="cheat-btn" onclick="cheatAddAge(-1)">-1 год</button>
             <button class="cheat-btn gold" onclick="cheatSetAge(18)">Сделать 18 лет</button>
             <button class="cheat-btn" onclick="cheatAddAge(1)">+1 год</button>
+            <button class="cheat-btn gold" onclick="cheatSetAge(65)">65 лет (Предел)</button>
           </div>
         </div>
 
@@ -453,6 +454,17 @@
             <button class="cheat-btn gold" onclick="cheatTpMaxCar()">🏎️ Прокачать болид команды до 99</button>
           </div>
         </div>
+
+        <div class="cheat-section">
+          <div class="cheat-sec-title">Стаж руководителя <span>Сезонов у руля: ${S.age || 0} / 65</span></div>
+          <div class="cheat-row">
+            <button class="cheat-btn" onclick="cheatTpAddSeasons(-5)">-5 сезонов</button>
+            <button class="cheat-btn" onclick="cheatTpAddSeasons(1)">+1 сезон</button>
+            <button class="cheat-btn" onclick="cheatTpAddSeasons(5)">+5 сезонов</button>
+            <button class="cheat-btn gold" onclick="cheatTpSetSeasons(62)">62 сезона (Предпенсионный)</button>
+            <button class="cheat-btn gold" onclick="cheatTpSetSeasons(65)">65 сезонов (Предел)</button>
+          </div>
+        </div>
       `;
     } else if (currentTab === "quick") {
       box.innerHTML = `
@@ -496,7 +508,7 @@
 
   window.cheatAddAge = function(delta) {
     if (!hasGame()) return;
-    S.age = Math.max(16, (S.age || 20) + delta);
+    S.age = Math.max(16, Math.min(65, (S.age || 20) + delta));
     try { refreshCard(); } catch(e){}
     notify(`Возраст изменён: ${S.age}`);
     renderCheatContent();
@@ -504,9 +516,25 @@
 
   window.cheatSetAge = function(val) {
     if (!hasGame()) return;
-    S.age = Math.max(16, val);
+    S.age = Math.max(16, Math.min(65, val));
     try { refreshCard(); } catch(e){}
     notify(`Возраст установлен: ${S.age}`);
+    renderCheatContent();
+  };
+
+  window.cheatTpAddSeasons = function(delta) {
+    if (!hasGame()) return;
+    S.age = Math.max(0, Math.min(65, (S.age || 0) + delta));
+    try { refreshCard(); } catch(e){}
+    notify(`Стаж руководителя: ${S.age} сезонов`);
+    renderCheatContent();
+  };
+
+  window.cheatTpSetSeasons = function(val) {
+    if (!hasGame()) return;
+    S.age = Math.max(0, Math.min(65, val));
+    try { refreshCard(); } catch(e){}
+    notify(`Стаж руководителя установлен: ${S.age} сезонов`);
     renderCheatContent();
   };
 
