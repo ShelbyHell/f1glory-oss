@@ -348,6 +348,7 @@ function deckIr(id){
   deckGoPinta();
   deckMasPinta();
   try{ updateCareerHud(); }catch(e){}
+  try{ renderF1State(); }catch(e){}
 }
 
 function deckMasPinta(){
@@ -409,6 +410,7 @@ function deckActualiza(){
 
   deckGoPinta();
   try{ updateCareerHud(); }catch(e){}
+  try{ renderF1State(); }catch(e){}
 }
 
 (function deckInit(){ try{
@@ -5521,6 +5523,7 @@ function startCareer(){
   const _T = testNow();
   if(_T && !_T.tp){ setupTest(_T); return; }   // los escenarios de jefe no valen para una carrera de piloto
   refreshCard();
+  try{ renderF1State(); }catch(e){}
   offerAcademies();
 }
 
@@ -12506,6 +12509,53 @@ function hallRows(){
   rows.sort((a,b)=>b.t-a.t);
   return rows;
 }
+
+function initStartingTop3(){
+  if(!S || !S.seats) return;
+  const yr = (S.baseYear || yearNow()) - 1;
+
+  if(!S.rankC || !Object.keys(S.rankC).length){
+    S.rankC = {};
+    (typeof F1_TEAMS!=="undefined" ? F1_TEAMS : []).forEach((t, i) => { S.rankC[t.name] = i + 1; });
+  }
+
+  if(!S.rankD) S.rankD = {};
+  const allDrivers = [];
+  Object.entries(S.seats).forEach(([team, slots]) => {
+    (slots||[]).forEach(d => {
+      if(d && d!=="PLAYER" && d.name) allDrivers.push({ name: d.name, team, flag: d.flag, skill: d.skill||80 });
+    });
+  });
+  let nextRank = Object.keys(S.rankD).length + 1;
+  allDrivers.sort((a,b) => (b.skill||0) - (a.skill||0)).forEach(d => {
+    if(S.rankD[d.name] == null){
+      S.rankD[d.name] = nextRank++;
+    }
+  });
+
+  const constrList = Object.entries(S.rankC).sort((a,b)=>a[1]-b[1]).map(e=>e[0]);
+  const driverList = Object.entries(S.rankD).sort((a,b)=>a[1]-b[1]).map(e=>e[0]);
+
+  const d3 = [];
+  for(let i=0; i<Math.min(3, driverList.length); i++){
+    const name = driverList[i];
+    let flag = "🏁", team = constrList[i] || "";
+    for(const [t, slots] of Object.entries(S.seats)){
+      const d = (slots||[]).find(x=>x && x.name===name);
+      if(d){ flag = d.flag || flag; team = t; break; }
+    }
+    d3.push({ n: surname(name), team, flag, me: false, mv: null });
+  }
+
+  S.lastTop3 = {
+    year: yr,
+    d: d3,
+    c: constrList.slice(0, 3),
+    cmv: [null, null, null],
+    myPos: null, myConstr: null, myPosMv: null, myConstrMv: null
+  };
+}
+
 function renderF1State(){
   /* la visibilidad del ▾ se decide ANTES del early return: si no, al pasar de una carrera clásica a
      una de jefe el botón se quedaba oculto del modo anterior hasta que corriera una temporada entera */
@@ -12514,8 +12564,12 @@ function renderF1State(){
   { const _bd=document.getElementById("fsMoreD"), _bc=document.getElementById("fsMoreC");
     FS_OPEN.d=FS_OPEN.c=true;
     if(_bd) _bd.style.display="none"; if(_bc) _bc.style.display="none"; }
+  if(!S.lastTop3){
+    try{ initStartingTop3(); }catch(e){}
+  }
+  const elF1 = document.getElementById("f1state");
+  if(elF1) elF1.style.display = "block";
   if(!S.lastTop3) return;
-  $("f1state").style.display="block";
   /* 🗓️ el año encabeza la tarjeta como en «Años anteriores» (Carlos, 23-sep) y los títulos de las
      dos columnas quedan a una línea, sin año */
   try{ const _fss=$("fsSeason"); if(_fss) _fss.textContent=L("Temporada","Season",{pt:"Temporada"})+" "+S.lastTop3.year; }catch(e){}
