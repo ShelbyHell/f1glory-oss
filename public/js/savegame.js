@@ -60,7 +60,8 @@
         SELECTED_ERA: (typeof SELECTED_ERA !== "undefined") ? SELECTED_ERA : "2026",
         TP_MODE: isTP,
         CHALLENGE: (typeof CHALLENGE !== "undefined") ? CHALLENGE : null,
-        activePanel: (typeof deckPanelActivo === "function") ? deckPanelActivo() : "decisionBox"
+        activePanel: (typeof deckPanelActivo === "function") ? deckPanelActivo() : "decisionBox",
+        CEO_STATE: localStorage.getItem("f1g_ceo_state") || null
       }
     };
   }
@@ -83,6 +84,13 @@
     window.SELECTED_ERA = d.SELECTED_ERA || "2026";
     window.TP_MODE = !!d.TP_MODE;
     window.CHALLENGE = d.CHALLENGE || null;
+
+    if(d.CEO_STATE) {
+      try {
+        localStorage.setItem("f1g_ceo_state", d.CEO_STATE);
+        if(typeof window.initCeoMode === "function") window.initCeoMode();
+      } catch(e){}
+    }
 
     // Hide intro, modals
     const hideIds = ["intro", "identity", "rankingModal", "patronModal", "tpGridModal", "cheatModal"];
@@ -114,9 +122,17 @@
         deckIr(d.activePanel || "decisionBox");
       }
 
-      // Check if end of career
-      if(S.retired && typeof endCareer === "function") {
-        endCareer();
+      // Check if end of career or CEO mode transition
+      if(S.retired) {
+        if(S.retiredByCeo && typeof window.transitionToCeoPage === "function") {
+          window.transitionToCeoPage(false);
+        } else if(typeof endCareer === "function") {
+          endCareer();
+        }
+      }
+
+      if(typeof window.updateCeoIntroCard === "function") {
+        window.updateCeoIntroCard();
       }
     } catch(err) {
       console.warn("UI refresh after load:", err);

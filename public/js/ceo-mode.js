@@ -762,85 +762,121 @@
   // =====================================================================
   // MAIN CEO DASHBOARD MODAL
   // =====================================================================
-  let activeCeoTab = "overview"; // "overview", "factory", "board"
+  // =====================================================================
+  // STANDALONE FULLSCREEN CEO PAGE
+  // =====================================================================
+  let activeCeoTab = "overview"; // "overview", "factory", "board", "legacy"
 
-  function createCeoModalDOM() {
-    if(document.getElementById("ceoModal")) return;
-    const m = document.createElement("div");
-    m.id = "ceoModal";
-    m.className = "f1-modal-overlay";
-    m.innerHTML = `
-      <div class="f1-modal-card ceo-main-card">
-        <div class="wealth-head ceo-head">
-          <div>
-            <span class="f1-mono-sub">FIA FORMULA 1 CONSTRUCTOR · CHAIR OF THE BOARD & CEO</span>
+  function createCeoPageDOM() {
+    let page = document.getElementById("ceoPage");
+    if(!page) {
+      page = document.createElement("section");
+      page.id = "ceoPage";
+      page.className = "ceo-fullscreen-page";
+      page.style.display = "none";
+      const carSec = document.getElementById("career");
+      if(carSec && carSec.parentNode) {
+        carSec.parentNode.insertBefore(page, carSec.nextSibling);
+      } else {
+        document.body.appendChild(page);
+      }
+    }
+
+    let container = document.getElementById("ceoPageContainer");
+    if(!container) {
+      container = document.createElement("div");
+      container.id = "ceoPageContainer";
+      container.className = "ceo-page-container";
+      page.appendChild(container);
+    }
+
+    if(container.querySelector(".ceo-page-header")) return;
+
+    container.innerHTML = `
+      <div class="ceo-page-header">
+        <div class="ceo-brand-identity">
+          <div class="ceo-flag-badge" id="ceoTeamFlagVal">🇬🇧</div>
+          <div class="ceo-brand-info">
+            <div class="ceo-fia-status">FIA FORMULA 1 CONSTRUCTOR · CHAIR OF THE BOARD & CEO</div>
             <div class="ceo-title-row">
-              <h2 id="ceoTeamTitle"><span id="ceoTeamFlagVal">🇬🇧</span> <span id="ceoTeamNameVal">Shelby F1 Team</span></h2>
+              <h1 class="ceo-team-title" id="ceoTeamNameVal">Shelby F1 Team</h1>
               <button class="ceo-edit-brand-btn" onclick="window.openTeamCreationModal(true)" title="Ребрендинг команды, смена названия и ливреи">✏️ Настроить бренд</button>
             </div>
             <div class="ceo-hq-sub" id="ceoTeamHqVal">📍 База: Сильверстоун (Великобритания) · Ливрея: Petronas Teal</div>
           </div>
-          <button class="rank-x" onclick="closeCeoModal()">✕</button>
         </div>
-
-        <!-- Metric KPI Cards -->
-        <div class="ceo-kpi-banner">
-          <div class="ceo-kpi-box">
-            <span class="wb-lbl">БЮДЖЕТ КОМАНДЫ</span>
-            <div class="wb-val" id="ceoBudgetVal">$0</div>
-          </div>
-          <div class="ceo-kpi-box">
-            <span class="wb-lbl">КАПИТАЛИЗАЦИЯ ФРАНШИЗЫ</span>
-            <div class="wb-val val-blue" id="ceoMarketCapVal">$0</div>
-          </div>
-          <div class="ceo-kpi-box">
-            <span class="wb-lbl">ДОВЕРИЕ СОВЕТА ДИРЕКТОРОВ</span>
-            <div class="wb-val val-gold" id="ceoApprovalVal">80%</div>
-          </div>
-          <div class="ceo-kpi-box">
-            <span class="wb-lbl">СЕЗОН ЧЕМПИОНАТА</span>
-            <div class="wb-val" id="ceoSeasonVal">Сезон 1 · 2026</div>
-          </div>
-        </div>
-
-        <!-- Tabs -->
-        <div class="wealth-nav-tabs">
-          <button class="wealth-tab-btn active" id="tabCeoOverview" onclick="switchCeoTab('overview')">📊 Штаб и Пилоты</button>
-          <button class="wealth-tab-btn" id="tabCeoFactory" onclick="switchCeoTab('factory')">🏭 Инфраструктура завода и Мотор</button>
-          <button class="wealth-tab-btn" id="tabCeoBoard" onclick="switchCeoTab('board')">🏛️ История и Совет акционеров</button>
-        </div>
-
-        <div class="ceo-body" id="ceoTabContent"></div>
-
-        <!-- Footer Control Bar -->
-        <div class="ceo-footer-bar">
-          <button class="btn s-btn btn-ceo-sim" onclick="window.runCeoSeasonSimulation()">
-            🏁 <b>СИМУЛИРОВАТЬ СЕЗОН ЧЕМПИОНАТА (24 ГРАН-ПРИ)</b>
-          </button>
+        <div class="ceo-top-actions">
+          <button class="btn ceo-top-btn" onclick="window.switchCeoTab('legacy')" title="Послужной список и трофеи завершенной карьеры пилота">🏆 Зал славы пилота</button>
+          <button class="btn ceo-top-btn ghost" onclick="window.exitCeoToMenu()" title="Сохранить и выйти в главное меню">🚪 В главное меню</button>
         </div>
       </div>
-    `;
 
-    document.body.appendChild(m);
-    m.addEventListener("click", e => { if(e.target === m) closeCeoModal(); });
+      <!-- Metric KPI Cards -->
+      <div class="ceo-kpi-banner">
+        <div class="ceo-kpi-box">
+          <span class="wb-lbl">БЮДЖЕТ КОМАНДЫ (CAPEX & OPEX)</span>
+          <div class="wb-val" id="ceoBudgetVal">$0</div>
+          <span class="ceo-kpi-sub">Лимит расходов FIA $135M</span>
+        </div>
+        <div class="ceo-kpi-box">
+          <span class="wb-lbl">КАПИТАЛИЗАЦИЯ ФРАНШИЗЫ</span>
+          <div class="wb-val val-blue" id="ceoMarketCapVal">$0</div>
+          <span class="ceo-kpi-sub">Оценка Forbes / Liberty</span>
+        </div>
+        <div class="ceo-kpi-box">
+          <span class="wb-lbl">ДОВЕРИЕ СОВЕТА ДИРЕКТОРОВ</span>
+          <div class="wb-val val-gold" id="ceoApprovalVal">80%</div>
+          <span class="ceo-kpi-sub">Резолюция акционеров</span>
+        </div>
+        <div class="ceo-kpi-box">
+          <span class="wb-lbl">СЕЗОН ЧЕМПИОНАТА</span>
+          <div class="wb-val" id="ceoSeasonVal">Сезон 1 · 2026</div>
+          <span class="ceo-kpi-sub">Календарь из 24 Гран-при</span>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="wealth-nav-tabs ceo-nav-tabs">
+        <button class="wealth-tab-btn active" id="tabCeoOverview" onclick="window.switchCeoTab('overview')">🏎️ Штаб, Болид и Пилоты</button>
+        <button class="wealth-tab-btn" id="tabCeoFactory" onclick="window.switchCeoTab('factory')">🏭 Инфраструктура завода и Мотор</button>
+        <button class="wealth-tab-btn" id="tabCeoBoard" onclick="window.switchCeoTab('board')">🏛️ Совет директоров и Хроника КК</button>
+        <button class="wealth-tab-btn" id="tabCeoLegacy" onclick="window.switchCeoTab('legacy')">🏆 Наследие Основателя</button>
+      </div>
+
+      <div class="ceo-page-body" id="ceoTabContent"></div>
+
+      <!-- Footer Control Bar -->
+      <div class="ceo-page-footer">
+        <button class="btn s-btn btn-ceo-sim" onclick="window.runCeoSeasonSimulation()">
+          🏁 <b>СИМУЛИРОВАТЬ СЕЗОН ЧЕМПИОНАТА (24 ГРАН-ПРИ)</b>
+        </button>
+      </div>
+    `;
   }
 
-  function renderCeoModal() {
-    createCeoModalDOM();
+  function renderCeoPage() {
+    createCeoPageDOM();
     if(!CEO_STATE) loadCeoState();
 
-    document.getElementById("ceoTeamFlagVal").textContent = CEO_STATE.teamFlag || "🇬🇧";
-    document.getElementById("ceoTeamNameVal").textContent = CEO_STATE.teamName;
+    const flagEl = document.getElementById("ceoTeamFlagVal");
+    if(flagEl) flagEl.textContent = CEO_STATE.teamFlag || "🇬🇧";
+    const nameEl = document.getElementById("ceoTeamNameVal");
+    if(nameEl) nameEl.textContent = CEO_STATE.teamName;
     const liveryObj = LIVERY_PALETTES.find(l => l.id === CEO_STATE.teamLivery) || LIVERY_PALETTES[0];
-    document.getElementById("ceoTeamHqVal").textContent = `📍 База: ${CEO_STATE.teamHq || 'Сильверстоун (Великобритания)'} · Ливрея: ${liveryObj.name}`;
+    const hqEl = document.getElementById("ceoTeamHqVal");
+    if(hqEl) hqEl.textContent = `📍 База: ${CEO_STATE.teamHq || 'Сильверстоун (Великобритания)'} · Ливрея: ${liveryObj.name}`;
 
-    document.getElementById("ceoBudgetVal").textContent = formatMoney(CEO_STATE.budget);
-    document.getElementById("ceoMarketCapVal").textContent = formatMoney(CEO_STATE.marketCap);
-    document.getElementById("ceoApprovalVal").textContent = `${CEO_STATE.boardApproval}%`;
-    document.getElementById("ceoSeasonVal").textContent = `Сезон ${CEO_STATE.seasonNum} · ${CEO_STATE.year}`;
+    const bVal = document.getElementById("ceoBudgetVal");
+    if(bVal) bVal.textContent = formatMoney(CEO_STATE.budget);
+    const mVal = document.getElementById("ceoMarketCapVal");
+    if(mVal) mVal.textContent = formatMoney(CEO_STATE.marketCap);
+    const aVal = document.getElementById("ceoApprovalVal");
+    if(aVal) aVal.textContent = `${CEO_STATE.boardApproval}%`;
+    const sVal = document.getElementById("ceoSeasonVal");
+    if(sVal) sVal.textContent = `Сезон ${CEO_STATE.seasonNum} · ${CEO_STATE.year}`;
 
     // Update tab buttons
-    ["overview", "factory", "board"].forEach(t => {
+    ["overview", "factory", "board", "legacy"].forEach(t => {
       const btn = document.getElementById("tabCeo" + t.charAt(0).toUpperCase() + t.slice(1));
       if(btn) {
         if(t === activeCeoTab) btn.classList.add("active");
@@ -858,10 +894,14 @@
       renderOverviewTab(body);
     } else if(activeCeoTab === "factory") {
       renderFactoryTab(body);
-    } else {
+    } else if(activeCeoTab === "board") {
       renderBoardTab(body);
+    } else {
+      renderLegacyTab(body);
     }
   }
+
+  window.renderCeoModal = renderCeoPage; // backward compatibility
 
   function renderOverviewTab(container) {
     const td = CEO_STATE.techDirector;
@@ -1183,6 +1223,105 @@
     `;
   }
 
+  function renderLegacyTab(container) {
+    const drvName = (typeof pName === "function" ? pName() : "Пилот");
+    const num = (typeof sel !== "undefined" && sel.num) ? sel.num : 10;
+    const flag = (typeof sel !== "undefined" && sel.flag) ? sel.flag : "🏁";
+    const seasons = (typeof S !== "undefined" && S.seasons) ? S.seasons : [];
+    const titlesF1 = (typeof S !== "undefined" && S.titles && S.titles.f1) || 0;
+    const titlesConstr = (typeof S !== "undefined" && S.titles && S.titles.constr) || 0;
+    const wins = (typeof S !== "undefined" && S.wins) || 0;
+    const pods = (typeof S !== "undefined" && S.podiums) || 0;
+    const poles = (typeof S !== "undefined" && S.poles) || 0;
+    const gp = (typeof S !== "undefined" && S.gp) || 0;
+    const pts = (typeof S !== "undefined" && S.ptsF1) || 0;
+    const bank = (typeof S !== "undefined" && S.bankAccount) || 0;
+    const age = (typeof S !== "undefined" && S.age) || 36;
+    const startYr = (typeof S !== "undefined" && S.baseYear) || 2026;
+    const retireYr = (typeof yearNow === "function") ? yearNow() : (startYr + Math.max(0, age - 16));
+    const flagStr = (typeof flg === "function") ? flg(flag) : (flag || "🏁");
+
+    container.innerHTML = `
+      <div class="ceo-legacy-content">
+        <div class="ceo-legacy-hero">
+          <div class="clh-badge">🏆 FOUNDER & RACING LEGEND · HALL OF FAME</div>
+          <div class="clh-title-row">
+            <span class="clh-flag">${flagStr}</span>
+            <h2>${drvName} #${num}</h2>
+          </div>
+          <div class="clh-subtitle">Карьера пилота: ${startYr} – ${retireYr} · Завершил карьеру в ${age} лет ради статуса Владельца & CEO команды</div>
+          <div class="clh-verdict">«От триумфов на трассе к величию в паддоке: легендарный пилот теперь руководит собственной чемпионской конюшней Формулы-1!»</div>
+        </div>
+
+        <div class="ceo-legacy-stats-grid">
+          <div class="cls-box gold">
+            <span class="cls-val">${titlesF1}</span>
+            <span class="cls-lbl">Титулы Чемпиона мира</span>
+          </div>
+          <div class="cls-box gold">
+            <span class="cls-val">${titlesConstr}</span>
+            <span class="cls-lbl">Кубки Конструкторов</span>
+          </div>
+          <div class="cls-box">
+            <span class="cls-val">${wins}</span>
+            <span class="cls-lbl">Победы в Гран-при</span>
+          </div>
+          <div class="cls-box">
+            <span class="cls-val">${pods}</span>
+            <span class="cls-lbl">Подиумы</span>
+          </div>
+          <div class="cls-box">
+            <span class="cls-val">${poles}</span>
+            <span class="cls-lbl">Поул-позиции</span>
+          </div>
+          <div class="cls-box">
+            <span class="cls-val">${gp}</span>
+            <span class="cls-lbl">Старты в Гран-при</span>
+          </div>
+          <div class="cls-box">
+            <span class="cls-val">${pts}</span>
+            <span class="cls-lbl">Очки в Формуле-1</span>
+          </div>
+          <div class="cls-box blue">
+            <span class="cls-val">${formatMoney(bank)}</span>
+            <span class="cls-lbl">Личный капитал</span>
+          </div>
+        </div>
+
+        <!-- Driver Career Seasons Table -->
+        <div class="ceo-history-block">
+          <div class="chb-title">🏁 ХРОНОЛОГИЯ ВЫСТУПЛЕНИЙ ОСНОВАТЕЛЯ ЗА РУЛЁМ</div>
+          ${seasons.length === 0 ? `
+            <div class="ceo-empty-history">Архив сезонов основателя сохранен в официальной летописи FIA.</div>
+          ` : `
+            <div class="ceo-history-table">
+              <div class="cht-head">
+                <span>СЕЗОН</span>
+                <span>КАТЕГОРИЯ</span>
+                <span>КОМАНДА</span>
+                <span>ИТОГ</span>
+                <span>ПОБЕДЫ</span>
+                <span>ПОДИУМЫ</span>
+                <span>ОЧКИ</span>
+              </div>
+              ${seasons.map(s => `
+                <div class="cht-row ${s.pos === 1 ? 'gold-row' : ''}">
+                  <span class="cht-season">${s.year || s.age + ' лет'}</span>
+                  <span class="cht-cat"><b>${s.cat || 'F1'}</b></span>
+                  <span class="cht-team">${(s.team && s.team.name) || s.team || '—'}</span>
+                  <span class="cht-pos"><b>P${s.pos || '-'}</b> ${s.pos === 1 ? '🏆' : ''}</span>
+                  <span class="cht-wins">${s.wins || 0}</span>
+                  <span class="cht-pods">${s.pods || 0}</span>
+                  <span class="cht-profit">${s.pts || 0} pts</span>
+                </div>
+              `).join("")}
+            </div>
+          `}
+        </div>
+      </div>
+    `;
+  }
+
   window.selectEngineSupplier = function(id) {
     if(!CEO_STATE) loadCeoState();
     const eng = ENGINE_SUPPLIERS.find(e => e.id === id);
@@ -1208,23 +1347,81 @@
   // Switch tabs
   window.switchCeoTab = function(tab) {
     activeCeoTab = tab;
-    renderCeoModal();
+    renderCeoPage();
   };
 
-  window.openCeoModal = function() {
+  // Fullscreen Page Transition
+  window.transitionToCeoPage = function(isEditing) {
     loadCeoState();
-    renderCeoModal();
-    const m = document.getElementById("ceoModal");
-    if(m) m.style.display = "flex";
+
+    // 1. Hide all standard career & modal sections
+    const hideIds = ["career", "intro", "identity", "careerHud", "endModal", "reopenBtn", "wealthModal", "ceoModal"];
+    hideIds.forEach(id => {
+      const el = document.getElementById(id);
+      if(el) el.style.display = "none";
+    });
+
+    // 2. Check if team branding is needed
+    const needsBranding = !CEO_STATE || !CEO_STATE.teamName || (!CEO_STATE.teamCustomized && !isEditing);
+    if(needsBranding) {
+      openTeamCreationModal(false);
+      return;
+    }
+
+    // 3. Reveal standalone CEO Page
+    showCeoPage();
+  };
+
+  function showCeoPage() {
+    window.scrollTo(0, 0);
+    const ceoPage = document.getElementById("ceoPage");
+    if(ceoPage) ceoPage.style.display = "block";
+    renderCeoPage();
+    updateCeoIntroCard();
+  }
+
+  window.exitCeoToMenu = function() {
+    saveCeoState();
+    const ceoPage = document.getElementById("ceoPage");
+    if(ceoPage) {
+      ceoPage.style.display = "none";
+      const body = document.getElementById("ceoTabContent");
+      if(body) body.textContent = "";
+    }
+    const intro = document.getElementById("intro");
+    if(intro) intro.style.display = "flex";
+    updateCeoIntroCard();
+    window.scrollTo(0, 0);
+    if(window.showF1Toast) window.showF1Toast("Прогресс команды сохранен!", "info");
+  };
+
+  function updateCeoIntroCard() {
+    const card = document.getElementById("ceoModeCard");
+    if(!card) return;
+    try {
+      const saved = localStorage.getItem("f1g_ceo_state");
+      if(saved) {
+        const parsed = JSON.parse(saved);
+        if(parsed && parsed.teamName) {
+          card.style.display = "flex";
+          const t = document.getElementById("ceoIntroTitle");
+          if(t) t.textContent = `🏛️ ${parsed.teamName}`;
+          const s = document.getElementById("ceoIntroSub");
+          if(s) s.textContent = `Сезон ${parsed.seasonNum} · ${parsed.year} · Бюджет ${formatMoney(parsed.budget)}`;
+          return;
+        }
+      }
+    } catch(e){}
+    card.style.display = "none";
+  }
+  window.updateCeoIntroCard = updateCeoIntroCard;
+
+  window.openCeoModal = function() {
+    window.transitionToCeoPage(false);
   };
 
   window.closeCeoModal = function() {
-    const m = document.getElementById("ceoModal");
-    if(m) {
-      m.style.display = "none";
-      const body = document.getElementById("ceoTabContent");
-      if(body) body.textContent = ""; // Release active tab DOM nodes to garbage collector
-    }
+    window.exitCeoToMenu();
   };
 
   window.fireCeoTechDirector = function() {
@@ -1292,25 +1489,35 @@
     CEO_STATE.teamColor = livery.primary;
     CEO_STATE.teamLivery = livery.id;
     CEO_STATE.teamStory = story.title;
+    CEO_STATE.teamCustomized = true;
 
     saveCeoState();
     window.closeTeamCreationModal();
-    openCeoModal();
+
+    // Show standalone CEO page!
+    showCeoPage();
+
     if(window.showF1Toast) {
-      window.showF1Toast(`🏛️ Конюшня «${CEO_STATE.teamName}» официально зарегистрирована в FIA!`, "success");
+      window.showF1Toast(`🏛️ Конюшня «${CEO_STATE.teamName}» официально зарегистрирована в FIA! Добро пожаловать в кабинет CEO!`, "success");
     }
   };
 
   // Wire up retirement / career end transition to CEO
   window.launchCeoFromRetirement = function() {
     if(typeof S !== "undefined" && S) {
+      S.retired = true;
+      S.retiredByCeo = true;
+      S.retireReason = "Выкуп команды F1 за $85M и переход на пост Владельца & CEO";
       S.assets = S.assets || [];
       if(!S.assets.includes("f1_team_share")) S.assets.push("f1_team_share");
     }
     const endM = document.getElementById("endModal");
     if(endM) endM.style.display = "none";
+    const reopenBtn = document.getElementById("reopenBtn");
+    if(reopenBtn) reopenBtn.style.display = "none";
+
     initCeoState();
-    openTeamCreationModal(false);
+    window.transitionToCeoPage(false);
   };
 
   // Global keydown listener for Escape key to close open CEO modals cleanly and free memory
@@ -1324,8 +1531,6 @@
       if(debM && debM.style.display === "flex") { window.closeCeoDebriefModal(); return; }
       const tcM = document.getElementById("teamCreationModal");
       if(tcM && tcM.style.display === "flex") { window.closeTeamCreationModal(); return; }
-      const ceoM = document.getElementById("ceoModal");
-      if(ceoM && ceoM.style.display === "flex") { window.closeCeoModal(); return; }
     }
   });
 
@@ -1335,19 +1540,23 @@
     window.closeCeoDriverMarketModal();
     window.closeCeoDebriefModal();
     window.closeTeamCreationModal();
-    window.closeCeoModal();
+    const ceoPage = document.getElementById("ceoPage");
+    if(ceoPage) ceoPage.style.display = "none";
     CEO_STATE = null;
     try {
       localStorage.removeItem("f1g_ceo_state");
     } catch(e) {}
+    updateCeoIntroCard();
   };
 
   // Expose global init
   window.initCeoMode = function() {
     loadCeoState();
+    updateCeoIntroCard();
   };
 
   document.addEventListener("DOMContentLoaded", function(){
     loadCeoState();
+    updateCeoIntroCard();
   });
 })();

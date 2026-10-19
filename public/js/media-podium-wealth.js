@@ -127,11 +127,30 @@
     renderWealthModal();
     updateWealthUI();
     if(assetId === "f1_team_share") {
+      // 1. Auto-retire driver career
+      if(typeof S !== "undefined" && S) {
+        if(!S.retired) {
+          S.retired = true;
+          S.retiredByCeo = true;
+          S.retireReason = "Выкуп команды F1 за $85M и переход на пост Владельца & CEO";
+          if(typeof endCareer === "function") {
+            try { endCareer(); } catch(e){}
+          }
+        }
+      }
+
+      // 2. Close career modals
       closeWealthModal();
-      if(typeof window.openTeamCreationModal === "function") {
+      const endM = document.getElementById("endModal");
+      if(endM) endM.style.display = "none";
+      const reopenBtn = document.getElementById("reopenBtn");
+      if(reopenBtn) reopenBtn.style.display = "none";
+
+      // 3. Full transition to standalone CEO page
+      if(typeof window.transitionToCeoPage === "function") {
+        window.transitionToCeoPage(false);
+      } else if(typeof window.openTeamCreationModal === "function") {
         window.openTeamCreationModal(false);
-      } else if(typeof window.openCeoModal === "function") {
-        window.openCeoModal();
       }
     } else {
       if(window.showF1Toast) window.showF1Toast(`💼 Сделка закрыта: ${asset.name}! Активы перешли под ваш контроль!`, "success");
@@ -278,8 +297,8 @@
               ${isOwned ? `
                 <div class="asset-owned-badge">✅ В ВАШЕМ ВЛАДЕНИИ</div>
                 ${a.id === 'f1_team_share' ? `
-                  <button class="btn s-btn asset-buy" style="margin-top:6px; font-size:11.5px; padding:8px 10px;" onclick="closeWealthModal(); window.openCeoModal();">
-                    🏛️ ВОЙТИ В КАБИНЕТ CEO
+                  <button class="btn s-btn asset-buy" style="margin-top:6px; font-size:11.5px; padding:8px 10px;" onclick="closeWealthModal(); window.transitionToCeoPage(false);">
+                    🏛️ СТРАНИЦА ВЛАДЕЛЬЦА & CEO
                   </button>
                 ` : ''}
               ` : `

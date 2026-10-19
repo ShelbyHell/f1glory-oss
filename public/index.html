@@ -96,6 +96,13 @@
       <span class="mode-ico"><img src="/ico/teamprincipal.png" alt="" width="30" height="30" loading="lazy"></span>
       <span class="mode-txt"><b data-es="Modo Team Principal" data-ru="Режим руководителя" data-pt="Modo Chefe de Equipe" data-pl="Tryb szefa zespołu" data-fr="Mode Directeur d'écurie" data-pt="Modo Team Principal" data-en="Team Principal mode">Modo Team Principal</b><small data-es="Ficha a los mejores pilotos, desarrolla el mejor coche y lleva a tu equipo a la gloria" data-ru="Нанимай лучших пилотов, строй быстрейший болид и веди команду к триумфу" data-pt="Contrate os melhores pilotos, desenvolva o melhor carro e leve a sua equipe à glória" data-pl="Podpisuj najlepszych kierowców, rozwijaj najlepszy samochód i poprowadź zespół po chwałę" data-fr="Recrute les meilleurs pilotes, développe la meilleure voiture et mène ton écurie à la gloire" data-pt="Contrata os melhores pilotos, desenvolve o melhor carro e leva a tua equipa à glória" data-en="Sign the best drivers, develop the best car, and take your team to glory">Ficha a los mejores pilotos, desarrolla el mejor coche y lleva a tu equipo a la gloria</small></span>
     </div>
+    <div class="mode-card ceo-intro-card" id="ceoModeCard" style="display:none" onclick="window.transitionToCeoPage(false)">
+      <span class="mode-ico">🏛️</span>
+      <span class="mode-txt">
+        <b id="ceoIntroTitle" data-ru="Кабинет Владельца & CEO" data-en="Team Owner & CEO Suite">Кабинет Владельца & CEO</b>
+        <small id="ceoIntroSub" data-ru="Управление собственной конюшней Формулы-1" data-en="Manage your owned Formula 1 team">Управление собственной конюшней Формулы-1</small>
+      </span>
+    </div>
     <div class="mode-card soon" id="challengeCard">
       <span class="soon-badge" id="badgeReto" data-es="Próximamente" data-ru="Скоро" data-pt="Em breve" data-pl="Wkrótce" data-fr="Bientôt" data-pt="Em breve" data-en="Coming soon">Próximamente</span>
       <span class="mode-ico"><img src="/ico/retosemanal.png" alt="" width="30" height="30" loading="lazy"></span>
@@ -315,6 +322,11 @@
       </div>
     </div>
   </div>
+</section>
+
+<!-- ========== CEO MODE (STANDALONE FULLSCREEN PAGE) ========== -->
+<section id="ceoPage" class="ceo-fullscreen-page" style="display:none">
+  <div id="ceoPageContainer" class="ceo-page-container"></div>
 </section>
 
 <!-- ========== END ========== -->
