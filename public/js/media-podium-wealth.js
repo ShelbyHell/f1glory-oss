@@ -5,7 +5,7 @@
 
 (function(){
   // =====================================================================
-  // 1. DRIVER WEALTH & SUPERCARS GARAGE
+  // 1. DRIVER WEALTH, SUPERCARS GARAGE & BUSINESS ASSETS
   // =====================================================================
   const SUPERCARS_CATALOG = [
     { id: "porsche_gt3", name: "Porsche 911 GT3 RS", price: 350000, power: "525 л.с.", speed: "296 км/ч", ico: "🏎️", tag: "Трековый скальпель" },
@@ -14,9 +14,18 @@
     { id: "valkyrie", name: "Aston Martin Valkyrie", price: 3500000, power: "1160 л.с.", speed: "355 км/ч", ico: "🟢", tag: "Шедевр Эдриана Ньюи" },
     { id: "laferrari", name: "Ferrari LaFerrari", price: 4200000, power: "963 л.с.", speed: "350 км/ч", ico: "🏎️", tag: "Гибридный флагман Маранелло" },
     { id: "chiron", name: "Bugatti Chiron Super Sport", price: 5000000, power: "1600 л.с.", speed: "440 км/ч", ico: "🚀", tag: "Король максимальной скорости" },
-    { id: "mclaren_f1", name: "McLaren F1 (1995)", price: 18000000, power: "627 л.с.", speed: "386 км/ч", ico: "🏆", tag: "Величайший суперкар в истории" },
-    { id: "f1_team_share", name: "Контрольный пакет команды F1", price: 75000000, power: "Весь завод", speed: "Владелец", ico: "🏭", tag: "Собственная конюшня F1" }
+    { id: "mclaren_f1", name: "McLaren F1 (1995)", price: 18000000, power: "627 л.с.", speed: "386 км/ч", ico: "🏆", tag: "Величайший суперкар в истории" }
   ];
+
+  const BUSINESS_ASSETS_CATALOG = [
+    { id: "karting_academy", name: "Картинговая академия юниоров", price: 1500000, type: "Автоспортивное образование", benefit: "Поиск и воспитание юных талантов для F3/F2", ico: "🏁🎓", tag: "Юниорская база" },
+    { id: "sim_center", name: "Киберспортивный симрейсинг-комплекс", price: 4000000, type: "Инжиниринг и симуляторы", benefit: "Точные виртуальные тесты и телеметрия", ico: "🎮⚡", tag: "Симрейсинг хаб" },
+    { id: "private_jet", name: "Бизнес-джет Gulfstream G650ER", price: 22000000, type: "Паддок-авиация и логистика", benefit: "Беспосадочные перелеты между 24 этапами", ico: "✈️🌐", tag: "VIP мобильность" },
+    { id: "wind_tunnel_share", name: "Доля в аэродинамическом комплексе", price: 45000000, type: "Высокие технологии и CFD", benefit: "Доступ к 60% аэродинамической трубе F1", ico: "🔬🌀", tag: "R&D Инфраструктура" },
+    { id: "f1_team_share", name: "Контрольный пакет команды F1", price: 85000000, type: "Конструктор Формулы-1", benefit: "Статус совладельца и решающий голос в Комиссии F1", ico: "🏛️🏎️", tag: "Владелец конюшни" }
+  ];
+
+  let currentWealthTab = "supercars";
 
   function getDriverWealth() {
     if(typeof S === "undefined" || !S) return 0;
@@ -36,7 +45,19 @@
       });
       S.bankAccount = base;
       S.garage = S.garage || [];
+      S.assets = S.assets || [];
     }
+
+    // Auto-migrate f1_team_share out of car garage if it was previously bought there
+    if(S.garage && S.garage.includes("f1_team_share")) {
+      S.garage = S.garage.filter(id => id !== "f1_team_share");
+      S.assets = S.assets || [];
+      if(!S.assets.includes("f1_team_share")) {
+        S.assets.push("f1_team_share");
+      }
+    }
+    if(!S.garage) S.garage = [];
+    if(!S.assets) S.assets = [];
     return S.bankAccount;
   }
 
@@ -85,7 +106,27 @@
     S.garage.push(carId);
     renderWealthModal();
     updateWealthUI();
-    if(window.showF1Toast) window.showF1Toast(`🎉 Приобретён ${car.name}! Машина доставлена в ваш гараж!`, "success");
+    if(window.showF1Toast) window.showF1Toast(`🏎️ Приобретён ${car.name}! Машина доставлена в ваш гараж!`, "success");
+  }
+
+  function buyAsset(assetId) {
+    getDriverWealth();
+    const asset = BUSINESS_ASSETS_CATALOG.find(a => a.id === assetId);
+    if(!asset) return;
+    if((S.bankAccount || 0) < asset.price) {
+      if(window.showF1Toast) window.showF1Toast("Недостаточно средств на инвестиционном счёте!", "error");
+      return;
+    }
+    S.assets = S.assets || [];
+    if(S.assets.includes(assetId)) {
+      if(window.showF1Toast) window.showF1Toast("Этот бизнес-актив уже приобретён вами!", "error");
+      return;
+    }
+    S.bankAccount -= asset.price;
+    S.assets.push(assetId);
+    renderWealthModal();
+    updateWealthUI();
+    if(window.showF1Toast) window.showF1Toast(`💼 Сделка закрыта: ${asset.name}! Активы перешли под ваш контроль!`, "success");
   }
 
   function updateWealthUI() {
@@ -97,8 +138,8 @@
         hudWealth = document.createElement("button");
         hudWealth.id = "hudWealthChip";
         hudWealth.className = "hud-wealth-chip";
-        hudWealth.title = "Банковский счёт и гараж суперкаров";
-        hudWealth.onclick = openWealthModal;
+        hudWealth.title = "Банковский счёт, автопарк и активы";
+        hudWealth.onclick = () => openWealthModal();
         hudRight.insertBefore(hudWealth, hudRight.firstChild);
       }
     }
@@ -117,8 +158,8 @@
       <div class="f1-modal-card wealth-card">
         <div class="wealth-head">
           <div>
-            <span class="f1-mono-sub">PRIVATE BANKING & VEHICLE FLEET</span>
-            <h2>💰 <span data-ru="Капитал Пилота и Гараж Суперкаров" data-en="Wealth & Garage">Капитал и Гараж Суперкаров</span></h2>
+            <span class="f1-mono-sub">PRIVATE BANKING · VEHICLE FLEET & ENTERPRISE ASSETS</span>
+            <h2>💰 <span>Капитал, Автопарк и Бизнес-активы</span></h2>
           </div>
           <button class="rank-x" onclick="closeWealthModal()">✕</button>
         </div>
@@ -129,13 +170,23 @@
             <div class="wb-val" id="wealthTotalVal">$0</div>
           </div>
           <div class="wealth-garage-count">
-            <span class="wb-lbl">В ГАРАЖЕ</span>
-            <div class="wb-val" id="wealthGarageCount">0 машин</div>
+            <span class="wb-lbl">СУПЕРКАРЫ В ГАРАЖЕ</span>
+            <div class="wb-val" id="wealthGarageCount">0 из 7</div>
+          </div>
+          <div class="wealth-assets-count">
+            <span class="wb-lbl">БИЗНЕС-АКТИВЫ</span>
+            <div class="wb-val" id="wealthAssetsCount">0 из 5</div>
           </div>
         </div>
 
-        <div class="wealth-section-title">🏎️ КАТАЛОГ СУПЕРКАРОВ И АКТИВОВ</div>
-        <div class="supercars-grid" id="supercarsGrid"></div>
+        <div class="wealth-nav-tabs">
+          <button class="wealth-tab-btn active" id="tabBtnSupercars" onclick="switchWealthTab('supercars')">🏎️ Автопарк суперкаров</button>
+          <button class="wealth-tab-btn" id="tabBtnAssets" onclick="switchWealthTab('assets')">🏢 Бизнес-активы и Инвестиции</button>
+        </div>
+
+        <div class="wealth-tab-content">
+          <div class="supercars-grid" id="wealthItemsGrid"></div>
+        </div>
       </div>
     `;
     document.body.appendChild(m);
@@ -146,44 +197,91 @@
     createWealthModalDOM();
     const wealth = getDriverWealth();
     const garage = S.garage || [];
+    const assets = S.assets || [];
 
     document.getElementById("wealthTotalVal").textContent = formatMoney(wealth);
     document.getElementById("wealthGarageCount").textContent = `${garage.length} из ${SUPERCARS_CATALOG.length}`;
+    document.getElementById("wealthAssetsCount").textContent = `${assets.length} из ${BUSINESS_ASSETS_CATALOG.length}`;
 
-    const grid = document.getElementById("supercarsGrid");
+    const btnSupercars = document.getElementById("tabBtnSupercars");
+    const btnAssets = document.getElementById("tabBtnAssets");
+    if(btnSupercars && btnAssets) {
+      if(currentWealthTab === "supercars") {
+        btnSupercars.classList.add("active");
+        btnAssets.classList.remove("active");
+      } else {
+        btnSupercars.classList.remove("active");
+        btnAssets.classList.add("active");
+      }
+    }
+
+    const grid = document.getElementById("wealthItemsGrid");
     if(!grid) return;
 
-    grid.innerHTML = SUPERCARS_CATALOG.map(c => {
-      const isOwned = garage.includes(c.id);
-      const canAfford = wealth >= c.price;
+    if(currentWealthTab === "supercars") {
+      grid.innerHTML = SUPERCARS_CATALOG.map(c => {
+        const isOwned = garage.includes(c.id);
+        const canAfford = wealth >= c.price;
 
-      return `
-        <div class="supercar-card ${isOwned ? 'owned' : ''}">
-          <div class="sc-top">
-            <span class="sc-ico">${c.ico}</span>
-            <span class="sc-tag">${c.tag}</span>
-            <span class="sc-price">${formatMoney(c.price)}</span>
+        return `
+          <div class="supercar-card ${isOwned ? 'owned' : ''}">
+            <div class="sc-top">
+              <span class="sc-ico">${c.ico}</span>
+              <span class="sc-tag">${c.tag}</span>
+              <span class="sc-price">${formatMoney(c.price)}</span>
+            </div>
+            <div class="sc-name">${c.name}</div>
+            <div class="sc-specs">
+              <span>Мощность: <b>${c.power}</b></span> · 
+              <span>Макс. скорость: <b>${c.speed}</b></span>
+            </div>
+            <div class="sc-actions">
+              ${isOwned ? `
+                <div class="sc-owned-badge">✅ В ВАШЕМ ГАРАЖЕ</div>
+              ` : `
+                <button class="btn s-btn ${canAfford ? 'sc-buy' : 'sc-locked'}" onclick="buyF1Supercar('${c.id}')" ${!canAfford ? 'disabled' : ''}>
+                  ${canAfford ? 'Купить в гараж' : 'Недостаточно $'}
+                </button>
+              `}
+            </div>
           </div>
-          <div class="sc-name">${c.name}</div>
-          <div class="sc-specs">
-            <span>Мощность: <b>${c.power}</b></span> · 
-            <span>Макс. скорость: <b>${c.speed}</b></span>
+        `;
+      }).join("");
+    } else {
+      // Business Assets tab
+      grid.innerHTML = BUSINESS_ASSETS_CATALOG.map(a => {
+        const isOwned = assets.includes(a.id);
+        const canAfford = wealth >= a.price;
+
+        return `
+          <div class="supercar-card asset-card ${isOwned ? 'owned' : ''}">
+            <div class="sc-top">
+              <span class="sc-ico">${a.ico}</span>
+              <span class="sc-tag asset-tag">${a.tag}</span>
+              <span class="sc-price asset-price">${formatMoney(a.price)}</span>
+            </div>
+            <div class="sc-name">${a.name}</div>
+            <div class="sc-specs">
+              <div style="margin-bottom: 3px;">Сфера: <b>${a.type}</b></div>
+              <div>Эффект: <b>${a.benefit}</b></div>
+            </div>
+            <div class="sc-actions">
+              ${isOwned ? `
+                <div class="asset-owned-badge">✅ В ВАШЕМ ВЛАДЕНИИ</div>
+              ` : `
+                <button class="btn s-btn ${canAfford ? 'asset-buy' : 'sc-locked'}" onclick="buyF1Asset('${a.id}')" ${!canAfford ? 'disabled' : ''}>
+                  ${canAfford ? 'Инвестировать капитал' : 'Недостаточно $'}
+                </button>
+              `}
+            </div>
           </div>
-          <div class="sc-actions">
-            ${isOwned ? `
-              <div class="sc-owned-badge">✅ В ВАШЕМ ГАРАЖЕ</div>
-            ` : `
-              <button class="btn s-btn ${canAfford ? 'sc-buy' : 'sc-locked'}" onclick="buyF1Supercar('${c.id}')" ${!canAfford ? 'disabled' : ''}>
-                ${canAfford ? 'Купить в гараж' : 'Недостаточно $'}
-              </button>
-            `}
-          </div>
-        </div>
-      `;
-    }).join("");
+        `;
+      }).join("");
+    }
   }
 
-  window.openWealthModal = function() {
+  window.openWealthModal = function(tab) {
+    if(tab) currentWealthTab = tab;
     renderWealthModal();
     const m = document.getElementById("wealthModal");
     if(m) m.style.display = "flex";
@@ -194,6 +292,13 @@
   };
   window.buyF1Supercar = function(id) {
     buySupercar(id);
+  };
+  window.buyF1Asset = function(id) {
+    buyAsset(id);
+  };
+  window.switchWealthTab = function(tab) {
+    currentWealthTab = tab;
+    renderWealthModal();
   };
 
   // =====================================================================

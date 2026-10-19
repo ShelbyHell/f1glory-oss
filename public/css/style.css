@@ -2957,12 +2957,12 @@ h1,h2,h3,.decision h3,#intro h1{font-family:var(--f-disp);font-weight:800;letter
 }
 .wealth-summary-banner {
   display: flex;
-  gap: 20px;
+  gap: 16px;
   padding: 16px 22px;
   background: rgba(255, 255, 255, 0.02);
   border-bottom: 1px solid var(--line);
 }
-.wealth-balance-box, .wealth-garage-count {
+.wealth-balance-box, .wealth-garage-count, .wealth-assets-count {
   flex: 1;
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid var(--line);
@@ -2978,10 +2978,49 @@ h1,h2,h3,.decision h3,#intro h1{font-family:var(--f-disp);font-weight:800;letter
 }
 .wb-val {
   font-family: var(--f-disp);
-  font-size: 26px;
+  font-size: 24px;
   font-weight: 900;
   color: #ffd700;
   margin-top: 2px;
+}
+.wealth-assets-count .wb-val {
+  color: #00d2be;
+}
+.wealth-nav-tabs {
+  display: flex;
+  gap: 8px;
+  padding: 14px 22px 4px;
+  border-bottom: 1px solid var(--line);
+  background: rgba(0, 0, 0, 0.15);
+}
+.wealth-tab-btn {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 8px 16px 10px;
+  font-family: var(--f-disp);
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.wealth-tab-btn:hover {
+  color: var(--text);
+}
+.wealth-tab-btn.active {
+  color: #fff;
+  border-bottom-color: var(--f1-red, #e10600);
+}
+.wealth-tab-btn#tabBtnAssets.active {
+  border-bottom-color: #00d2be;
+  color: #00d2be;
+}
+.wealth-tab-content {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 .wealth-section-title {
   padding: 12px 22px 4px;
@@ -2995,7 +3034,7 @@ h1,h2,h3,.decision h3,#intro h1{font-family:var(--f-disp);font-weight:800;letter
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: 12px;
-  padding: 12px 22px 20px;
+  padding: 16px 22px 20px;
   overflow-y: auto;
   max-height: 52vh;
 }
@@ -3016,6 +3055,13 @@ h1,h2,h3,.decision h3,#intro h1{font-family:var(--f-disp);font-weight:800;letter
   border-left: 3px solid #10b981;
   background: rgba(16, 185, 129, 0.03);
 }
+.asset-card.owned {
+  border-left: 3px solid #00d2be;
+  background: rgba(0, 210, 190, 0.04);
+}
+.asset-card:hover {
+  border-color: rgba(0, 210, 190, 0.3);
+}
 .sc-top {
   display: flex;
   align-items: center;
@@ -3032,11 +3078,18 @@ h1,h2,h3,.decision h3,#intro h1{font-family:var(--f-disp);font-weight:800;letter
   border-radius: 4px;
   color: var(--muted);
 }
+.asset-tag {
+  background: rgba(0, 210, 190, 0.1);
+  color: #00d2be;
+}
 .sc-price {
   font-family: var(--f-mono);
   font-size: 12.5px;
   font-weight: 800;
   color: #ffd700;
+}
+.asset-price {
+  color: #00d2be;
 }
 .sc-name {
   font-size: 14px;
@@ -3059,6 +3112,12 @@ h1,h2,h3,.decision h3,#intro h1{font-family:var(--f-disp);font-weight:800;letter
   color: #000 !important;
   font-weight: 800;
 }
+.asset-buy {
+  width: 100%;
+  background: #00d2be !important;
+  color: #000 !important;
+  font-weight: 800;
+}
 .sc-locked {
   width: 100%;
   opacity: 0.5;
@@ -3071,6 +3130,16 @@ h1,h2,h3,.decision h3,#intro h1{font-family:var(--f-disp);font-weight:800;letter
   font-weight: 800;
   color: #10b981;
   background: rgba(16, 185, 129, 0.12);
+  padding: 6px;
+  border-radius: 8px;
+}
+.asset-owned-badge {
+  text-align: center;
+  font-family: var(--f-mono);
+  font-size: 10.5px;
+  font-weight: 800;
+  color: #00d2be;
+  background: rgba(0, 210, 190, 0.12);
   padding: 6px;
   border-radius: 8px;
 }
