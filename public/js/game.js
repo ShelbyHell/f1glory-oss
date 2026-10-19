@@ -14929,6 +14929,7 @@ function endCareer(){
     : S.subcamp>0?"runner_up" : S.wins>0?"race_winner" : S.f1Seasons>0?"f1_driver" : "prospect";
   track("career_ended", {result, f1_titles:S.titles.f1, constructors:S.titles.constr, f1_seasons:S.f1Seasons, wins:S.wins, retire_age:S.age, era:S.era||"2026"});
   const m=$("endModal"); m.style.display="flex"; ajustaBotonRepetir();
+  const ceoOpt = $("endCeoOption"); if(ceoOpt) ceoOpt.style.display = "block";
   /* 🏳️ la bandera de la pantalla final pasa por flg(): las naciones históricas (YUG, URS, GDR, TCH)
      tienen SVG propia y el código pelado parecía parte del nombre («YUG MIROSLAV», lo cazó Carlos).
      El nombre va como NODO DE TEXTO, nunca por innerHTML: lo escribe el jugador. */

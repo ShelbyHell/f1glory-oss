@@ -268,6 +268,11 @@
             <div class="sc-actions">
               ${isOwned ? `
                 <div class="asset-owned-badge">✅ В ВАШЕМ ВЛАДЕНИИ</div>
+                ${a.id === 'f1_team_share' ? `
+                  <button class="btn s-btn asset-buy" style="margin-top:6px; font-size:11.5px; padding:8px 10px;" onclick="closeWealthModal(); window.openCeoModal();">
+                    🏛️ ВОЙТИ В КАБИНЕТ CEO
+                  </button>
+                ` : ''}
               ` : `
                 <button class="btn s-btn ${canAfford ? 'asset-buy' : 'sc-locked'}" onclick="buyF1Asset('${a.id}')" ${!canAfford ? 'disabled' : ''}>
                   ${canAfford ? 'Инвестировать капитал' : 'Недостаточно $'}
