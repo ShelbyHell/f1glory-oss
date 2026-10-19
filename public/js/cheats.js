@@ -325,7 +325,7 @@
       const curAge = S.age || 20;
       const curVal = S.val || 10;
       box.innerHTML = `
-        <div class="cheat-status">Пилот: <b>${(sel.name || "Гонщик").toUpperCase()}</b> · Возраст: <b>${curAge}</b> · OVR: <b>${curOvr}</b> · Слава: <b>${Math.round(curVal)}</b></div>
+        <div class="cheat-status">Пилот: <b>${(sel.name || "Гонщик").toUpperCase()}</b> · Сезон: <b>${yearNow()}</b> · Возраст: <b>${curAge}</b> · OVR: <b>${curOvr}</b> · Слава: <b>${Math.round(curVal)}</b></div>
         
         <div class="cheat-section">
           <div class="cheat-sec-title">Общий рейтинг (OVR) <span>Текущий: ${curOvr}</span></div>
@@ -437,7 +437,7 @@
       const tpPrest = S.tpPrest || 50;
       const isOwner = !!(S.tpOwner && S.tpOwner.k === "self");
       box.innerHTML = `
-        <div class="cheat-status">Режим TP: <b>${S.tpTeam || "Нет команды"}</b> · Престиж: <b>${tpPrest}</b> · Владелец: <b>${isOwner ? "ДА (Своя команда)" : "НЕТ (Наёмный директор)"}</b></div>
+        <div class="cheat-status">Режим TP: <b>${S.tpTeam || "Нет команды"}</b> · Сезон: <b>${yearNow()}</b> · Престиж: <b>${tpPrest}</b> · Владелец: <b>${isOwner ? "ДА (Своя команда)" : "НЕТ (Наёмный директор)"}</b></div>
 
         <div class="cheat-section">
           <div class="cheat-sec-title">Престиж и Совет директоров</div>
@@ -468,6 +468,18 @@
       `;
     } else if (currentTab === "quick") {
       box.innerHTML = `
+        <div class="cheat-status">Текущий сезон: <b>${yearNow()}</b> · Сыграно сезонов: <b>${(S.seasons || []).length}</b></div>
+
+        <div class="cheat-section">
+          <div class="cheat-sec-title">Календарный год и синхронизация <span>Текущий год: ${yearNow()}</span></div>
+          <div class="cheat-row">
+            <button class="cheat-btn" onclick="cheatAddYear(-1)">-1 год назад</button>
+            <button class="cheat-btn" onclick="cheatAddYear(1)">+1 год вперёд</button>
+            <button class="cheat-btn" onclick="cheatAddYear(5)">+5 лет вперёд</button>
+            <button class="cheat-btn gold" onclick="cheatSyncYearWithSeasons()">🔄 Восстановить год по сыгранным сезонам (${(S.baseYear || 2026) + (S.seasons ? S.seasons.length : 0)})</button>
+          </div>
+        </div>
+
         <div class="cheat-section">
           <div class="cheat-sec-title">Управление сезоном и карьерой</div>
           <div class="cheat-row">
@@ -508,33 +520,60 @@
 
   window.cheatAddAge = function(delta) {
     if (!hasGame()) return;
+    const curY = yearNow();
     S.age = Math.max(16, Math.min(65, (S.age || 20) + delta));
+    S.startAge = S.age - (curY - (S.baseYear || 2026));
     try { refreshCard(); } catch(e){}
-    notify(`Возраст изменён: ${S.age}`);
+    notify(`Возраст изменён: ${S.age} (Год: ${yearNow()})`);
     renderCheatContent();
   };
 
   window.cheatSetAge = function(val) {
     if (!hasGame()) return;
+    const curY = yearNow();
     S.age = Math.max(16, Math.min(65, val));
+    S.startAge = S.age - (curY - (S.baseYear || 2026));
     try { refreshCard(); } catch(e){}
-    notify(`Возраст установлен: ${S.age}`);
+    notify(`Возраст установлен: ${S.age} (Год: ${yearNow()})`);
     renderCheatContent();
   };
 
   window.cheatTpAddSeasons = function(delta) {
     if (!hasGame()) return;
+    const curY = yearNow();
     S.age = Math.max(0, Math.min(65, (S.age || 0) + delta));
+    S.startAge = S.age - (curY - (S.baseYear || 2026));
     try { refreshCard(); } catch(e){}
-    notify(`Стаж руководителя: ${S.age} сезонов`);
+    notify(`Стаж руководителя: ${S.age} сезонов (Год: ${yearNow()})`);
     renderCheatContent();
   };
 
   window.cheatTpSetSeasons = function(val) {
     if (!hasGame()) return;
+    const curY = yearNow();
     S.age = Math.max(0, Math.min(65, val));
+    S.startAge = S.age - (curY - (S.baseYear || 2026));
     try { refreshCard(); } catch(e){}
-    notify(`Стаж руководителя установлен: ${S.age} сезонов`);
+    notify(`Стаж руководителя установлен: ${S.age} сезонов (Год: ${yearNow()})`);
+    renderCheatContent();
+  };
+
+  window.cheatAddYear = function(delta) {
+    if (!hasGame()) return;
+    const targetY = yearNow() + delta;
+    S.startAge = (S.age || 20) - (targetY - (S.baseYear || 2026));
+    try { refreshCard(); } catch(e){}
+    notify(`Календарный год изменён: ${yearNow()} (Возраст: ${S.age})`);
+    renderCheatContent();
+  };
+
+  window.cheatSyncYearWithSeasons = function() {
+    if (!hasGame()) return;
+    const seasonsCount = S.seasons ? S.seasons.length : 0;
+    const targetYear = (S.baseYear || 2026) + seasonsCount;
+    S.startAge = (S.age || 20) - (targetYear - (S.baseYear || 2026));
+    try { refreshCard(); } catch(e){}
+    notify(`Год синхронизирован: ${yearNow()} (по числу сезонов: ${seasonsCount})`);
     renderCheatContent();
   };
 
