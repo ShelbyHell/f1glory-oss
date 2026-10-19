@@ -293,6 +293,111 @@
     { round: 24, name: "Гран-при Абу-Даби", track: "Яс-Марина", flag: "🇦🇪", laps: 58, type: "Гранд-финал под софитами" }
   ];
 
+  const POWERTRAIN_STAGES = [
+    { level: 1, cost: 40000000, name: "Динамометрические стенды AVL Dyno", desc: "Стенды калибровки крутящего момента, испытания турбокомпрессора и термического КПД ICE." },
+    { level: 2, cost: 40000000, name: "Лаборатория ERS и высоковольтных батарей", desc: "Исследования рекуперации кинетической и тепловой энергии MGU-K/MGU-H, инверторы." },
+    { level: 3, cost: 40000000, name: "Литейный цех моноблоков и сборка двигателей", desc: "Высокоточные ЧПУ-центры, термостойкие сплавы Inconel и официальная омологация FIA." }
+  ];
+
+  const POTENTIAL_PU_CLIENTS = [
+    { id: "haas", name: "Haas F1 Team", flag: "🇺🇸", fee: 24000000, desc: "Американская команда ищет надежного моториста с гибкими условиями поставок." },
+    { id: "williams", name: "Williams Racing", flag: "🇬🇧", fee: 26000000, desc: "Легендарная британская конюшня готова платить за топ-моторы заводской спецификации." },
+    { id: "sauber", name: "Stake F1 Kick Sauber", flag: "🇨🇭", fee: 22000000, desc: "Швейцарская команда заинтересована в многолетнем клиентском соглашении." }
+  ];
+
+  const OWNER_LUXURY_ASSETS = [
+    {
+      id: "asset_jet",
+      name: "Бизнес-джет Gulfstream G650ER",
+      icon: "🛩️",
+      cost: 45000000,
+      tag: "Личная авиация",
+      desc: "Дальнемагистральный борт в ливрее команды для перелетов руководства и пилотов на все 24 Гран-при без джетлага.",
+      perk: "✈️ Боевые пилоты получают +3 к рейтингу OVR. Эффективность R&D ускорена на +5%."
+    },
+    {
+      id: "asset_yacht",
+      name: "85-метровая мега-яхта в гавани Монако и Абу-Даби",
+      icon: "🛥️",
+      cost: 70000000,
+      tag: "Морская резиденция",
+      desc: "Флагманская суперъяхта с вертолетной площадкой. Место проведения закрытых VIP-вечеринок для шейхов и президентов корпораций.",
+      perk: "💰 Прием VIP-спонсоров приносит +$15,000,000 к спонсорским контрактам каждый сезон!"
+    },
+    {
+      id: "asset_museum",
+      name: "Частный музей чемпионских болидов в Сильверстоуне",
+      icon: "🏛️",
+      cost: 35000000,
+      tag: "Гоночное наследие",
+      desc: "Музейный комплекс рядом с базой команды с экспозицией победных болидов, трофеев и чемпионских комбинезонов.",
+      perk: "📈 Капитализация франшизы увеличивается на +$150,000,000, а одобрение совета растет на +15%."
+    },
+    {
+      id: "asset_estate",
+      name: "Историческое поместье в Котсуолдс",
+      icon: "🏰",
+      cost: 25000000,
+      tag: "Британское поместье",
+      desc: "Английская усадьба XVIII века в 20 минутах от трассы Сильверстоун. Локация для неофициальных ужинов с президентом FIA и боссами команд.",
+      perk: "🏛️ Дает +1 дополнительный постоянный голос в Комиссии FIA."
+    },
+    {
+      id: "asset_hypercar",
+      name: "Гиперкар Mercedes-AMG ONE / Valkyrie",
+      icon: "🏎️",
+      cost: 6000000,
+      tag: "Личный гараж",
+      desc: "Дорожный болид с двигателем Формулы-1 V6 Turbo Hybrid мощностью 1063 л.с. для эффектных прибытий в паддок.",
+      perk: "🔥 Максимальный статус в паддоке (+5% к общему авторитету команды)."
+    }
+  ];
+
+  const SPYGATE_OPERATIONS = [
+    {
+      id: "op_cad_aero",
+      title: "Операция «Stepneygate»: Похищение CAD-чертежей днища у лидера пелотона",
+      icon: "📐",
+      cost: 12000000,
+      risk: 30,
+      desc: "Через тайного информатора в конструкторском бюро лидера чемпионата заполучить 3D-модели граунд-эффект каналов Вентури.",
+      successTitle: "Шпионаж успешен! Чертежи переданы в отдел CFD!",
+      successBonus: "+8 к Car Performance мгновенно без затрат времени в трубе!",
+      failTitle: "🚨 СКАНДАЛ SPYGATE! FIA ОБНАРУЖИЛА УТЕЧКУ!",
+      failPenalty: "Штраф FIA $20,000,000 и снятие 20 очков КК!"
+    },
+    {
+      id: "op_pu_telemetry",
+      title: "Операция «Black Box»: Взлом зашифрованной телеметрии мотора конкурента",
+      icon: "💾",
+      cost: 8000000,
+      risk: 25,
+      desc: "Перехват радиоканала телеметрии боксов соперников во время квалификации для изучения кривой зажигания MGU-K.",
+      successTitle: "Телеметрия мотора расшифрована!",
+      successBonus: "+5% к надежности мотора и +4 к мощности на прямых!",
+      failTitle: "🚨 КИБЕР-ПРОВАЛ! Соперник подал официальный протест в FIA!",
+      failPenalty: "Штраф $10,000,000 и официальный выговор Всемирного совета FIA."
+    },
+    {
+      id: "op_poach_lead",
+      title: "Операция «Ghost Engineer»: Переманивание ключевого аэродинамика в обход NDA",
+      icon: "🕶️",
+      cost: 15000000,
+      risk: 35,
+      desc: "Предложить тайный бонус ведущему специалисту соперника и перевести его на секретную работу без 'gardening leave'.",
+      successTitle: "Топ-инженер тайно приступил к работе!",
+      successBonus: "+7 к рейтингу конструкторского бюро и +5 к темпу болида!",
+      failTitle: "🚨 СУДЕБНЫЙ ИСК В ЛОНДОНЕ!",
+      failPenalty: "Выплата $16,000,000 судебной компенсации сопернику."
+    }
+  ];
+
+  const COUNTER_ESPIONAGE_LEVELS = [
+    { level: 1, name: "Базовый КПП и охрана базы", cost: 0, desc: "Стандартная пропускная система фабрики. Риск утечек высокий." },
+    { level: 2, name: "Корпоративное шифрование и NDA-контроль", cost: 6000000, desc: "Шифрование CAD-серверов, соглашения о неразглашении и досмотр багажа инженеров." },
+    { level: 3, name: "Клетки Фарадея, биометрический допуск и глушилки", cost: 14000000, desc: "Абсолютная защита базы от прослушки и кибер-шпионажа соперников." }
+  ];
+
   function generateAcademyCandidates() {
     return [
       { id: "c_bernard_" + Math.random().toString(36).substr(2,4), name: "Тео Бернар", flag: "🇫🇷", age: 17, ovr: 72, pot: 93, cost: 1800000, tag: "Чемпион Французской F4" },
@@ -339,6 +444,40 @@
       deals: [],
       ipoDone: false,
       annualDividendPaid: 0
+    };
+  }
+
+  function getDefaultPowertrainsState() {
+    return {
+      status: "none", // "none", "building", "operational"
+      level: 0, // 0..3
+      invested: 0,
+      targetInvestment: 120000000,
+      power: 97,
+      rel: 95,
+      clients: []
+    };
+  }
+
+  function getDefaultOwnerState() {
+    return {
+      assets: []
+    };
+  }
+
+  function getDefaultOwnershipState() {
+    return {
+      share: 75,
+      isSoleOwner: false
+    };
+  }
+
+  function getDefaultSpygateState() {
+    return {
+      securityLevel: 1, // 1..3
+      operationsDone: 0,
+      seasonOpDone: false,
+      history: []
     };
   }
 
@@ -412,6 +551,10 @@
       politics: getDefaultPoliticsState(),
       academy: getDefaultAcademyState(),
       investors: getDefaultInvestorsState(),
+      powertrains: getDefaultPowertrainsState(),
+      owner: getDefaultOwnerState(),
+      ownership: getDefaultOwnershipState(),
+      spygate: getDefaultSpygateState(),
       simMode: "calendar",
       calendarProgress: null,
       history: [],
@@ -447,6 +590,10 @@
       if(!CEO_STATE.politics) CEO_STATE.politics = getDefaultPoliticsState();
       if(!CEO_STATE.academy) CEO_STATE.academy = getDefaultAcademyState();
       if(!CEO_STATE.investors) CEO_STATE.investors = getDefaultInvestorsState();
+      if(!CEO_STATE.powertrains) CEO_STATE.powertrains = getDefaultPowertrainsState();
+      if(!CEO_STATE.owner) CEO_STATE.owner = getDefaultOwnerState();
+      if(!CEO_STATE.ownership) CEO_STATE.ownership = getDefaultOwnershipState();
+      if(!CEO_STATE.spygate) CEO_STATE.spygate = getDefaultSpygateState();
       if(!CEO_STATE.simMode) CEO_STATE.simMode = "calendar";
     }
   }
@@ -724,10 +871,25 @@
       sprintBonus = 8000000;
     }
 
-    const totalIncome = fomPrize + sponsorPayout + payDriverMoney + academyLoanIncome + usCapitalBoost + sprintBonus;
+    // Superyacht VIP sponsorship bonus
+    let yachtBonus = 0;
+    if(CEO_STATE.owner && CEO_STATE.owner.assets && CEO_STATE.owner.assets.includes("asset_yacht")) {
+      yachtBonus = 15000000;
+    }
 
-    // Expenses
-    const engCost = (CEO_STATE.engine && CEO_STATE.engine.cost) || 20000000;
+    // Works Powertrains: Customer client supply income
+    let puClientIncome = 0;
+    if(CEO_STATE.powertrains && CEO_STATE.powertrains.status === "operational" && CEO_STATE.powertrains.clients) {
+      CEO_STATE.powertrains.clients.forEach(c => {
+        puClientIncome += (c.fee || 24000000);
+      });
+    }
+
+    const totalIncome = fomPrize + sponsorPayout + payDriverMoney + academyLoanIncome + usCapitalBoost + sprintBonus + yachtBonus + puClientIncome;
+
+    // Expenses: If Works Powertrains operational, engine cost is $0!
+    const isWorksPU = (CEO_STATE.powertrains && CEO_STATE.powertrains.status === "operational");
+    const engCost = isWorksPU ? 0 : ((CEO_STATE.engine && CEO_STATE.engine.cost) || 20000000);
     const tdSalary = (CEO_STATE.techDirector && CEO_STATE.techDirector.salary) || 6000000;
     const tpSalary = (CEO_STATE.teamPrincipal && CEO_STATE.teamPrincipal.salary) || 5000000;
     const d1Salary = (CEO_STATE.driver1 && !CEO_STATE.driver1.isPay ? CEO_STATE.driver1.salary : 0);
@@ -745,6 +907,7 @@
       personalDividend = 20000000;
       if(typeof S !== "undefined" && S) {
         S.bankAccount = (S.bankAccount || 0) + personalDividend;
+        if(typeof save === "function") save();
       }
       CEO_STATE.investors.annualDividendPaid = (CEO_STATE.investors.annualDividendPaid || 0) + personalDividend;
     }
@@ -779,7 +942,14 @@
       boardComment += " Также совет обеспокоен финансовым дефицитом сезона.";
     }
 
-    CEO_STATE.boardApproval = Math.max(10, Math.min(100, CEO_STATE.boardApproval + boardDelta));
+    // Check 100% Sole Ownership immunity
+    const isSoleOwner = (CEO_STATE.ownership && CEO_STATE.ownership.isSoleOwner);
+    if(isSoleOwner) {
+      CEO_STATE.boardApproval = 100;
+      boardComment = "👑 ЕДИНОЛИЧНЫЙ ВЛАДЕЛЕЦ: Вы обладаете 100% частной собственности команды. Совет директоров упразднен, ваше положение незыблемо!";
+    } else {
+      CEO_STATE.boardApproval = Math.max(10, Math.min(100, CEO_STATE.boardApproval + boardDelta));
+    }
 
     // 4. R&D Carryover to Next Year
     let nextYearBonus = 0;
@@ -796,9 +966,12 @@
       CEO_STATE.carPerf = Math.min(99, Math.max(65, Math.round(62 + (tdSkill - 65) * 0.7 + facBonus + nextYearBonus)));
     }
 
-    // 5. Refresh Academy candidates
+    // 5. Refresh Academy candidates & reset Spygate season op
     if(CEO_STATE.academy) {
       CEO_STATE.academy.candidates = generateAcademyCandidates();
+    }
+    if(CEO_STATE.spygate) {
+      CEO_STATE.spygate.seasonOpDone = false;
     }
 
     // 6. Generate next season's FIA Directive proposal
@@ -828,10 +1001,12 @@
       academyLoanIncome: academyLoanIncome,
       usCapitalBoost: usCapitalBoost,
       sprintBonus: sprintBonus,
+      yachtBonus: yachtBonus,
+      puClientIncome: puClientIncome,
       personalDividend: personalDividend,
       boardApproval: CEO_STATE.boardApproval,
       boardComment: boardComment,
-      recommendedFiring: (wccPos >= 8)
+      recommendedFiring: (!isSoleOwner && wccPos >= 8)
     };
 
     CEO_STATE.history.unshift(summary);
@@ -853,12 +1028,15 @@
 
     // 1. Calculate final team pace index
     const tdSkill = (CEO_STATE.techDirector && CEO_STATE.techDirector.skill) || 75;
-    const engPower = (CEO_STATE.engine && CEO_STATE.engine.power) || 90;
-    const engRel = (CEO_STATE.engine && CEO_STATE.engine.rel) || 90;
+    const isWorks = (CEO_STATE.powertrains && CEO_STATE.powertrains.status === "operational");
+    const engPower = isWorks ? 97 : ((CEO_STATE.engine && CEO_STATE.engine.power) || 90);
+    const engRel = isWorks ? 95 : ((CEO_STATE.engine && CEO_STATE.engine.rel) || 90);
     const facBonus = (CEO_STATE.facilities.windTunnel + CEO_STATE.facilities.cfdSupercomputer) * 2;
     const rdBonus = (CEO_STATE.rd && CEO_STATE.rd.focus === "current" ? 5 : (CEO_STATE.rd && CEO_STATE.rd.focus === "balanced" ? 2.5 : 0));
+    const hasJet = (CEO_STATE.owner && CEO_STATE.owner.assets && CEO_STATE.owner.assets.includes("asset_jet"));
+    const jetBonus = hasJet ? 4 : 0;
 
-    const basePace = (tdSkill * 0.35) + (engPower * 0.35) + facBonus + (CEO_STATE.carPerf * 0.2) + rdBonus;
+    const basePace = (tdSkill * 0.35) + (engPower * 0.35) + facBonus + (CEO_STATE.carPerf * 0.2) + rdBonus + jetBonus;
     
     // Drivers influence
     const d1Skill = (CEO_STATE.driver1 && CEO_STATE.driver1.ovr) || 80;
@@ -924,11 +1102,14 @@
 
     // Compute pace
     const tdSkill = (CEO_STATE.techDirector && CEO_STATE.techDirector.skill) || 75;
-    const engPower = (CEO_STATE.engine && CEO_STATE.engine.power) || 90;
-    const engRel = (CEO_STATE.engine && CEO_STATE.engine.rel) || 90;
+    const isWorks = (CEO_STATE.powertrains && CEO_STATE.powertrains.status === "operational");
+    const engPower = isWorks ? 97 : ((CEO_STATE.engine && CEO_STATE.engine.power) || 90);
+    const engRel = isWorks ? 95 : ((CEO_STATE.engine && CEO_STATE.engine.rel) || 90);
     const facBonus = (CEO_STATE.facilities.windTunnel + CEO_STATE.facilities.cfdSupercomputer) * 1.5;
     const rdBonus = (CEO_STATE.rd && CEO_STATE.rd.focus === "current" ? 5 : (CEO_STATE.rd && CEO_STATE.rd.focus === "balanced" ? 2.5 : 0));
-    const effPace = (tdSkill * 0.25) + (engPower * 0.25) + facBonus + (CEO_STATE.carPerf * 0.25) + rdBonus;
+    const hasJet = (CEO_STATE.owner && CEO_STATE.owner.assets && CEO_STATE.owner.assets.includes("asset_jet"));
+    const jetBonus = hasJet ? 3.5 : 0;
+    const effPace = (tdSkill * 0.25) + (engPower * 0.25) + facBonus + (CEO_STATE.carPerf * 0.25) + rdBonus + jetBonus;
 
     // Reliability check
     const totalRel = (engRel * 0.5) + (CEO_STATE.carRel * 0.5);
@@ -1513,17 +1694,20 @@
     let votesFor = dir.aiVotesFor;
     let votesAgainst = dir.aiVotesAgainst;
 
+    const hasEstate = (CEO_STATE.owner && CEO_STATE.owner.assets && CEO_STATE.owner.assets.includes("asset_estate"));
+    const estateVote = hasEstate ? 1 : 0;
+
     if(vote === "pro") {
-      votesFor += 1;
+      votesFor += (1 + estateVote);
     } else if(vote === "contra") {
-      votesAgainst += 1;
+      votesAgainst += (1 + estateVote);
     } else if(vote === "lobby") {
       if(CEO_STATE.budget < dir.costLobby) {
         if(window.showF1Toast) window.showF1Toast(`Недостаточно средств для лоббирования! Требуется ${formatMoney(dir.costLobby)}.`, "error");
         return;
       }
       CEO_STATE.budget -= dir.costLobby;
-      votesFor += 3;
+      votesFor += (3 + estateVote);
     }
 
     const passed = (votesFor > votesAgainst);
@@ -1567,13 +1751,17 @@
       CEO_STATE.budget += 95000000;
       inv.equitySold = (inv.equitySold || 0) + 10;
       inv.deals.push("swo_fund");
+      if(CEO_STATE.ownership) CEO_STATE.ownership.share = Math.max(10, (CEO_STATE.ownership.share || 75) - 10);
       CEO_STATE.marketCap += 110000000;
-      CEO_STATE.boardApproval = Math.max(10, CEO_STATE.boardApproval - 4);
+      if(!CEO_STATE.ownership || !CEO_STATE.ownership.isSoleOwner) {
+        CEO_STATE.boardApproval = Math.max(10, CEO_STATE.boardApproval - 4);
+      }
       if(window.showF1Toast) window.showF1Toast("💰 Сделка закрыта: Суверенный фонд инвестировал $95,000,000 за 10% акций конюшни!", "success");
     } else if(dealId === "us_capital") {
       CEO_STATE.budget += 140000000;
       inv.equitySold = (inv.equitySold || 0) + 15;
       inv.deals.push("us_capital");
+      if(CEO_STATE.ownership) CEO_STATE.ownership.share = Math.max(10, (CEO_STATE.ownership.share || 75) - 15);
       CEO_STATE.marketCap += 180000000;
       if(window.showF1Toast) window.showF1Toast("💰 Консорциум из США выкупил 15% за $140,000,000 и обеспечил +$12M ежегодных спонсорских прав!", "success");
     }
@@ -1600,16 +1788,292 @@
     }
 
     inv.ipoDone = true;
+    if(CEO_STATE.ownership) CEO_STATE.ownership.share = Math.max(10, (CEO_STATE.ownership.share || 75) - 20);
     CEO_STATE.budget += 250000000;
     CEO_STATE.marketCap += 350000000;
 
     const personalPayout = 50000000;
     if(typeof S !== "undefined" && S) {
       S.bankAccount = (S.bankAccount || 0) + personalPayout;
+      if(typeof save === "function") save();
     }
 
     saveCeoState();
     if(window.showF1Toast) window.showF1Toast(`🔔 ИСТОРИЧЕСКИЙ ЗВОНОК НА NYSE! Команда провела IPO ($GLRY)! На ваш личный счет поступило $50,000,000!`, "success");
+    renderCeoModal();
+  };
+
+  // =====================================================================
+  // 🏎️ WORKS POWERTRAINS, OWNER LUXURY, 100% BUYOUT & SPYGATE ACTIONS
+  // =====================================================================
+  window.investPowertrainStage = function() {
+    if(!CEO_STATE) loadCeoState();
+    if(!CEO_STATE.powertrains) CEO_STATE.powertrains = getDefaultPowertrainsState();
+    const pu = CEO_STATE.powertrains;
+    if(pu.level >= 3) {
+      if(window.showF1Toast) window.showF1Toast("Моторный завод уже полностью построен и омологирован FIA!", "info");
+      return;
+    }
+
+    const nextStage = POWERTRAIN_STAGES[pu.level];
+    if(CEO_STATE.budget < nextStage.cost) {
+      if(window.showF1Toast) window.showF1Toast(`Недостаточно средств в бюджете! Требуется ${formatMoney(nextStage.cost)}.`, "error");
+      return;
+    }
+
+    CEO_STATE.budget -= nextStage.cost;
+    pu.level += 1;
+    pu.invested = (pu.invested || 0) + nextStage.cost;
+    CEO_STATE.marketCap += Math.round(nextStage.cost * 1.5);
+
+    if(pu.level === 3) {
+      pu.status = "operational";
+      pu.engineName = `${CEO_STATE.teamName} Powertrains V6 Turbo`;
+      CEO_STATE.engine = {
+        id: "works_powertrain",
+        name: `${CEO_STATE.teamName} Works V6 Turbo Hybrid`,
+        power: 97,
+        rel: 95,
+        cost: 0,
+        tag: "ЗАВОДСКОЙ МОТОР"
+      };
+      if(window.showF1Toast) window.showF1Toast(`🏆 ИСТОРИЧЕСКИЙ ТРИУМФ! Моторный завод F1 Powertrains запущен! Команда получила статус ЗАВОДСКОЙ КОНЮШНИ (Works Team)!`, "success");
+    } else {
+      pu.status = "building";
+      if(window.showF1Toast) window.showF1Toast(`🔧 Этап ${pu.level}/3 завершен: «${nextStage.name}» введен в строй!`, "success");
+    }
+
+    saveCeoState();
+    renderCeoModal();
+  };
+
+  window.signPuClient = function(clientId) {
+    if(!CEO_STATE) loadCeoState();
+    if(!CEO_STATE.powertrains) CEO_STATE.powertrains = getDefaultPowertrainsState();
+    const pu = CEO_STATE.powertrains;
+    if(pu.status !== "operational") {
+      if(window.showF1Toast) window.showF1Toast("Сначала необходимо достроить собственный моторный завод!", "error");
+      return;
+    }
+    if(!pu.clients) pu.clients = [];
+    if(pu.clients.length >= 2) {
+      if(window.showF1Toast) window.showF1Toast("Производственные мощности моторов загружены (максимум 2 команды-клиента)!", "error");
+      return;
+    }
+    const cand = POTENTIAL_PU_CLIENTS.find(c => c.id === clientId);
+    if(!cand) return;
+    if(pu.clients.some(c => c.id === clientId)) {
+      if(window.showF1Toast) window.showF1Toast("Контракт с этой командой уже активен!", "info");
+      return;
+    }
+
+    pu.clients.push({ id: cand.id, name: cand.name, fee: cand.fee });
+    saveCeoState();
+    if(window.showF1Toast) window.showF1Toast(`🤝 Соглашение заключено: ${cand.name} теперь закупает ваши силовые установки (+${formatMoney(cand.fee)}/сезон)!`, "success");
+    renderCeoModal();
+  };
+
+  window.terminatePuClient = function(clientId) {
+    if(!CEO_STATE) loadCeoState();
+    if(!CEO_STATE.powertrains || !CEO_STATE.powertrains.clients) return;
+    CEO_STATE.powertrains.clients = CEO_STATE.powertrains.clients.filter(c => c.id !== clientId);
+    saveCeoState();
+    if(window.showF1Toast) window.showF1Toast("Клиентский контракт на поставку моторов расторгнут.", "info");
+    renderCeoModal();
+  };
+
+  window.buyOwnerAsset = function(assetId) {
+    if(!CEO_STATE) loadCeoState();
+    if(!CEO_STATE.owner) CEO_STATE.owner = getDefaultOwnerState();
+    const asset = OWNER_LUXURY_ASSETS.find(a => a.id === assetId);
+    if(!asset) return;
+
+    if(CEO_STATE.owner.assets && CEO_STATE.owner.assets.includes(assetId)) {
+      if(window.showF1Toast) window.showF1Toast("Этот предмет роскоши уже находится в вашей личной собственности!", "info");
+      return;
+    }
+
+    const personalBank = (typeof S !== "undefined" && S && typeof S.bankAccount === "number") ? S.bankAccount : 0;
+    if(personalBank < asset.cost) {
+      if(window.showF1Toast) window.showF1Toast(`Недостаточно ЛИЧНЫХ средств на банковском счете! Требуется ${formatMoney(asset.cost)}.`, "error");
+      return;
+    }
+
+    if(typeof S !== "undefined" && S) {
+      S.bankAccount -= asset.cost;
+      if(typeof save === "function") save();
+    }
+
+    CEO_STATE.owner.assets.push(assetId);
+
+    // Apply immediate bonuses
+    if(assetId === "asset_museum") {
+      CEO_STATE.marketCap += 150000000;
+      CEO_STATE.boardApproval = Math.min(100, CEO_STATE.boardApproval + 15);
+    } else if(assetId === "asset_jet") {
+      if(CEO_STATE.driver1) CEO_STATE.driver1.ovr = Math.min(99, CEO_STATE.driver1.ovr + 3);
+      if(CEO_STATE.driver2) CEO_STATE.driver2.ovr = Math.min(99, CEO_STATE.driver2.ovr + 3);
+    } else if(assetId === "asset_hypercar") {
+      CEO_STATE.boardApproval = Math.min(100, CEO_STATE.boardApproval + 5);
+    }
+
+    saveCeoState();
+    if(window.showF1Toast) window.showF1Toast(`🎉 ${asset.name} приобретен в личную собственность основателя!`, "success");
+    renderCeoModal();
+  };
+
+  function getBuyoutCost() {
+    if(!CEO_STATE) loadCeoState();
+    const curShare = (CEO_STATE.ownership && CEO_STATE.ownership.share) || 75;
+    const remaining = Math.max(0, 100 - curShare);
+    return Math.max(40000000, Math.round(CEO_STATE.marketCap * (remaining / 100)));
+  }
+
+  window.buyoutRemainingShares = function(source) {
+    if(!CEO_STATE) loadCeoState();
+    if(!CEO_STATE.ownership) CEO_STATE.ownership = getDefaultOwnershipState();
+    if(CEO_STATE.ownership.isSoleOwner) {
+      if(window.showF1Toast) window.showF1Toast("Вы уже являетесь 100% единоличным владельцем команды!", "info");
+      return;
+    }
+
+    const cost = getBuyoutCost();
+    if(source === "personal") {
+      const personalBank = (typeof S !== "undefined" && S && typeof S.bankAccount === "number") ? S.bankAccount : 0;
+      if(personalBank < cost) {
+        if(window.showF1Toast) window.showF1Toast(`Недостаточно средств на личном счете! Требуется ${formatMoney(cost)}.`, "error");
+        return;
+      }
+      if(typeof S !== "undefined" && S) {
+        S.bankAccount -= cost;
+        if(typeof save === "function") save();
+      }
+    } else {
+      if(CEO_STATE.budget < cost + 25000000) {
+        if(window.showF1Toast) window.showF1Toast(`Недостаточно свободного бюджета команды! Требуется ${formatMoney(cost)} + $25M на операционный резерв.`, "error");
+        return;
+      }
+      CEO_STATE.budget -= cost;
+    }
+
+    CEO_STATE.ownership.isSoleOwner = true;
+    CEO_STATE.ownership.share = 100;
+    CEO_STATE.boardApproval = 100;
+    if(CEO_STATE.investors) {
+      CEO_STATE.investors.equitySold = 0;
+      CEO_STATE.investors.ipoDone = false; // Delisted and fully privatized!
+    }
+
+    saveCeoState();
+    if(window.showF1Toast) window.showF1Toast(`👑 ИСТОРИЧЕСКИЙ МЕНЕДЖЕРСКИЙ ВЫКУП! Вы консолидировали 100% акций! Совет директоров упразднен, ваше слово — абсолютный закон!`, "success");
+    renderCeoModal();
+  };
+
+  window.withdrawFounderProfit = function(amount) {
+    if(!CEO_STATE) loadCeoState();
+    if(!CEO_STATE.ownership || !CEO_STATE.ownership.isSoleOwner) {
+      if(window.showF1Toast) window.showF1Toast("Вывод чистой прибыли доступен только при 100% единоличном владении!", "error");
+      return;
+    }
+    if(CEO_STATE.budget < amount + 20000000) {
+      if(window.showF1Toast) window.showF1Toast(`Необходимо оставить минимум $20,000,000 в бюджете команды на операционную деятельность!`, "error");
+      return;
+    }
+
+    CEO_STATE.budget -= amount;
+    if(typeof S !== "undefined" && S) {
+      S.bankAccount = (S.bankAccount || 0) + amount;
+      if(typeof save === "function") save();
+    }
+
+    saveCeoState();
+    if(window.showF1Toast) window.showF1Toast(`💸 Выплата основателю: ${formatMoney(amount)} переведены на ваш личный счет!`, "success");
+    renderCeoModal();
+  };
+
+  window.runSpyOperation = function(opId) {
+    if(!CEO_STATE) loadCeoState();
+    if(!CEO_STATE.spygate) CEO_STATE.spygate = getDefaultSpygateState();
+    const spy = CEO_STATE.spygate;
+    const op = SPYGATE_OPERATIONS.find(o => o.id === opId);
+    if(!op) return;
+
+    if(spy.seasonOpDone) {
+      if(window.showF1Toast) window.showF1Toast("В этом сезоне вы уже провели секретную операцию! Повторный шпионаж привлечет внимание FIA.", "error");
+      return;
+    }
+
+    if(CEO_STATE.budget < op.cost) {
+      if(window.showF1Toast) window.showF1Toast(`Недостаточно средств для спецоперации! Требуется ${formatMoney(op.cost)}.`, "error");
+      return;
+    }
+
+    CEO_STATE.budget -= op.cost;
+    spy.seasonOpDone = true;
+    spy.operationsDone = (spy.operationsDone || 0) + 1;
+
+    // Roll for detection
+    const isCaught = (Math.random() * 100 < op.risk);
+    if(isCaught) {
+      // Punishments
+      if(opId === "op_cad_aero") {
+        CEO_STATE.budget = Math.max(0, CEO_STATE.budget - 20000000);
+        if(CEO_STATE.calendarProgress) {
+          CEO_STATE.calendarProgress.totalPoints = Math.max(0, CEO_STATE.calendarProgress.totalPoints - 20);
+        }
+        if(!CEO_STATE.ownership || !CEO_STATE.ownership.isSoleOwner) {
+          CEO_STATE.boardApproval = Math.max(10, CEO_STATE.boardApproval - 25);
+        }
+        CEO_STATE.marketCap = Math.max(100000000, CEO_STATE.marketCap - 80000000);
+      } else if(opId === "op_pu_telemetry") {
+        CEO_STATE.budget = Math.max(0, CEO_STATE.budget - 10000000);
+        if(!CEO_STATE.ownership || !CEO_STATE.ownership.isSoleOwner) {
+          CEO_STATE.boardApproval = Math.max(10, CEO_STATE.boardApproval - 15);
+        }
+      } else if(opId === "op_poach_lead") {
+        CEO_STATE.budget = Math.max(0, CEO_STATE.budget - 16000000);
+      }
+      if(window.showF1Toast) window.showF1Toast(`${op.failTitle} ${op.failPenalty}`, "error");
+    } else {
+      // Success bonuses
+      if(opId === "op_cad_aero") {
+        CEO_STATE.carPerf = Math.min(99, CEO_STATE.carPerf + 8);
+        CEO_STATE.marketCap += 40000000;
+      } else if(opId === "op_pu_telemetry") {
+        CEO_STATE.carRel = Math.min(99, CEO_STATE.carRel + 5);
+        CEO_STATE.carPerf = Math.min(99, CEO_STATE.carPerf + 4);
+      } else if(opId === "op_poach_lead") {
+        if(CEO_STATE.techDirector) CEO_STATE.techDirector.skill = Math.min(99, CEO_STATE.techDirector.skill + 7);
+        CEO_STATE.carPerf = Math.min(99, CEO_STATE.carPerf + 5);
+      }
+      if(window.showF1Toast) window.showF1Toast(`🕵️ ${op.successTitle} Получено: ${op.successBonus}`, "success");
+    }
+
+    saveCeoState();
+    renderCeoModal();
+  };
+
+  window.upgradeCounterEspionage = function() {
+    if(!CEO_STATE) loadCeoState();
+    if(!CEO_STATE.spygate) CEO_STATE.spygate = getDefaultSpygateState();
+    const cur = CEO_STATE.spygate.securityLevel || 1;
+    if(cur >= 3) {
+      if(window.showF1Toast) window.showF1Toast("Контрразведка и безопасность базы развиты до максимума (Tier 3)!", "info");
+      return;
+    }
+
+    const nextLvl = COUNTER_ESPIONAGE_LEVELS[cur];
+    if(CEO_STATE.budget < nextLvl.cost) {
+      if(window.showF1Toast) window.showF1Toast(`Недостаточно средств для модернизации безопасности! Требуется ${formatMoney(nextLvl.cost)}.`, "error");
+      return;
+    }
+
+    CEO_STATE.budget -= nextLvl.cost;
+    CEO_STATE.spygate.securityLevel = cur + 1;
+    CEO_STATE.marketCap += Math.round(nextLvl.cost * 1.3);
+
+    saveCeoState();
+    if(window.showF1Toast) window.showF1Toast(`🛡️ Безопасность базы повышена до Tier ${CEO_STATE.spygate.securityLevel}: «${nextLvl.name}»!`, "success");
     renderCeoModal();
   };
 
@@ -1936,13 +2400,15 @@
         </div>
       </div>
 
-      <!-- Tabs Navigation (6 Fullscreen Modules) -->
+      <!-- Tabs Navigation (8 Fullscreen Modules) -->
       <div class="wealth-nav-tabs ceo-nav-tabs">
         <button class="wealth-tab-btn active" id="tabCeoOverview" onclick="window.switchCeoTab('overview')">🏎️ Штаб и Болид</button>
-        <button class="wealth-tab-btn" id="tabCeoFactory" onclick="window.switchCeoTab('factory')">🏭 База и R&D</button>
+        <button class="wealth-tab-btn" id="tabCeoFactory" onclick="window.switchCeoTab('factory')">🏭 База и Моторы</button>
+        <button class="wealth-tab-btn" id="tabCeoSpygate" onclick="window.switchCeoTab('spygate')">🕵️ Шпионаж Spygate</button>
         <button class="wealth-tab-btn" id="tabCeoPolitics" onclick="window.switchCeoTab('politics')">🏛️ Политика FIA</button>
         <button class="wealth-tab-btn" id="tabCeoAcademy" onclick="window.switchCeoTab('academy')">🎓 Академия пилотов</button>
-        <button class="wealth-tab-btn" id="tabCeoBoard" onclick="window.switchCeoTab('board')">📈 Совет и Инвесторы</button>
+        <button class="wealth-tab-btn" id="tabCeoBoard" onclick="window.switchCeoTab('board')">📈 Совет и Выкуп</button>
+        <button class="wealth-tab-btn" id="tabCeoOwner" onclick="window.switchCeoTab('owner')">🛥️ Активы Владельца</button>
         <button class="wealth-tab-btn" id="tabCeoLegacy" onclick="window.switchCeoTab('legacy')">🏆 Наследие</button>
       </div>
 
@@ -1983,18 +2449,30 @@
     const mVal = document.getElementById("ceoMarketCapVal");
     if(mVal) mVal.textContent = formatMoney(CEO_STATE.marketCap);
     const aVal = document.getElementById("ceoApprovalVal");
-    if(aVal) aVal.textContent = `${CEO_STATE.boardApproval}%`;
+    if(aVal) {
+      if(CEO_STATE.ownership && CEO_STATE.ownership.isSoleOwner) {
+        aVal.textContent = "100% 👑";
+      } else {
+        aVal.textContent = `${CEO_STATE.boardApproval}%`;
+      }
+    }
     const sVal = document.getElementById("ceoSeasonVal");
     if(sVal) sVal.textContent = `Сезон ${CEO_STATE.seasonNum} · ${CEO_STATE.year}`;
 
-    // IPO badge in header
+    // Header Badges
     const ipoBadgeEl = document.getElementById("ceoIpoHeaderBadge");
     if(ipoBadgeEl) {
-      if(CEO_STATE.investors && CEO_STATE.investors.ipoDone) {
-        ipoBadgeEl.innerHTML = `<span class="ceo-ipo-pill">🏛️ NYSE: $GLRY</span>`;
-      } else {
-        ipoBadgeEl.innerHTML = "";
+      let badgesHtml = "";
+      if(CEO_STATE.ownership && CEO_STATE.ownership.isSoleOwner) {
+        badgesHtml += `<span class="ceo-sole-badge">👑 100% ВЛАДЕЛЕЦ</span> `;
       }
+      if(CEO_STATE.powertrains && CEO_STATE.powertrains.status === "operational") {
+        badgesHtml += `<span class="ceo-works-badge">⚡ WORKS PU</span> `;
+      }
+      if(CEO_STATE.investors && CEO_STATE.investors.ipoDone) {
+        badgesHtml += `<span class="ceo-ipo-pill">🏛️ NYSE: $GLRY</span>`;
+      }
+      ipoBadgeEl.innerHTML = badgesHtml;
     }
 
     // Simulation mode toggle buttons
@@ -2019,7 +2497,7 @@
     }
 
     // Update tab buttons
-    ["overview", "factory", "politics", "academy", "board", "legacy"].forEach(t => {
+    ["overview", "factory", "spygate", "politics", "academy", "board", "owner", "legacy"].forEach(t => {
       const btn = document.getElementById("tabCeo" + t.charAt(0).toUpperCase() + t.slice(1));
       if(btn) {
         if(t === activeCeoTab) btn.classList.add("active");
@@ -2036,18 +2514,25 @@
       renderOverviewTab(body);
     } else if(activeCeoTab === "factory") {
       renderFactoryTab(body);
+    } else if(activeCeoTab === "spygate") {
+      renderSpygateTab(body);
     } else if(activeCeoTab === "politics") {
       renderPoliticsTab(body);
     } else if(activeCeoTab === "academy") {
       renderAcademyTab(body);
     } else if(activeCeoTab === "board") {
       renderBoardTab(body);
+    } else if(activeCeoTab === "owner") {
+      renderOwnerTab(body);
     } else {
       renderLegacyTab(body);
     }
   }
 
-  window.renderCeoModal = renderCeoPage; // backward compatibility
+  function renderCeoModal() {
+    renderCeoPage();
+  }
+  window.renderCeoModal = renderCeoModal;
 
   function renderOverviewTab(container) {
     const td = CEO_STATE.techDirector;
@@ -2206,37 +2691,149 @@
       return pips;
     };
 
+    const pu = CEO_STATE.powertrains || getDefaultPowertrainsState();
+    const isWorksPU = (pu.status === "operational");
+
     container.innerHTML = `
       <div class="ceo-factory-layout">
-        <!-- Section: Engine Partners -->
+        <!-- Section: Engine Partners & Works Powertrain Program -->
         <div class="ceo-sec-block">
           <div class="csb-header">
             <div>
-              <span class="f1-mono-sub">POWER UNIT ALLIANCE</span>
-              <h3>🔧 ПОСТАВЩИК СИЛОВОЙ УСТАНОВКИ V6 TURBO HYBRID</h3>
+              <span class="f1-mono-sub">POWER UNIT ALLIANCE & WORKS ENGINE PROGRAM</span>
+              <h3>🔧 СИЛОВАЯ УСТАНОВКА И ЗАВОДСКОЙ МОТОРНЫЙ ЦЕНТР</h3>
             </div>
           </div>
-          <div class="ceo-engines-strip">
-            ${ENGINE_SUPPLIERS.map(e => {
-              const isSelected = (currentEng.id === e.id);
-              return `
-                <div class="ceo-engine-box ${isSelected ? 'active' : ''}">
-                  <div class="ceb-top">
-                    <span class="ceb-tag">${e.tag}</span>
-                    <span class="ceb-cost">${formatMoney(e.cost)}/год</span>
+
+          <!-- Works Engine Card -->
+          <div class="ceo-powertrain-card ${isWorksPU ? 'works-active' : ''}">
+            <div class="cpc-header">
+              <div class="cpc-badge">${isWorksPU ? '🏆 ПОЛНОЦЕННЫЙ ЗАВОДСКОЙ СТАТУС (WORKS TEAM)' : '🏗️ ПРОГРАММА СОЗДАНИЯ ЗАВОДСКОГО МОТОРА'}</div>
+              <div class="cpc-title">${isWorksPU ? `${CEO_STATE.teamName} Powertrains V6 Turbo Works` : `${CEO_STATE.teamName} Powertrains Project`}</div>
+              <div class="cpc-sub">
+                ${isWorksPU ? 
+                  'Команда разрабатывает и производит собственные двигатели V6 Turbo Hybrid. Расходы на закупку моторов: $0 / сезон.' : 
+                  'Инвестируйте в строительство собственного моторного завода, чтобы получить статус заводской команды и продавать моторы другим конюшням.'}
+              </div>
+            </div>
+
+            ${isWorksPU ? `
+              <div class="cpc-works-body">
+                <div class="cpc-metrics-row">
+                  <div class="cpm-box">
+                    <span class="cpm-lbl">МОЩНОСТЬ ДВИГАТЕЛЯ</span>
+                    <div class="cpm-val">97 <small>/ 100</small></div>
                   </div>
-                  <div class="ceb-name">${e.name}</div>
-                  <div class="ceb-stats">
-                    <span>Мощность ERS/ICE: <b>${e.power}/100</b></span> · 
-                    <span>Надежность: <b>${e.rel}%</b></span>
+                  <div class="cpm-box">
+                    <span class="cpm-lbl">НАДЕЖНОСТЬ СИСТЕМЫ</span>
+                    <div class="cpm-val">95%</div>
                   </div>
-                  <button class="btn ${isSelected ? 'ceb-btn-active' : 'ceb-btn-pick'}" onclick="window.selectEngineSupplier('${e.id}')" ${isSelected ? 'disabled' : ''}>
-                    ${isSelected ? '✅ ТЕКУЩИЙ КОНТРАКТ' : 'ЗАКЛЮЧИТЬ КОНТРАКТ'}
-                  </button>
+                  <div class="cpm-box">
+                    <span class="cpm-lbl">ЗАТРАТЫ НА ЗАКУПКУ</span>
+                    <div class="cpm-val pay-green">$0 / сезон</div>
+                  </div>
                 </div>
-              `;
-            }).join("")}
+
+                <!-- Customer Supply Section -->
+                <div class="cpc-clients-wrap">
+                  <div class="cpc-clients-head">
+                    <span>🤝 ПОСТАВКА МОТОРОВ КОМАНДАМ-КЛИЕНТАМ (CUSTOMER TEAMS):</span>
+                    <span class="cpc-clients-count">Занято мест: <b>${(pu.clients || []).length}/2</b></span>
+                  </div>
+                  <div class="cpc-clients-grid">
+                    ${POTENTIAL_PU_CLIENTS.map(cl => {
+                      const isClient = (pu.clients || []).some(c => c.id === cl.id);
+                      return `
+                        <div class="cpc-client-box ${isClient ? 'active' : ''}">
+                          <div class="ccb-top">
+                            <span class="ccb-flag">${cl.flag}</span>
+                            <span class="ccb-fee">+${formatMoney(cl.fee)} / сезон</span>
+                          </div>
+                          <div class="ccb-name">${cl.name}</div>
+                          <div class="ccb-desc">${cl.desc}</div>
+                          <div class="ccb-action">
+                            ${isClient ? `
+                              <button class="btn s-btn ccb-btn remove" onclick="window.terminatePuClient('${cl.id}')">Расторгнуть контракт</button>
+                            ` : `
+                              <button class="btn s-btn ccb-btn add" onclick="window.signPuClient('${cl.id}')" ${(pu.clients || []).length >= 2 ? 'disabled' : ''}>
+                                ${(pu.clients || []).length >= 2 ? 'Лимит поставок исчерпан' : 'Поставлять моторы'}
+                              </button>
+                            `}
+                          </div>
+                        </div>
+                      `;
+                    }).join("")}
+                  </div>
+                </div>
+              </div>
+            ` : `
+              <div class="cpc-building-body">
+                <div class="cpc-progress-row">
+                  <div class="cpc-p-info">
+                    <span>Прогресс строительства: <b>Этап ${pu.level} из 3</b></span>
+                    <span>Инвестировано: <b>${formatMoney(pu.invested || 0)}</b> / $120.0M</span>
+                  </div>
+                  <div class="cpc-bar-track">
+                    <div class="cpc-bar-fill" style="width: ${(pu.level / 3) * 100}%;"></div>
+                  </div>
+                </div>
+
+                <div class="cpc-stages-list">
+                  ${POWERTRAIN_STAGES.map((st, idx) => {
+                    const isDone = (idx < pu.level);
+                    const isCurrent = (idx === pu.level);
+                    return `
+                      <div class="cpc-stage-item ${isDone ? 'done' : isCurrent ? 'current' : 'locked'}">
+                        <div class="csi-left">
+                          <span class="csi-pip">${isDone ? '✅' : isCurrent ? '🔧' : '🔒'}</span>
+                          <div>
+                            <div class="csi-name">Этап ${st.level}: ${st.name}</div>
+                            <div class="csi-desc">${st.desc}</div>
+                          </div>
+                        </div>
+                        <div class="csi-right">
+                          <span class="csi-cost">${formatMoney(st.cost)}</span>
+                        </div>
+                      </div>
+                    `;
+                  }).join("")}
+                </div>
+
+                <div class="cpc-invest-actions">
+                  ${pu.level < 3 ? `
+                    <button class="btn s-btn cpc-invest-btn ${CEO_STATE.budget >= POWERTRAIN_STAGES[pu.level].cost ? 'sc-buy' : 'sc-locked'}" onclick="window.investPowertrainStage()" ${CEO_STATE.budget < POWERTRAIN_STAGES[pu.level].cost ? 'disabled' : ''}>
+                      🏗️ Инвестировать ${formatMoney(POWERTRAIN_STAGES[pu.level].cost)} в Этап ${pu.level + 1}
+                    </button>
+                  ` : ''}
+                </div>
+              </div>
+            `}
           </div>
+
+          ${!isWorksPU ? `
+            <div class="cpc-supplier-sub">ИЛИ ЗАКЛЮЧИТЕ КЛИЕНТСКИЙ ДОГОВОР СО СТОРОННИМ ПОСТАВЩИКОМ:</div>
+            <div class="ceo-engines-strip">
+              ${ENGINE_SUPPLIERS.map(e => {
+                const isSelected = (currentEng.id === e.id);
+                return `
+                  <div class="ceo-engine-box ${isSelected ? 'active' : ''}">
+                    <div class="ceb-top">
+                      <span class="ceb-tag">${e.tag}</span>
+                      <span class="ceb-cost">${formatMoney(e.cost)}/год</span>
+                    </div>
+                    <div class="ceb-name">${e.name}</div>
+                    <div class="ceb-stats">
+                      <span>Мощность ERS/ICE: <b>${e.power}/100</b></span> · 
+                      <span>Надежность: <b>${e.rel}%</b></span>
+                    </div>
+                    <button class="btn ${isSelected ? 'ceb-btn-active' : 'ceb-btn-pick'}" onclick="window.selectEngineSupplier('${e.id}')" ${isSelected ? 'disabled' : ''}>
+                      ${isSelected ? '✅ ТЕКУЩИЙ КОНТРАКТ' : 'ЗАКЛЮЧИТЬ КОНТРАКТ'}
+                    </button>
+                  </div>
+                `;
+              }).join("")}
+            </div>
+          ` : ''}
         </div>
 
         <!-- Section: Title Sponsors -->
@@ -2627,29 +3224,102 @@
   function renderBoardTab(container) {
     const history = CEO_STATE.history || [];
     const inv = CEO_STATE.investors || { equitySold: 0, deals: [], ipoDone: false };
+    const own = CEO_STATE.ownership || getDefaultOwnershipState();
+    const isSoleOwner = own.isSoleOwner;
+    const buyoutCost = getBuyoutCost();
+    const personalBank = (typeof S !== "undefined" && S && typeof S.bankAccount === "number") ? S.bankAccount : 0;
+    const canAffordPersonal = (personalBank >= buyoutCost);
+    const canAffordTeam = (CEO_STATE.budget >= buyoutCost + 25000000);
 
     const meetsIpo = (CEO_STATE.marketCap >= 1500000000 && CEO_STATE.boardApproval >= 75);
 
     container.innerHTML = `
       <div class="ceo-board-content">
-        <!-- Board Hero -->
-        <div class="ceo-board-hero">
-          <div class="cbh-left">
-            <span class="f1-mono-sub">BOARD OF DIRECTORS CONFIDENCE</span>
-            <div class="cbh-title">🏛️ ДОВЕРИЕ СОВЕТА АКЦИОНЕРОВ: <b>${CEO_STATE.boardApproval}%</b></div>
-            <div class="cbh-desc">
-              Как управляющий совладелец, вы несете персональную ответственность перед советом директоров. 
-              ${CEO_STATE.boardApproval >= 70 ? 
-                '✅ Акционеры довольны текущим курсом развития и одобряют выбранную стратегию.' : 
-                '⚠️ Внимание: Низкий уровень доверия акционеров! Совет настаивает на кадровых перестановках в техническом штабе.'}
+        <!-- Ownership & Board Hero -->
+        ${isSoleOwner ? `
+          <div class="ceo-sole-hero">
+            <div class="csh-crown">👑</div>
+            <div class="csh-info">
+              <span class="f1-mono-sub">ABSOLUTE PRIVATE GOVERNANCE · 100% PRIVATE EQUITY</span>
+              <h2>ЕДИНОЛИЧНЫЙ ВЛАДЕЛЕЦ И ХОЗЯИН КОНЮШНИ (100% АКЦИЙ)</h2>
+              <div class="csh-sub">
+                Совет директоров полностью упразднен. Все ключевые решения принимаются лично вами без риска вотума недоверия или увольнения! 
+                Вы вправе переводить свободную прибыль команды на свой личный счет в любое время.
+              </div>
             </div>
           </div>
-          <div class="cbh-gauge-wrap">
-            <div class="cbh-gauge-bar">
-              <div class="cbh-gauge-fill" style="width: ${CEO_STATE.boardApproval}%; background: ${CEO_STATE.boardApproval >= 70 ? '#10b981' : CEO_STATE.boardApproval >= 45 ? '#f59e0b' : '#ef4444'};"></div>
+
+          <!-- Direct Founder Cashout Module -->
+          <div class="ceo-sec-block">
+            <div class="csb-header">
+              <div>
+                <span class="f1-mono-sub">FOUNDER PROFIT WITHDRAWAL & DIVIDENDS</span>
+                <h3>💸 ВЫВОД ПРИБЫЛИ КОМАНДЫ НА ЛИЧНЫЙ СЧЕТ ОСНОВАТЕЛЯ</h3>
+              </div>
+            </div>
+            <div class="ceo-cashout-box">
+              <div class="ccb-text">
+                Баланс свободных средств команды: <b>${formatMoney(CEO_STATE.budget)}</b> (необходимо сохранять минимум $20M на операционную деятельность).
+                Выберите сумму для мгновенного зачисления на ваш персональный счет (${formatMoney(personalBank)}):
+              </div>
+              <div class="ccb-actions">
+                <button class="btn s-btn ccb-cash-btn" onclick="window.withdrawFounderProfit(10000000)" ${CEO_STATE.budget < 30000000 ? 'disabled' : ''}>
+                  💰 Вывести $10,000,000
+                </button>
+                <button class="btn s-btn ccb-cash-btn" onclick="window.withdrawFounderProfit(25000000)" ${CEO_STATE.budget < 45000000 ? 'disabled' : ''}>
+                  💰 Вывести $25,000,000
+                </button>
+                <button class="btn s-btn ccb-cash-btn" onclick="window.withdrawFounderProfit(50000000)" ${CEO_STATE.budget < 70000000 ? 'disabled' : ''}>
+                  💰 Вывести $50,000,000
+                </button>
+              </div>
             </div>
           </div>
-        </div>
+        ` : `
+          <!-- Board Hero with Gauge -->
+          <div class="ceo-board-hero">
+            <div class="cbh-left">
+              <span class="f1-mono-sub">BOARD OF DIRECTORS CONFIDENCE</span>
+              <div class="cbh-title">🏛️ ДОВЕРИЕ СОВЕТА АКЦИОНЕРОВ: <b>${CEO_STATE.boardApproval}%</b></div>
+              <div class="cbh-desc">
+                Как управляющий совладелец (доля: <b>${own.share || 75}%</b>), вы несете персональную ответственность перед советом директоров. 
+                ${CEO_STATE.boardApproval >= 70 ? 
+                  '✅ Акционеры довольны текущим курсом развития и одобряют выбранную стратегию.' : 
+                  '⚠️ Внимание: Низкий уровень доверия акционеров! Совет настаивает на кадровых перестановках в техническом штабе.'}
+              </div>
+            </div>
+            <div class="cbh-gauge-wrap">
+              <div class="cbh-gauge-bar">
+                <div class="cbh-gauge-fill" style="width: ${CEO_STATE.boardApproval}%; background: ${CEO_STATE.boardApproval >= 70 ? '#10b981' : CEO_STATE.boardApproval >= 45 ? '#f59e0b' : '#ef4444'};"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Management Buyout (MBO) 100% Card -->
+          <div class="ceo-mbo-card">
+            <div class="cmc-head">
+              <span class="cmc-tag">MANAGEMENT BUYOUT (MBO)</span>
+              <span class="cmc-share">Ваша текущая доля: <b>${own.share || 75}%</b> · К выкупу: <b>${100 - (own.share || 75)}%</b></span>
+            </div>
+            <div class="cmc-title">👑 ПОЛНЫЙ ВЫКУП КОМАНДЫ В ЕДИНОЛИЧНУЮ СОБСТВЕННОСТЬ (100%)</div>
+            <div class="cmc-desc">
+              Консолидируйте все оставшиеся доли миноритариев и внешних акционеров в своих руках. 
+              Совет директоров будет упразднен, риск увольнения исчезнет навсегда, а вы получите право свободно выводить любую прибыль команды на свой счет!
+            </div>
+            <div class="cmc-cost-row">
+              <span>Стоимость консолидации 100% пакета:</span>
+              <b class="gold">${formatMoney(buyoutCost)}</b>
+            </div>
+            <div class="cmc-btns">
+              <button class="btn s-btn ${canAffordPersonal ? 'sc-buy' : 'sc-locked'}" onclick="window.buyoutRemainingShares('personal')" ${!canAffordPersonal ? 'disabled' : ''}>
+                💳 Выкупить из ЛИЧНЫХ средств (${formatMoney(buyoutCost)})
+              </button>
+              <button class="btn s-btn ${canAffordTeam ? 'sc-buy' : 'sc-locked'}" onclick="window.buyoutRemainingShares('team')" ${!canAffordTeam ? 'disabled' : ''}>
+                🏢 Выкупить из БЮДЖЕТА команды (${formatMoney(buyoutCost)})
+              </button>
+            </div>
+          </div>
+        `}
 
         <!-- Section: Investors, Sovereign Wealth Funds & NYSE IPO -->
         <div class="ceo-sec-block">
@@ -2761,6 +3431,210 @@
               `).join("")}
             </div>
           `}
+        </div>
+      </div>
+    `;
+  }
+
+  // =====================================================================
+  // 🕵️ SPYGATE TAB
+  // =====================================================================
+  function renderSpygateTab(container) {
+    if(!CEO_STATE) loadCeoState();
+    if(!CEO_STATE.spygate) CEO_STATE.spygate = getDefaultSpygateState();
+    const spy = CEO_STATE.spygate;
+
+    const curSec = COUNTER_ESPIONAGE_LEVELS[spy.securityLevel - 1] || COUNTER_ESPIONAGE_LEVELS[0];
+    const nextSec = (spy.securityLevel < 3) ? COUNTER_ESPIONAGE_LEVELS[spy.securityLevel] : null;
+
+    container.innerHTML = `
+      <div class="ceo-spygate-content">
+        <!-- Spygate Hero -->
+        <div class="ceo-spygate-hero">
+          <div class="csh-top">
+            <span class="f1-mono-sub">CLANDESTINE PADDOCK OPERATIONS & INDUSTRIAL ESPIONAGE</span>
+            <div class="csh-title">🕵️ ОТДЕЛ ТАЙНЫХ ОПЕРАЦИЙ И РАЗВЕДКИ («SPYGATE»)</div>
+          </div>
+          <div class="csh-desc">
+            Формула-1 — это не только секундомер на трассе, но и битва разведданных за закрытыми дверями. 
+            Похищение чертежей аэродинамики, взлом зашифрованных радиоканалов телеметрии и тайный переманивание инженеров. 
+            Но помните: если FIA или Всемирный Совет по автоспорту раскроют операцию — последуют драконовские штрафы и снятие очков!
+          </div>
+          <div class="csh-status-strip">
+            <div class="csh-status-pill ${spy.seasonOpDone ? 'used' : 'ready'}">
+              ${spy.seasonOpDone ? '⏳ Операция этого сезона проведена (Лимит 1 оп / сезон)' : '✅ Разведгруппа в боевой готовности'}
+            </div>
+            <div class="csh-status-pill sec">
+              🛡️ Защита базы: <b>Tier ${spy.securityLevel}/3 («${curSec.name}»)</b>
+            </div>
+            <div class="csh-status-pill">
+              📁 Проведено спецопераций: <b>${spy.operationsDone || 0}</b>
+            </div>
+          </div>
+        </div>
+
+        <!-- Operations Grid -->
+        <div class="ceo-sec-block">
+          <div class="csb-header">
+            <div>
+              <span class="f1-mono-sub">BLACK OPS COVERT MISSIONS</span>
+              <h3>🕶️ ДОСТУПНЫЕ СПЕЦОПЕРАЦИИ ПРОМЫШЛЕННОГО ШПИОНАЖА</h3>
+            </div>
+          </div>
+
+          <div class="ceo-spygate-grid">
+            ${SPYGATE_OPERATIONS.map(op => {
+              const canAfford = (CEO_STATE.budget >= op.cost);
+              const isLocked = spy.seasonOpDone;
+              return `
+                <div class="ceo-spy-card">
+                  <div class="csc-head">
+                    <div class="csc-icon">${op.icon}</div>
+                    <div class="csc-meta">
+                      <span class="csc-tag">BLACK OP</span>
+                      <span class="csc-risk-badge">Риск разоблачения: <b>${op.risk}%</b></span>
+                    </div>
+                  </div>
+                  <div class="csc-title">${op.title}</div>
+                  <div class="csc-desc">${op.desc}</div>
+                  
+                  <div class="csc-impact-box">
+                    <div class="csc-gain">
+                      <span class="cib-lbl">ПРИ УСПЕХЕ:</span>
+                      <div class="cib-val gain">${op.successBonus}</div>
+                    </div>
+                    <div class="csc-loss">
+                      <span class="cib-lbl">ПРИ ПРОВАЛЕ (FIA):</span>
+                      <div class="cib-val loss">${op.failPenalty}</div>
+                    </div>
+                  </div>
+
+                  <div class="csc-cost-row">
+                    <span>Бюджет спецоперации:</span>
+                    <b>${formatMoney(op.cost)}</b>
+                  </div>
+
+                  <div class="csc-actions">
+                    <button class="btn s-btn csc-btn-spy ${!canAfford || isLocked ? 'locked' : ''}" onclick="window.runSpyOperation('${op.id}')" ${!canAfford || isLocked ? 'disabled' : ''}>
+                      ${isLocked ? 'Лимит сезона исчерпан' : canAfford ? '🚀 НАЧАТЬ СПЕЦОПЕРАЦИЮ' : 'Недостаточно бюджета'}
+                    </button>
+                  </div>
+                </div>
+              `;
+            }).join("")}
+          </div>
+        </div>
+
+        <!-- Counter-Espionage Defense Upgrade -->
+        <div class="ceo-sec-block">
+          <div class="csb-header">
+            <div>
+              <span class="f1-mono-sub">FACTORY COUNTER-INTELLIGENCE & CYBER SECURITY</span>
+              <h3>🛡️ КОНТРРАЗВЕДКА И ЗАЩИТА ТЕХНОЛОГИЙ БАЗЫ</h3>
+            </div>
+          </div>
+
+          <div class="ceo-counter-sec-card">
+            <div class="css-info">
+              <div class="css-title">Текущий уровень безопасности: <b>Tier ${spy.securityLevel}/3 — ${curSec.name}</b></div>
+              <div class="css-desc">${curSec.desc}</div>
+              <div class="css-perk">
+                ${spy.securityLevel >= 3 ? 
+                  '🏆 МАКСИМАЛЬНАЯ ЗАЩИТА: База полностью экранирована клетками Фарадея. Любой шпионаж со стороны соперников гарантированно пресекается!' : 
+                  '⚠️ Предупреждение: Конкурирующие команды могут попытаться переманить ваших сотрудников или выкрасть аэродинамические новинки во время сезона.'}
+              </div>
+            </div>
+            <div class="css-action">
+              ${nextSec ? `
+                <button class="btn s-btn ${CEO_STATE.budget >= nextSec.cost ? 'sc-buy' : 'sc-locked'}" onclick="window.upgradeCounterEspionage()" ${CEO_STATE.budget < nextSec.cost ? 'disabled' : ''}>
+                  🛡️ Установить «${nextSec.name}» (${formatMoney(nextSec.cost)})
+                </button>
+              ` : `
+                <div class="css-badge-maxed">✅ МАКСИМАЛЬНЫЙ УРОВЕНЬ ЗАЩИТЫ TIER 3</div>
+              `}
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  // =====================================================================
+  // 🛥️ OWNER'S LUXURY ASSETS TAB
+  // =====================================================================
+  function renderOwnerTab(container) {
+    if(!CEO_STATE) loadCeoState();
+    if(!CEO_STATE.owner) CEO_STATE.owner = getDefaultOwnerState();
+    const assets = CEO_STATE.owner.assets || [];
+    const personalBank = (typeof S !== "undefined" && S && typeof S.bankAccount === "number") ? S.bankAccount : 0;
+
+    container.innerHTML = `
+      <div class="ceo-owner-content">
+        <!-- Owner Hero Banner -->
+        <div class="ceo-owner-hero">
+          <div class="coh-badge">👑 OWNER & FOUNDER PRIVATE WEALTH & LUXURY</div>
+          <div class="coh-flex">
+            <div class="coh-left">
+              <h2>🛥️ ЛИЧНЫЕ АКТИВЫ И ВЛАСТЬ ОСНОВАТЕЛЯ</h2>
+              <div class="coh-desc">
+                Этот раздел финансируется исключительно из вашего <b>ЛИЧНОГО банковского счета</b>, накопленного за призовые пилота, кэшаут от IPO и командные дивиденды.
+                Приобретенные супер-активы дают постоянное влияние, авторитет в паддоке и прямые преимущества для вашей команды!
+              </div>
+            </div>
+            <div class="coh-bank-card">
+              <span class="cbc-lbl">ЛИЧНЫЙ БАНКОВСКИЙ СЧЕТ</span>
+              <div class="cbc-val">${formatMoney(personalBank)}</div>
+              <span class="cbc-sub">Доступно для личных инвестиций</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Assets Grid -->
+        <div class="ceo-sec-block">
+          <div class="csb-header">
+            <div>
+              <span class="f1-mono-sub">EXCLUSIVE HIGH-STATUS ASSETS & PERKS</span>
+              <h3>💎 КОЛЛЕКЦИЯ РОСКОШИ И СТАТУСНЫХ ОБЪЕКТОВ</h3>
+            </div>
+          </div>
+
+          <div class="ceo-owner-grid">
+            ${OWNER_LUXURY_ASSETS.map(asset => {
+              const isOwned = assets.includes(asset.id);
+              const canAfford = (personalBank >= asset.cost);
+              return `
+                <div class="ceo-owner-card ${isOwned ? 'owned' : ''}">
+                  <div class="coc-head">
+                    <span class="coc-icon">${asset.icon}</span>
+                    <span class="coc-tag">${asset.tag}</span>
+                  </div>
+                  <div class="coc-name">${asset.name}</div>
+                  <div class="coc-desc">${asset.desc}</div>
+                  
+                  <div class="coc-perk-box">
+                    <span class="cpb-lbl">ПРЕИМУЩЕСТВО ДЛЯ КОМАНДЫ:</span>
+                    <div class="cpb-val">${asset.perk}</div>
+                  </div>
+
+                  <div class="coc-footer">
+                    <div class="coc-cost">
+                      <span>Стоимость:</span>
+                      <b>${formatMoney(asset.cost)}</b>
+                    </div>
+                    <div class="coc-action">
+                      ${isOwned ? `
+                        <div class="coc-owned-badge">✅ В ЛИЧНОЙ СОБСТВЕННОСТИ</div>
+                      ` : `
+                        <button class="btn s-btn ${canAfford ? 'sc-buy' : 'sc-locked'}" onclick="window.buyOwnerAsset('${asset.id}')" ${!canAfford ? 'disabled' : ''}>
+                          ${canAfford ? 'Купить в личную собственность' : 'Недостаточно средств на счете'}
+                        </button>
+                      `}
+                    </div>
+                  </div>
+                </div>
+              `;
+            }).join("")}
+          </div>
         </div>
       </div>
     `;
