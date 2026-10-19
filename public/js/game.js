@@ -38,6 +38,9 @@ const L = (es,en,x)=>{
   const t = (x && typeof x==="object") ? x[LANG] : null;
   if(t!=null) return t;
   if(LANG==="ru"){
+    if(Array.isArray(en)){
+      return en.map(s => (typeof RU_DICT!=="undefined" && (RU_DICT[s] || (typeof ruTranslate==="function"?ruTranslate(s):s))) || s);
+    }
     if(typeof RU_DICT!=="undefined"){
       const r = RU_DICT[en] || RU_DICT[es];
       if(r!=null) return r;
@@ -7770,8 +7773,14 @@ function offerAcademies(){
 function setDecision(title,sub,pulsing,outcome){
   try{ if(typeof S!=="undefined" && S) S._lastDecision={t:title,s:sub,p:pulsing,o:outcome}; }catch(e){}
   const h=$("decTitle"), p=$("decSub");
-  h.textContent=Array.isArray(title)?LA(title):title;
-  p.textContent=Array.isArray(sub)?LA(sub):sub;
+  let tText = Array.isArray(title)?LA(title):title;
+  let sText = Array.isArray(sub)?LA(sub):sub;
+  if(LANG==="ru" && typeof ruTranslate==="function"){
+    if(typeof tText==="string") tText = ruTranslate(tText);
+    if(typeof sText==="string") sText = ruTranslate(sText);
+  }
+  h.textContent=tText;
+  p.textContent=sText;
   h.classList.toggle("pulsing",!!pulsing);
   p.classList.toggle("outcome",!!outcome);
 }
