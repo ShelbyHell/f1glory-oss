@@ -184,7 +184,7 @@ function setLang(l){
   });
 }catch(e){} })();
 /* ================= TEMA CLARO/OSCURO ================= */
-let THEME = (function(){ try{return localStorage.getItem("f1theme")||"light";}catch(e){return "light";} })();
+let THEME = (function(){ try{return localStorage.getItem("f1theme")||"dark";}catch(e){return "dark";} })();
 function applyTheme(){
   document.documentElement.setAttribute("data-theme", THEME==="dark"?"dark":"light");
   const tg=document.getElementById("themeToggle"); if(tg) tg.textContent = THEME==="dark"?"☀️":"🌙";
