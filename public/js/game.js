@@ -222,7 +222,6 @@ function pintaColorEquipo(t){
 const DECK_PANELES=[
   ["decisionBox", ["🏁 Decisiones", "🏁 Decisions & Race", {ru:"🏁 Решения & Гонка", pt:"🏁 Decisões"}]],
   ["driverCard",  ["👤 Piloto", "👤 Driver & Team", {ru:"👤 Пилот & Команда", pt:"👤 Piloto"}]],
-  ["f1state",     ["📊 F1", "📊 F1 Standings", {ru:"📊 Таблицы F1", pt:"📊 Classificação"}]],
   ["tlPanel",     ["📜 Trayectoria", "📜 Career History", {ru:"📜 История карьеры", pt:"📜 Histórico"}]]
 ];
 
@@ -325,7 +324,7 @@ function deckIr(id){
   }
 
   // 2. Update panel classes
-  const panelIds = ["decisionBox", "driverCard", "f1state", "tlPanel"];
+  const panelIds = ["decisionBox", "driverCard", "tlPanel"];
   panelIds.forEach(pid => {
     const pEl = document.getElementById(pid);
     if(!pEl) return;
@@ -382,13 +381,10 @@ function deckActualiza(){
     if(tb && tb.parentNode!==tabs) tabs.appendChild(tb);
   }catch(e){}
 
-  const hasF1 = !!(typeof S!=="undefined" && S && (S.lastTop3 || S.cat==="F1" || S.cat==="TP"));
-
   [...tabs.children].filter(b => b.dataset && b.dataset.p).forEach(b => {
     const pid = b.dataset.p;
     const pEl = document.getElementById(pid);
-    const isAvail = pEl && (pid!=="f1state" || hasF1);
-    b.hidden = !isAvail;
+    b.hidden = !pEl;
     const item = DECK_PANELES.find(x => x[0] === pid);
     if(item){
       const l = item[1];
@@ -398,12 +394,8 @@ function deckActualiza(){
     b.classList.toggle("on", pid === _activePanel);
   });
 
-  if(_activePanel==="f1state" && !hasF1){
-    _activePanel = "decisionBox";
-  }
-
   // Ensure active panel is shown
-  ["decisionBox", "driverCard", "f1state", "tlPanel"].forEach(pid => {
+  ["decisionBox", "driverCard", "tlPanel"].forEach(pid => {
     const pEl = document.getElementById(pid);
     if(!pEl) return;
     if(pid === _activePanel){

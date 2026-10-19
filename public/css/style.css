@@ -254,11 +254,13 @@ h1,h2,h3{font-style:italic;letter-spacing:-.5px}
 @keyframes f1TabFadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
 /* Individual active panel layout */
-#decisionBox.tab-panel-active{max-width:880px;margin:0 auto}
-#driverCard.tab-panel-active{max-width:880px;margin:0 auto}
-#f1state.tab-panel-active{max-width:1040px;margin:0 auto}
-#f1state.tab-panel-active .cols{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+#decisionBox.tab-panel-active{max-width:980px;margin:0 auto}
+#driverCard.tab-panel-active{max-width:980px;margin:0 auto}
 #tlPanel.tab-panel-active{max-width:1040px;margin:0 auto}
+
+#decisionBox #f1state{margin-top:28px;border-top:1px solid rgba(255,255,255,.1);padding-top:20px}
+#decisionBox #f1state .cols{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+#decisionBox #f1state .fs-season{font-family:var(--f-disp);font-weight:800;font-size:16px;margin-bottom:12px;color:var(--text);letter-spacing:.03em}
 
 
 .driver-head{display:flex;gap:16px;align-items:center;position:relative}
