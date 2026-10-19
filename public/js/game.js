@@ -7833,7 +7833,8 @@ function renderOffers(offers, withRetire){
     b.onclick=()=>signContract(o);
     box.appendChild(b);
   });
-  if(withRetire){
+  const allowRetire = withRetire || S.cat==="F1" || S.cat==="TEST" || (S.f1Seasons||0)>0 || S.age>=25;
+  if(allowRetire){
     const b=document.createElement("button"); b.className="offer retire";
     b.innerHTML=`<span class="team-dot dot" style="background:#71717c">🏁</span>
       <span class="info"><span class="name">${L("Retirarse","Retire",{pt:"Retirar-se"})}</span><span class="sub" style="display:block">${L("Colgar el casco y asegurar tu legado","Hang up your helmet and secure your legacy",{pt:"Pendurar o capacete e garantir o teu legado"})}</span></span>`;
@@ -13395,8 +13396,8 @@ function nextOffers(){
      0,3% pasa de 44. A los 44 ya casi nadie llega sin ser elite -la mediana de OVR de quien llega
      ahi es 90-, asi que el escalon no abre la puerta a nadie mediocre: deja de castigar al que se
      gano estar ahi. */
-  const _topeEdad = S.ovr>=90 ? 46 : S.ovr>=85 ? 45 : 44;
-  if(S.age>=_topeEdad){ endCareer(); return; }
+  // Sin auto-retirada por edad: la retirada es siempre a elección del jugador
+
   // 🤝 el compromiso solo tiene sentido con un asiento titular de F1: si estás de reserva, de aventura
   // fuera, o ya no corres para ellos, el contrato decae (si no, quedaría colgado el resto de la partida)
   /* ⏸️ …salvo el año en blanco: ese compromiso se cumple JUSTAMENTE de probador, así que aquí no vale
@@ -13622,9 +13623,7 @@ function nextOffers(){
                                    {pt:" O seu ano de trabalho não passou despercebido: estas portas continuam abertas."});
         S.promesaRotaTxt=null;
       }
-      S.testProved=0; S.promesaRota=null;
-    } else if(S.age>=28){ if(S.f1Seasons>0){ endCareer(); } else { washedOut(); } return; }
-    else {
+    } else {
       title=L("Otro año de probador","Another year as reserve",{pt:"Mais um ano de piloto de testes"});
       sub=L(`El asiento titular se resiste. Sigues de reserva: ${yearNow()>=2005?"FP1, simulador":"test privados"} y alguna carrera si surge.`,`The race seat is elusive. You stay a reserve: ${yearNow()>=2005?"FP1, simulator":"private testing"} and the odd race if it comes up.`,{pt:`A vaga de titular resiste. Você segue como reserva: ${yearNow()>=2005?"TL1, simulador":"testes privados"} e alguma corrida se surgir.`});
       pick(F1_TEAMS,3).forEach(t=>o.push({team:{...t,cat:"TEST"},note:["Programa de pruebas","Test programme"]}));
@@ -13673,9 +13672,24 @@ function nextOffers(){
     const _em = edadMercado();   // 👴 en el reto de Loeb el paddock le quita años
     const pOut = stillWanted ? 0 : (_em>=40?.4 : _em>=38?.25 : _em>=36?.12 : 0);
     if(Math.random()<pOut){
-      setDecision(L("El paddock pasa página","The paddock moves on",{pt:"O paddock vira a página"}),L("Los años pesan y los resultados ya no acompañan: esta vez el teléfono no suena.","The years weigh and the results no longer follow: this time the phone doesn't ring.",{pt:"Os anos pesam e os resultados já não acompanham: desta vez o telefone não toca."}));
-      $("offerList").innerHTML="";
-      setTimeout(endCareer,1500);
+      setDecision(L("El paddock pasa página","The paddock moves on",{pt:"O paddock vira a página"}),
+        L("Los años pesan y las grandes escuderías ya no llaman. ¿Qué decides hacer?",
+          "The years weigh and the big teams are no longer calling. What do you decide to do?",
+          {pt:"Os anos pesam e as grandes equipes já não ligam. O que você decide fazer?"}));
+      $("decRecap").style.display="none";
+      const _jv = typeof sorteoAventura==="function" ? sorteoAventura() : [];
+      const opts = [
+        {special:true, em:"🏁", name:L("Colgar el casco","Hang up your helmet",{pt:"Pendurar o capacete"}), sub:L("Retirarse por voluntad propia y asegurar tu legado","Retire by your own choice and secure your legacy",{pt:"Aposentar-se por vontade própria e garantir seu legado"}), color:"#71717c", onClick:endCareer},
+        {special:true, em:"🏎️", name:L("Buscar un último asiento modesto","Seek one last modest seat",{pt:"Buscar uma última vaga modesta"}), sub:L("Pelear en la parte baja de la parrilla","Fight at the back of the grid",{pt:"Lutar no fundo do grid"}), color:"#e10600", onClick:()=>{
+          const sorted=[...F1_TEAMS].sort((a,b)=>S.f1perf[b.name]-S.f1perf[a.name]);
+          const bottomTeams = sorted.slice(-3);
+          renderOffers(bottomTeams.map(t=>({team:t, role:roleFor(t.name), note:L("Última oportunidad","Last chance",{pt:"Última chance"})})), true);
+        }}
+      ];
+      if(_jv && _jv.length){
+        opts.push({special:true, em:"🌏", name:L("Competir fuera de la F1","Race outside F1",{pt:"Competir fora da F1"}), sub:nombresSeries(_jv), color:"#6d28d9", onClick:()=>chooseAdventureSeries(_jv)});
+      }
+      renderSpecialOptions(opts);
       return;
     }
     // reputación para las ofertas: nivel + palmarés + resultado reciente − edad + un poco de FAMA
@@ -13695,7 +13709,11 @@ function nextOffers(){
       else S._repSobre=0;
     }
     if(S.tooHumble){ rep-=6; S.tooHumble=false; sub=L("😐 Un proyecto ganador te descarta: dudan de tu ambición. ","😐 A winning project passes on you: they doubt your ambition. ",{pt:"😐 Um projeto vencedor te descarta: duvidam da sua ambição. "}); }
-    if(rep<68&&_em>=33){ endCareer(); return; }
+    if(rep<68&&_em>=33){
+      sub = (sub||"") + L("Las ofertas escasean, pero aún puedes luchar en equipos humildes o retirarte. ",
+                          "Offers are scarce, but you can still fight with modest teams or retire. ",
+                          {pt:"As ofertas escasseiam, mas você ainda pode lutar em equipes humildes ou se aposentar. "});
+    }
     // el perdón llega con los años; a un CAMPEÓN se le vuelve a llamar antes (2 años vs 4) y más fácil
     const champ=(S.titles.f1||0)>0;
     Object.entries(S.burned).forEach(([tm,age])=>{
@@ -13831,10 +13849,9 @@ function nextOffers(){
       }
     }
     if(!o.length){
-      setDecision(L("Sin ofertas","No offers",{pt:"Sem ofertas"}),L("Demasiados puentes quemados. El paddock tiene memoria.","Too many bridges burned. The paddock has a long memory.",{pt:"Pontes queimadas demais. O paddock tem memória."}));
-      $("offerList").innerHTML="";
-      setTimeout(endCareer,1500);
-      return;
+      const _av=sorteoAventura();
+      o.push({special:true, em:"🌎", name:L("Competir fuera de la F1","Compete outside F1",{pt:"Competir fora da F1"}), sub:L(`Tu camino sigue en otra parte: ${nombresSeries(_av)}`,`Your path continues elsewhere: ${nombresSeries(_av)}`,{pt:`Seu caminho continua em outro lugar: ${nombresSeries(_av)}`}), color:"#0ea5e9", onClick:()=>chooseAdventureSeries(_av)});
+      o.push({special:true, em:"🏁", name:L("Colgar el casco","Hang up your helmet",{pt:"Pendurar o capacete"}), sub:L("Retirarse por decisión propia","Retire by your own choice",{pt:"Aposentar-se por decisão própria"}), color:"#71717c", onClick:endCareer});
     }
     // 🎬 el cameo de APXGP es de la PELÍCULA de 2025: no puede aparecer antes en las eras retro
     // (en la era 2000 se colaba en 2018 con solo cumplir la edad).
@@ -13893,10 +13910,19 @@ function nextOffers(){
 }
 
 function washedOut(){
-  S.retired=true;
-  setDecision(L("Fin del camino","End of the road",{pt:"Fim do caminho"}),L("Las ofertas se agotaron antes de llegar a la F1. El automovilismo es cruel.","The offers dried up before you reached F1. Motorsport is cruel.",{pt:"As ofertas acabaram antes de você chegar à F1. O automobilismo é cruel."}));
-  $("offerList").innerHTML="";
-  setTimeout(endCareer,1200);
+  setDecision(L("Fin del camino en la F1","End of the road in F1",{pt:"Fim do caminho na F1"}),
+    L("Las puertas de la F1 se han cerrado por ahora. Puedes buscarte la vida en otras competiciones o colgar el casco por tu cuenta.",
+      "The doors to F1 have closed for now. You can make a career in other championships or hang up your helmet by your own choice.",
+      {pt:"As portas da F1 se fecharam por ora. Você pode tentar a vida em outros campeonatos ou pendurar o capacete por escolha própria."}));
+  $("decRecap").style.display="none";
+  const _jv = typeof sorteoJoven==="function" ? sorteoJoven() : (typeof sorteoAventura==="function" ? sorteoAventura() : []);
+  const opts = [
+    {special:true, em:"🏁", name:L("Colgar el casco","Hang up your helmet",{pt:"Pendurar o capacete"}), sub:L("Retirarse","Retire",{pt:"Retirar-se"}), color:"#71717c", onClick:endCareer}
+  ];
+  if(_jv && _jv.length){
+    opts.unshift({special:true, em:"🌏", name:L("Buscarte la vida fuera","Make your name elsewhere",{pt:"Se virar lá fora"}), sub:nombresSeries(_jv), color:"#6d28d9", onClick:()=>chooseYoungSeries(_jv)});
+  }
+  renderSpecialOptions(opts);
 }
 
 // 🏁 REVOLUCIÓN TÉCNICA (efecto Brawn 2009): una vez por partida, a partir de ~2046.
@@ -18470,7 +18496,7 @@ function monedaSimbolica(tn){
    final de dilemas —14 nuevos entre veteranos y evergreen—, luego abrir). Todo lo que cuelga del
    tope es paramétrico y se mueve solo: contratos, último contrato, texto de despedida, ventana de
    la sede. El ranking NO se normaliza — decisión de Carlos: «la gente puede sumar más puntos». */
-const TP_TOPE=30;                      // temporadas máximas en el muro
+const TP_TOPE=100;                     // temporadas máximas en el muro (ampliado para permitir retiro a elección)
 const TP_DESPEDIDA=TP_TOPE-3;          // …y la temporada en la que al DUEÑO se le pregunta hasta cuándo (atada al tope, antes 17 a mano)
 function tpDuracionContrato(tn){
   // los grandes atan corto (te exigen ya); los pequeños dan margen porque necesitan paciencia
@@ -18582,8 +18608,6 @@ function tpWinter(){
        partida de 43 contra un tope de 20. La decisión de Carlos («que no te echen» no es «que no te
        jubiles») se resuelve preguntándoselo A ÉL en rueda de prensa: se anuncia una fecha y esa
        fecha se cumple. El aviso deja de ser una pastilla y pasa a ser una promesa suya. */
-    if(S._despedida!=null && yearNow()>S._despedida){ tpFinDeCarrera(); return; }
-    if(cuantoQuedaCond()){ tpCuantoQueda(); return; }
   }
   if(tpTemptCheck()) return;
   tpYearStart();
@@ -18592,8 +18616,7 @@ function tpWinter(){
    La calidad de lo que te llega sale de tu prestigio y de cómo ha ido la última etapa. */
 function tpContratoScreen(){
   if(S.retired) return;
-  const tn=S.tpTeam, ultimaEtapa=S.tpUltimo;
-  if(ultimaEtapa){ tpFinDeCarrera(); return; }            // el contrato final se cumplió: se acabó
+  const tn=S.tpTeam;
   /* 🧠 el consejo mira el MANDATO, no solo el último año (ver tpConfianza). El último año sigue
      pesando más que ninguno; lo que cambia es que dejó de ser lo único que existe. */
   const _conf=tpConfianza(null);
@@ -18628,7 +18651,7 @@ function tpContratoScreen(){
   const oferta=(t, renov)=>{
     const b=document.createElement("button"); b.className="offer";
     const años=tpDuracionContrato(t.name);
-    const ultimo=(S.age+años)>=TP_TOPE;
+    const ultimo=false;
     /* 🛡️ el MISMO escudo que el resto de pantallas (badge mira primero el que elegiste al fundar).
        Antes se buscaba el logo por el NOMBRE: un equipo propio llamado «Minardi» enseñaba el logo
        real de Minardi justo aquí, al renovar (aviso de un amigo de Carlos, 1-oct). */
@@ -18770,26 +18793,39 @@ function tpFiredScreen(){
      TP_TOPE temporadas se aplicaba solo al FIRMAR contrato; si te echaban con el tope ya cumplido,
      aquí te llegaba otra oferta y cada despido sumaba una temporada más (medido: partidas de 31 a 46
      temporadas en el muro). Con el tope cumplido, el despido cierra la etapa. */
-  const _topeCumplido = S.age>=TP_TOPE;
+  const _topeCumplido = false;
   if(!_topeCumplido){
     if(S.tpPrest>=58) offers=pickN(cands.filter(t=>(S.f1perf[t.name]||70)<=myPerf+4),2);
     else if(S.tpPrest>=42) offers=pickN(cands.slice(-4),1);
   }
   if(!offers.length){
+    const rescate = cands.slice(-1)[0] || F1_TEAMS[F1_TEAMS.length - 1];
     setDecision(L("🚪 Despedido","🚪 Sacked",{pt:"🚪 Demitido"}),
-      _topeCumplido
-      ? L(`${from} prescinde de ti y esta vez no esperas a que suene el teléfono: ${S.age} temporadas en el muro son una vida entera. Tu etapa de Team Principal acaba aquí.`,
-          `${from} lets you go, and this time you don't wait for the phone: ${S.age} seasons on the pit wall are a whole life. Your Team Principal era ends here.`,
-          {pt:`A ${from} dispensa você e desta vez você não espera o telefone tocar: ${S.age} temporadas no muro são uma vida inteira. A sua era de Team Principal acaba aqui.`})
-      : S._quebro
-      ? L(`Tu equipo ya no existe y el teléfono no suena: al que hunde su propia casa no lo llama nadie. Tu etapa de Team Principal acaba aquí.`,
-          `Your team no longer exists and the phone stays silent: nobody calls the man who sank his own house. Your Team Principal era ends here.`,
-          {pt:`A sua equipe já não existe e o telefone não toca: ninguém liga para quem afundou a própria casa. A sua era de Team Principal acaba aqui.`})
-      : L("El teléfono no suena: sin prestigio, nadie te ofrece otro muro. Tu etapa de Team Principal acaba aquí.",
-        "The phone stays silent: without prestige, nobody offers you another pit wall. Your Team Principal era ends here.",
-        {pt:"O telefone não toca: sem prestígio, ninguém te oferece outro muro. A sua era de Team Principal acaba aqui."}));
-    $("offerList").innerHTML="";
-    setTimeout(endCareer,1600);
+      L("El paddock de la F1 es implacable, pero la decisión de cerrar tu ciclo es solo tuya. ¿Deseas aceptar un proyecto humilde o cerrar tu etapa?",
+        "The F1 paddock is ruthless, but the choice to close your chapter is yours alone. Do you accept a modest project or retire?",
+        {pt:"O paddock da F1 é implacável, mas a decisão de encerrar seu ciclo é só sua. Deseja aceitar um projeto modesto ou se aposentar?"}));
+    $("decRecap").style.display="none";
+    const box=$("offerList"); box.innerHTML="";
+    box.appendChild(tpGridBtn());
+    if(rescate){
+      const b=document.createElement("button"); b.className="offer";
+      b.style.border="2px solid "+rescate.color; b.style.borderLeftWidth="6px";
+      const punto=badge(rescate);
+      b.innerHTML=`${punto}<span class="info"><span class="name">${L("Reconstruir con ","Rebuild with ",{pt:"Reconstruir com "})}${rescate.name} · ${tpStars(rescate.name)}</span>
+        <span class="sub" style="display:block">${L("Proyecto humilde · 1 temporada para demostrar tu valía","Modest project · 1 season to prove yourself",{pt:"Projeto humilde · 1 temporada para provar seu valor"})}</span></span>`;
+      b.onclick=()=>{
+        S._tpAñosOferta=1;
+        tpSignTeam(rescate, "rescate");
+      };
+      box.appendChild(b);
+    }
+    const r=document.createElement("button"); r.className="offer retire";
+    r.innerHTML=`<span class="team-dot dot" style="background:#71717c">🏁</span>
+      <span class="info"><span class="name">${L("Dejar el muro","Leave the pit wall",{pt:"Deixar o muro"})}</span>
+      <span class="sub" style="display:block">${L("Cerrar tu etapa como Team Principal","Retire from Team Principal role",{pt:"Encerrar a sua era como Team Principal"})}</span></span>`;
+    r.onclick=endCareer;
+    box.appendChild(r);
+    scrollToDecision();
     return;
   }
   setDecision(S._quebro

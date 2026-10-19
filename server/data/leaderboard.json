@@ -708,7 +708,7 @@
       "gloria": 1040,
       "era": "2026",
       "updatedAt": 1792407650496,
-      "rank": 1
+      "rank": 101
     },
     {
       "id": "player_test_42",
@@ -720,6 +720,17 @@
       "ch": null,
       "updatedAt": 1792407245621,
       "rank": 102
+    },
+    {
+      "id": "pz3ru32jvmvf56ved",
+      "name": "SHELBY",
+      "flag": "🇩🇪",
+      "country": "Alemania",
+      "gloria": 434,
+      "era": "2026",
+      "ch": null,
+      "updatedAt": 1792408060410,
+      "rank": 3
     }
   ],
   "e:tp": [
@@ -4966,6 +4977,17 @@
       "ch": null,
       "updatedAt": 1792407245621,
       "rank": 2
+    },
+    {
+      "id": "pz3ru32jvmvf56ved",
+      "name": "SHELBY",
+      "flag": "🇩🇪",
+      "country": "Alemania",
+      "gloria": 434,
+      "era": "2026",
+      "ch": null,
+      "updatedAt": 1792408060410,
+      "rank": 3
     }
   ]
 }
